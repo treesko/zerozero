@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-slate-800 antialiased;
+}
+
+/* Ensure anchors don’t hide under sticky header */
+[id] {
+  scroll-margin-top: 88px; /* header height + spacing */
+}
+
+/* Subtle focus styles */
+*:focus-visible {
+  outline: 2px solid theme('colors.accent.DEFAULT');
+  outline-offset: 2px;
+}
+
+/* Utility for the sticky header backdrop blur */
+.backdrop-blur-10 {
+  backdrop-filter: saturate(180%) blur(10px);
+}
+
+/* Simple animated underline for nav links */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 0;
+  background: currentColor;
+  transition: width 250ms var(--ease);
+}
+.nav-underline:hover::after,
+.nav-underline[aria-current='page']::after {
+  width: 100%;
+}
+
+/* Fade-in-on-scroll base (JS toggles the opacity/transform via classes) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}

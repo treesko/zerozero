@@ -1,0 +1,207 @@
+import { NavBar } from '@/components/NavBar'
+import { Footer } from '@/components/Footer'
+import { Section } from '@/components/Section'
+import { Button } from '@/components/Button'
+import { ServiceCard } from '@/components/cards/ServiceCard'
+import { TestimonialCard } from '@/components/cards/TestimonialCard'
+import { PricingCard } from '@/components/cards/PricingCard'
+import { ContactForm } from '@/components/ContactForm'
+import { RevealController } from '@/components/RevealController'
+import { getDictionary } from '@/lib/i18n'
+import type { Metadata } from 'next'
+
+type Props = { params: { locale: 'en' | 'sq' | 'de' } }
+
+function HeroGraphic() {
+  return (
+    <div className="relative h-72 w-full overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-soft-bg shadow-sm md:h-full">
+      <svg className="absolute -left-6 -top-6 h-40 w-40 text-accent/20" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2"/>
+      </svg>
+      <svg className="absolute bottom-6 right-6 h-28 w-28 text-accent/30" viewBox="0 0 100 100" fill="none">
+        <rect x="10" y="10" width="80" height="80" rx="10" stroke="currentColor" strokeWidth="2"/>
+      </svg>
+      <div className="absolute inset-6">
+        <div className="grid h-full grid-rows-3 gap-3">
+          <div className="rounded-md bg-white/70 p-4 shadow-sm">
+            <div className="h-2 w-1/3 rounded bg-accent/60"></div>
+            <div className="mt-3 flex items-end gap-2">
+              {[30, 50, 80, 45, 90].map((h, i) => (
+                <div key={i} className="w-5 rounded bg-primary/20" style={{ height: `${h}%` }} />
+              ))}
+            </div>
+          </div>
+          <div className="rounded-md bg-white/70 p-4 shadow-sm">
+            <div className="h-2 w-24 rounded bg-slate-300"></div>
+            <div className="mt-3 h-1.5 w-full rounded bg-accent/30"></div>
+            <div className="mt-2 h-1.5 w-2/3 rounded bg-primary/30"></div>
+          </div>
+          <div className="rounded-md bg-white/70 p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="h-2 w-28 rounded bg-slate-300"></div>
+              <div className="h-6 w-16 rounded bg-accent/40"></div>
+            </div>
+            <div className="mt-3 h-1.5 w-4/5 rounded bg-primary/20"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default async function Page({ params }: { params: Promise<Props['params']> }) {
+  const { locale } = await params
+  const t = getDictionary(locale)
+  return (
+    <main id="home">
+      <NavBar locale={locale} t={t} />
+
+      {/* Hero */}
+      <Section container className="pt-16">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          <div className="reveal">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-accent">{t.hero.badge}</p>
+            <h1 className="mb-4 text-4xl font-extrabold leading-tight text-primary md:text-5xl">{t.hero.title}</h1>
+            <p className="mb-8 max-w-xl text-lg text-slate-600">{t.hero.subtitle}</p>
+            <div className="flex flex-wrap gap-3">
+              <Button as="a" href={`/${locale}#contact`}>{t.hero.primaryCta}</Button>
+              <Button as="a" href={`/${locale}#services`} variant="secondary">{t.hero.secondaryCta}</Button>
+            </div>
+          </div>
+          <div className="reveal">
+            <HeroGraphic />
+          </div>
+        </div>
+      </Section>
+
+      {/* Trust / Stats Strip */}
+      <Section container className="py-8">
+        <div className="reveal grid grid-cols-2 gap-6 rounded-xl border border-slate-200 bg-white p-6 text-sm shadow-sm md:grid-cols-4">
+          {t.stats.map((s) => (
+            <div key={s.label} className="text-center">
+              <div className="text-xl font-extrabold text-primary">{s.value}</div>
+              <div className="mt-1 text-slate-600">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Services */}
+      <Section id="services">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.services.title}</h2>
+          <p className="reveal text-slate-600">{t.services.intro}</p>
+        </div>
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {t.services.items.map((s) => (
+            <ServiceCard key={s.title} title={s.title} description={s.desc} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3h18v14H3z"/><path d="M3 7h18"/><path d="M7 21h10"/></svg>} />
+          ))}
+        </div>
+      </Section>
+
+      {/* About */}
+      <Section id="about">
+        <div className="grid gap-10 md:grid-cols-2">
+          <div className="reveal">
+            <h2 className="mb-4 text-3xl font-bold text-primary">{t.about.title}</h2>
+            <p className="mb-4 text-slate-700">{t.about.p1}</p>
+            <p className="text-slate-700">{t.about.p2}</p>
+          </div>
+          <div className="reveal">
+            <ul className="space-y-3">
+              {t.about.bullets.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-slate-700">
+                  <svg className="mt-1 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* Industries */}
+      <Section id="industries">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.industries.title}</h2>
+          <p className="reveal text-slate-600">{t.industries.intro}</p>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {t.industries.items.map((c) => (
+            <div key={c.t} className="reveal rounded-full border border-slate-200 bg-white px-5 py-3 text-sm shadow-sm">
+              <div className="font-semibold text-primary">{c.t}</div>
+              <div className="text-slate-600">{c.d}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Testimonials */}
+      <Section id="testimonials">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.testimonials.title}</h2>
+          <p className="reveal text-slate-600">{t.testimonials.intro}</p>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {t.testimonials.items.map((item) => (
+            <TestimonialCard key={item.quote} quote={item.quote} name={item.name} role={item.role} />
+          ))}
+        </div>
+      </Section>
+
+      {/* Resources */}
+      <Section id="resources">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.resources.title}</h2>
+          <p className="reveal text-slate-600">{t.resources.intro}</p>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {t.resourcesData.slice(0, 3).map((a) => (
+            <article key={a.slug} className="reveal rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="mb-2 text-base font-semibold text-primary">{a.title}</h3>
+              <p className="mb-3 text-sm text-slate-600">{a.excerpt}</p>
+              <a href={`/${locale}/resources/${a.slug}`} className="text-sm font-semibold text-accent hover:underline">{t.resources.readMore}</a>
+            </article>
+          ))}
+        </div>
+        <div className="reveal mx-auto mt-8 max-w-3xl text-center">
+          <a href={`/${locale}/resources`} className="text-sm font-semibold text-accent hover:underline">{t.resources.exploreAll}</a>
+        </div>
+      </Section>
+
+      {/* Pricing */}
+      <Section id="pricing">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.pricing.title}</h2>
+          <p className="reveal text-slate-600">{t.pricing.intro}</p>
+        </div>
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {t.pricing.plans.map((p) => (
+            <PricingCard key={p.name} name={p.name} price={p.price} description={p.desc} features={p.features} highlighted={p.highlighted} mostPopularText={t.pricing.mostPopular} />
+          ))}
+        </div>
+      </Section>
+
+      {/* Contact */}
+      <Section id="contact">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.contact.title}</h2>
+          <p className="reveal text-slate-600">{t.contact.intro}</p>
+        </div>
+        <ContactForm t={t} />
+      </Section>
+
+      <Footer locale={locale} t={t} />
+      <RevealController />
+    </main>
+  )
+}
+
+export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
+  const { locale } = await params
+  const t = getDictionary(locale)
+  return {
+    title: `${t.brand} – Modern Accounting & Advisory`,
+    description: `${t.brand}: ${t.slogan}`,
+  }
+}

@@ -14,8 +14,9 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = cookies().get('locale')?.value || 'en'
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const store = await cookies()
+  const locale = store.get('locale')?.value || 'en'
   return (
     <html lang={locale} className={inter.variable}>
       <body>{children}</body>

@@ -1,19 +1,10 @@
-import { Inter } from 'next/font/google'
-import '../globals.css'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
-
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { locale: 'en'|'sq'|'de' }
+  params: Promise<{ locale: 'en'|'sq'|'de' }>
 }) {
-  return (
-    <html lang={params.locale} className={inter.variable}>
-      <body>{children}</body>
-    </html>
-  )
+  await params // awaited to satisfy Next 15 typed routes API
+  return children as React.ReactElement
 }
-

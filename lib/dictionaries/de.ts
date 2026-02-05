@@ -3,7 +3,7 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Präzision. Klarheit. Vertrauen.',
     nav: {
-      home: 'Start', services: 'Leistungen', about: 'Über uns', industries: 'Branchen', testimonials: 'Referenzen', resources: 'Ressourcen', pricing: 'Preise', contact: 'Kontakt', cta: 'Beratung buchen'
+      home: 'Start', services: 'Leistungen', about: 'Über uns', industries: 'Branchen', tools: 'Rechner', testimonials: 'Referenzen', resources: 'Ressourcen', pricing: 'Preise', contact: 'Kontakt', cta: 'Beratung buchen'
     },
     hero: {
       badge: 'Präzision. Klarheit. Vertrauen.',

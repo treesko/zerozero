@@ -3,7 +3,7 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Saktësi. Qartësi. Besim.',
     nav: {
-      home: 'Kreu', services: 'Shërbimet', about: 'Rreth nesh', industries: 'Industrikat', testimonials: 'Dëshmitë', resources: 'Burimet', pricing: 'Çmimet', contact: 'Kontakti', cta: 'Rezervo Konsultim'
+      home: 'Kreu', services: 'Shërbimet', about: 'Rreth nesh', industries: 'Industrikat', tools: 'Vegla', testimonials: 'Dëshmitë', resources: 'Burimet', pricing: 'Çmimet', contact: 'Kontakti', cta: 'Rezervo Konsultim'
     },
     hero: {
       badge: 'Saktësi. Qartësi. Besim.',

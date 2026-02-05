@@ -8,6 +8,7 @@ import { PricingCard } from '@/components/cards/PricingCard'
 import { ContactForm } from '@/components/ContactForm'
 import { RevealController } from '@/components/RevealController'
 import { BackToTop } from '@/components/BackToTop'
+import { ToolsSection } from '@/components/calculators/ToolsSection'
 import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
@@ -137,11 +138,16 @@ export default async function Page({ params }: { params: Promise<Props['params']
         </div>
       </Section>
 
+      {/* Interactive Tools */}
+      <Section id="tools" className="bg-slate-50 dark:bg-slate-800/50">
+        <ToolsSection locale={locale} />
+      </Section>
+
       {/* Testimonials */}
       <Section id="testimonials">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.testimonials.title}</h2>
-          <p className="reveal text-slate-600">{t.testimonials.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.testimonials.title}</h2>
+          <p className="reveal text-slate-600 dark:text-slate-400">{t.testimonials.intro}</p>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.testimonials.items.map((item) => (

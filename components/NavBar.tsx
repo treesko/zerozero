@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn'
 import { useActiveSection } from '@/lib/useActiveSection'
 
 type Dict = any
-const linkKeys = ['home','services','about','industries','testimonials','resources','pricing','contact'] as const
+const linkKeys = ['home','services','about','industries','tools','testimonials','resources','pricing','contact'] as const
 
 export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   const [open, setOpen] = useState(false)

@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Button } from './Button'
+import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/cn'
+import { useActiveSection } from '@/lib/useActiveSection'
 
 type Dict = any
 const linkKeys = ['home','services','about','industries','testimonials','resources','pricing','contact'] as const
@@ -12,6 +14,7 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === `/${locale}`
+  const activeSection = useActiveSection([...linkKeys])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -26,10 +29,10 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   }, [open])
 
   return (
-    <header className={cn('sticky top-0 z-50 w-full transition-colors', scrolled ? 'bg-white/80 backdrop-blur-10 border-b border-slate-200' : 'bg-transparent')}
+    <header className={cn('sticky top-0 z-50 w-full transition-colors', scrolled ? 'bg-white/80 backdrop-blur-10 border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-700' : 'bg-transparent')}
       aria-label="Main Navigation">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
-        <a href={`/${locale}`} className="text-xl font-extrabold tracking-tight text-primary" aria-label={`${t.brand} home`}>
+        <a href={`/${locale}`} className="text-xl font-extrabold tracking-tight text-primary dark:text-white" aria-label={`${t.brand} home`}>
           {t.brand}
         </a>
 
@@ -39,9 +42,21 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
             const label = t.nav[key]
             const base = `/${locale}`
             const href = isHome ? `#${key}` : `${base}/#${key}`
+            const isActive = isHome && activeSection === key
             return (
-              <a key={key} href={href} className="nav-underline text-sm font-medium text-slate-700 hover:text-primary" onClick={() => setOpen(false)}>
-              {label}
+              <a
+                key={key}
+                href={href}
+                className={cn(
+                  'nav-underline text-sm font-medium transition-colors',
+                  isActive
+                    ? 'text-accent dark:text-accent'
+                    : 'text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-white'
+                )}
+                aria-current={isActive ? 'page' : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {label}
               </a>
             )
           })}
@@ -49,12 +64,13 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
 
         <div className="hidden items-center gap-4 md:flex">
           <LangSwitcher locale={locale} />
+          <ThemeToggle />
           <Button as="a" href={isHome ? '#contact' : `/${locale}/#contact`}>{t.nav.cta}</Button>
         </div>
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50"
+          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
           aria-label="Open menu"
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -75,18 +91,21 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
       <div
         id="mobile-menu"
         className={cn(
-          'md:hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-10 transition-opacity duration-300',
+          'md:hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-10 transition-opacity duration-300 dark:bg-slate-900/95',
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
       >
         <div className="mx-auto flex h-full max-w-7xl flex-col justify-center gap-8 px-8">
-          <LangSwitcher locale={locale} mobile />
+          <div className="flex items-center gap-4">
+            <LangSwitcher locale={locale} mobile />
+            <ThemeToggle />
+          </div>
           {linkKeys.map(key => {
             const label = t.nav[key]
             const base = `/${locale}`
             const href = isHome ? `#${key}` : `${base}/#${key}`
             return (
-              <a key={key} href={href} className="text-2xl font-semibold text-primary" onClick={() => setOpen(false)}>
+              <a key={key} href={href} className="text-2xl font-semibold text-primary dark:text-white" onClick={() => setOpen(false)}>
                 {label}
               </a>
             )
@@ -109,12 +128,12 @@ function LangSwitcher({ locale, mobile }: { locale: 'en'|'sq'|'de', mobile?: boo
     { code: 'de', label: 'DE' },
   ]
   return (
-    <div className={cn('flex items-center gap-2', mobile ? 'mb-6' : '')} aria-label="Language selector">
+    <nav className={cn('flex items-center gap-2', mobile ? '' : '')} aria-label="Language selector">
       {langs.map(l => (
-        <a key={l.code} href={`/${l.code}${rest}`} className={cn('text-xs font-semibold uppercase tracking-wide', l.code === locale ? 'text-primary' : 'text-slate-500 hover:text-primary')}>
+        <a key={l.code} href={`/${l.code}${rest}`} className={cn('text-xs font-semibold uppercase tracking-wide', l.code === locale ? 'text-primary dark:text-white' : 'text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white')}>
           {l.label}
         </a>
       ))}
-    </div>
+    </nav>
   )
 }

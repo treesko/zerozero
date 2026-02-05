@@ -7,6 +7,7 @@ import { TestimonialCard } from '@/components/cards/TestimonialCard'
 import { PricingCard } from '@/components/cards/PricingCard'
 import { ContactForm } from '@/components/ContactForm'
 import { RevealController } from '@/components/RevealController'
+import { BackToTop } from '@/components/BackToTop'
 import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
@@ -192,16 +193,44 @@ export default async function Page({ params }: { params: Promise<Props['params']
       </Section>
 
       <Footer locale={locale} t={t} />
+      <BackToTop />
       <RevealController />
     </main>
   )
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params
   const t = getDictionary(locale)
+
+  const localeToOg: Record<string, string> = {
+    en: 'en_US',
+    sq: 'sq_AL',
+    de: 'de_DE',
+  }
+
   return {
     title: `${t.brand} – Modern Accounting & Advisory`,
-    description: `${t.brand}: ${t.slogan}`,
+    description: `${t.hero.subtitle}`,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        'en': `${BASE_URL}/en`,
+        'sq': `${BASE_URL}/sq`,
+        'de': `${BASE_URL}/de`,
+        'x-default': `${BASE_URL}/en`,
+      },
+    },
+    openGraph: {
+      title: `${t.brand} – ${t.hero.title}`,
+      description: t.hero.subtitle,
+      url: `${BASE_URL}/${locale}`,
+      locale: localeToOg[locale] || 'en_US',
+      alternateLocale: Object.entries(localeToOg)
+        .filter(([l]) => l !== locale)
+        .map(([, og]) => og),
+    },
   }
 }

@@ -13,35 +13,58 @@ type CalculatorResult = {
   additionalBenefits: string[]
 }
 
-const businessTypeLabels: Record<BusinessType, string> = {
-  startup: 'Startup / Tech',
-  smb: 'Small & Medium Business',
-  freelancer: 'Freelancer / Creator',
-  ecommerce: 'E-commerce / Retail',
-  professional: 'Professional Services',
+type SavingsTranslations = {
+  title: string
+  subtitle: string
+  annualRevenue: string
+  revenuePlaceholder: string
+  employees: string
+  employeesPlaceholder: string
+  businessType: string
+  currentCost: string
+  currentCostPlaceholder: string
+  currentCostHint: string
+  calculateBtn: string
+  calculating: string
+  annualSavings: string
+  savingsPercent: string
+  currentCostLabel: string
+  withZerozero: string
+  included: string
+  recalculate: string
+  cta: string
+  businessTypes: Record<BusinessType, string>
+  benefits: {
+    fundraising: string
+    runway: string
+    inventory: string
+    multichannel: string
+    taxFiling: string
+    expenses: string
+    insights: string
+    manager: string
+  }
 }
 
-// Simplified pricing model for demonstration
 function calculateSavings(
   revenue: number,
   employees: number,
   businessType: BusinessType,
-  currentCost: number
+  currentCost: number,
+  benefitTexts: SavingsTranslations['benefits']
 ): CalculatorResult {
-  // Base zerozero pricing tiers
-  let zeroroCost = 149 // Starter
+  let zeroroCost = 149
 
   if (employees > 5 || revenue > 100000) {
-    zeroroCost = 349 // Growth
+    zeroroCost = 349
   }
   if (employees > 20 || revenue > 500000) {
-    zeroroCost = 599 // Custom base
+    zeroroCost = 599
   }
   if (employees > 50 || revenue > 1000000) {
-    zeroroCost = 999 // Enterprise
+    zeroroCost = 999
   }
 
-  // Business type modifiers
   const complexityModifiers: Record<BusinessType, number> = {
     startup: 1.0,
     smb: 1.1,
@@ -52,28 +75,26 @@ function calculateSavings(
 
   zeroroCost = Math.round(zeroroCost * complexityModifiers[businessType])
 
-  // Estimate current cost if not provided (industry averages)
   const estimatedCurrentCost = currentCost > 0 ? currentCost : zeroroCost * 1.8
 
   const savings = Math.max(0, estimatedCurrentCost - zeroroCost)
   const savingsPercent = estimatedCurrentCost > 0 ? Math.round((savings / estimatedCurrentCost) * 100) : 0
 
-  // Generate benefits based on business type
   const additionalBenefits: string[] = []
 
   if (businessType === 'startup') {
-    additionalBenefits.push('Fundraising-ready financial statements')
-    additionalBenefits.push('Runway and burn rate tracking')
+    additionalBenefits.push(benefitTexts.fundraising)
+    additionalBenefits.push(benefitTexts.runway)
   } else if (businessType === 'ecommerce') {
-    additionalBenefits.push('Inventory cost tracking')
-    additionalBenefits.push('Multi-channel revenue reconciliation')
+    additionalBenefits.push(benefitTexts.inventory)
+    additionalBenefits.push(benefitTexts.multichannel)
   } else if (businessType === 'freelancer') {
-    additionalBenefits.push('Simplified tax filing')
-    additionalBenefits.push('Expense categorization automation')
+    additionalBenefits.push(benefitTexts.taxFiling)
+    additionalBenefits.push(benefitTexts.expenses)
   }
 
-  additionalBenefits.push('Monthly financial insights')
-  additionalBenefits.push('Dedicated account manager')
+  additionalBenefits.push(benefitTexts.insights)
+  additionalBenefits.push(benefitTexts.manager)
 
   return {
     currentCost: estimatedCurrentCost,
@@ -86,17 +107,11 @@ function calculateSavings(
 
 type TaxCalculatorProps = {
   locale: string
-  ctaText?: string
-  title?: string
-  subtitle?: string
+  t: SavingsTranslations | Record<string, unknown>
 }
 
-export function TaxCalculator({
-  locale,
-  ctaText = 'Get Your Free Consultation',
-  title = 'Calculate Your Savings',
-  subtitle = 'See how much you could save with zerozero',
-}: TaxCalculatorProps) {
+export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
+  const t = tRaw as SavingsTranslations
   const [revenue, setRevenue] = useState('')
   const [employees, setEmployees] = useState('')
   const [businessType, setBusinessType] = useState<BusinessType>('smb')
@@ -107,14 +122,13 @@ export function TaxCalculator({
   const handleCalculate = async () => {
     setIsCalculating(true)
 
-    // Simulate calculation delay for UX
     await new Promise((resolve) => setTimeout(resolve, 800))
 
     const revenueNum = parseFloat(revenue.replace(/[^0-9.]/g, '')) || 0
     const employeesNum = parseInt(employees) || 1
     const currentCostNum = parseFloat(currentCost.replace(/[^0-9.]/g, '')) || 0
 
-    const calculationResult = calculateSavings(revenueNum, employeesNum, businessType, currentCostNum)
+    const calculationResult = calculateSavings(revenueNum, employeesNum, businessType, currentCostNum, t.benefits)
     setResult(calculationResult)
     setIsCalculating(false)
   }
@@ -136,8 +150,8 @@ export function TaxCalculator({
     <div className="mx-auto max-w-2xl">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
         <div className="mb-6 text-center">
-          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{subtitle}</p>
+          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
+          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
         </div>
 
         {!result ? (
@@ -145,13 +159,13 @@ export function TaxCalculator({
             {/* Annual Revenue */}
             <div>
               <label htmlFor="revenue" className={labelClass}>
-                Annual Revenue (EUR)
+                {t.annualRevenue}
               </label>
               <input
                 id="revenue"
                 type="text"
                 inputMode="numeric"
-                placeholder="e.g., 250,000"
+                placeholder={t.revenuePlaceholder}
                 value={revenue}
                 onChange={(e) => setRevenue(e.target.value)}
                 className={inputClass}
@@ -161,13 +175,13 @@ export function TaxCalculator({
             {/* Number of Employees */}
             <div>
               <label htmlFor="employees" className={labelClass}>
-                Number of Employees
+                {t.employees}
               </label>
               <input
                 id="employees"
                 type="number"
                 min="1"
-                placeholder="e.g., 10"
+                placeholder={t.employeesPlaceholder}
                 value={employees}
                 onChange={(e) => setEmployees(e.target.value)}
                 className={inputClass}
@@ -177,7 +191,7 @@ export function TaxCalculator({
             {/* Business Type */}
             <div>
               <label htmlFor="businessType" className={labelClass}>
-                Business Type
+                {t.businessType}
               </label>
               <select
                 id="businessType"
@@ -185,7 +199,7 @@ export function TaxCalculator({
                 onChange={(e) => setBusinessType(e.target.value as BusinessType)}
                 className={`${inputClass} bg-white dark:bg-slate-800`}
               >
-                {Object.entries(businessTypeLabels).map(([value, label]) => (
+                {Object.entries(t.businessTypes).map(([value, label]) => (
                   <option key={value} value={value}>
                     {label}
                   </option>
@@ -196,19 +210,19 @@ export function TaxCalculator({
             {/* Current Monthly Cost */}
             <div>
               <label htmlFor="currentCost" className={labelClass}>
-                Current Monthly Accounting Cost (optional)
+                {t.currentCost}
               </label>
               <input
                 id="currentCost"
                 type="text"
                 inputMode="numeric"
-                placeholder="e.g., 500"
+                placeholder={t.currentCostPlaceholder}
                 value={currentCost}
                 onChange={(e) => setCurrentCost(e.target.value)}
                 className={inputClass}
               />
               <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                Leave blank to use industry average
+                {t.currentCostHint}
               </p>
             </div>
 
@@ -216,10 +230,10 @@ export function TaxCalculator({
             <Button
               onClick={handleCalculate}
               loading={isCalculating}
-              loadingText="Calculating..."
+              loadingText={t.calculating}
               className="w-full"
             >
-              Calculate My Savings
+              {t.calculateBtn}
             </Button>
           </div>
         ) : (
@@ -228,13 +242,13 @@ export function TaxCalculator({
             <div className="rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 p-6 dark:from-accent/20 dark:to-accent/10">
               <div className="mb-4 text-center">
                 <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                  Your Estimated Annual Savings
+                  {t.annualSavings}
                 </p>
                 <p className="mt-1 text-4xl font-extrabold text-accent">
                   {formatCurrency(result.savings * 12)}
                 </p>
                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                  That&apos;s {result.savingsPercent}% less than your current costs
+                  {t.savingsPercent.replace('{percent}', String(result.savingsPercent))}
                 </p>
               </div>
             </div>
@@ -242,7 +256,7 @@ export function TaxCalculator({
             {/* Comparison Chart */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-600 dark:text-slate-400">Current Cost</span>
+                <span className="text-sm text-slate-600 dark:text-slate-400">{t.currentCostLabel}</span>
                 <span className="font-semibold text-slate-700 dark:text-slate-300">
                   {formatCurrency(result.currentCost)}/mo
                 </span>
@@ -252,7 +266,7 @@ export function TaxCalculator({
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-600 dark:text-slate-400">With zerozero</span>
+                <span className="text-sm text-slate-600 dark:text-slate-400">{t.withZerozero}</span>
                 <span className="font-semibold text-accent">{formatCurrency(result.zeroroCost)}/mo</span>
               </div>
               <div className="h-3 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
@@ -266,7 +280,7 @@ export function TaxCalculator({
             {/* Additional Benefits */}
             <div>
               <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
-                What&apos;s Included:
+                {t.included}
               </p>
               <ul className="space-y-2">
                 {result.additionalBenefits.map((benefit, index) => (
@@ -291,14 +305,14 @@ export function TaxCalculator({
             {/* CTA Buttons */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button as="a" href={`/${locale}#contact`} className="flex-1">
-                {ctaText}
+                {t.cta}
               </Button>
               <Button
                 variant="secondary"
                 onClick={() => setResult(null)}
                 className="flex-1"
               >
-                Recalculate
+                {t.recalculate}
               </Button>
             </div>
           </div>

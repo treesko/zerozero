@@ -140,7 +140,7 @@ export default async function Page({ params }: { params: Promise<Props['params']
 
       {/* Interactive Tools */}
       <Section id="tools" className="bg-slate-50 dark:bg-slate-800/50">
-        <ToolsSection locale={locale} />
+        <ToolsSection locale={locale} t={t.tools} />
       </Section>
 
       {/* Testimonials */}

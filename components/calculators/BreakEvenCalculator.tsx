@@ -10,13 +10,42 @@ type BreakEvenResult = {
   contributionMarginRatio: number
 }
 
+type BreakEvenTranslations = {
+  title: string
+  subtitle: string
+  fixedCosts: string
+  fixedCostsHint: string
+  fixedCostsPlaceholder: string
+  variableCost: string
+  variableCostHint: string
+  variableCostPlaceholder: string
+  sellingPrice: string
+  sellingPricePlaceholder: string
+  priceError: string
+  calculateBtn: string
+  breakEvenUnits: string
+  breakEvenRevenue: string
+  contributionMargin: string
+  contributionRatio: string
+  chartTitle: string
+  chartRevenue: string
+  chartTotalCost: string
+  chartBreakEven: string
+  chartEur: string
+  chartUnits: string
+  whatThisMeans: string
+  insightText: string
+  advisorCta: string
+  talkToAdvisors: string
+}
+
 function calculateBreakEven(
   fixedCosts: number,
   variableCostPerUnit: number,
   pricePerUnit: number
 ): BreakEvenResult | null {
   if (pricePerUnit <= variableCostPerUnit) {
-    return null // Can't break even if price <= variable cost
+    return null
   }
 
   const contributionMargin = pricePerUnit - variableCostPerUnit
@@ -34,15 +63,11 @@ function calculateBreakEven(
 
 type BreakEvenCalculatorProps = {
   locale: string
-  title?: string
-  subtitle?: string
+  t: BreakEvenTranslations | Record<string, unknown>
 }
 
-export function BreakEvenCalculator({
-  locale,
-  title = 'Break-Even Calculator',
-  subtitle = 'Find out how many units you need to sell to cover your costs',
-}: BreakEvenCalculatorProps) {
+export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProps) {
+  const t = tRaw as BreakEvenTranslations
   const [fixedCosts, setFixedCosts] = useState('')
   const [variableCost, setVariableCost] = useState('')
   const [price, setPrice] = useState('')
@@ -82,25 +107,6 @@ export function BreakEvenCalculator({
     return `${Math.round(value * 100)}%`
   }
 
-  // Generate chart data points
-  const chartData = useMemo(() => {
-    if (!result) return []
-
-    const maxUnits = Math.ceil(result.breakEvenUnits * 1.5)
-    const points = []
-    const priceNum = parseFloat(price.replace(/[^0-9.]/g, '')) || 0
-    const variableNum = parseFloat(variableCost.replace(/[^0-9.]/g, '')) || 0
-    const fixedNum = parseFloat(fixedCosts.replace(/[^0-9.]/g, '')) || 0
-
-    for (let units = 0; units <= maxUnits; units += Math.ceil(maxUnits / 10)) {
-      const revenue = units * priceNum
-      const totalCost = fixedNum + units * variableNum
-      points.push({ units, revenue, totalCost })
-    }
-
-    return points
-  }, [result, price, variableCost, fixedCosts])
-
   const inputClass =
     'w-full rounded-md border border-slate-300 px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white'
   const labelClass = 'mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300'
@@ -109,16 +115,16 @@ export function BreakEvenCalculator({
     <div className="mx-auto max-w-2xl">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
         <div className="mb-6 text-center">
-          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{subtitle}</p>
+          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
+          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
         </div>
 
         <div className="space-y-5">
           {/* Fixed Costs */}
           <div>
             <label htmlFor="fixedCosts" className={labelClass}>
-              Monthly Fixed Costs (EUR)
-              <span className="ml-1 text-xs text-slate-400" title="Rent, salaries, insurance, etc.">
+              {t.fixedCosts}
+              <span className="ml-1 text-xs text-slate-400" title={t.fixedCostsHint}>
                 ⓘ
               </span>
             </label>
@@ -126,7 +132,7 @@ export function BreakEvenCalculator({
               id="fixedCosts"
               type="text"
               inputMode="numeric"
-              placeholder="e.g., 10,000"
+              placeholder={t.fixedCostsPlaceholder}
               value={fixedCosts}
               onChange={(e) => {
                 setFixedCosts(e.target.value)
@@ -135,15 +141,15 @@ export function BreakEvenCalculator({
               className={inputClass}
             />
             <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              Costs that don&apos;t change with production (rent, salaries, insurance)
+              {t.fixedCostsHint}
             </p>
           </div>
 
           {/* Variable Cost Per Unit */}
           <div>
             <label htmlFor="variableCost" className={labelClass}>
-              Variable Cost Per Unit (EUR)
-              <span className="ml-1 text-xs text-slate-400" title="Materials, labor per unit">
+              {t.variableCost}
+              <span className="ml-1 text-xs text-slate-400" title={t.variableCostHint}>
                 ⓘ
               </span>
             </label>
@@ -151,7 +157,7 @@ export function BreakEvenCalculator({
               id="variableCost"
               type="text"
               inputMode="numeric"
-              placeholder="e.g., 25"
+              placeholder={t.variableCostPlaceholder}
               value={variableCost}
               onChange={(e) => {
                 setVariableCost(e.target.value)
@@ -160,20 +166,20 @@ export function BreakEvenCalculator({
               className={inputClass}
             />
             <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              Costs that vary with each unit (materials, direct labor)
+              {t.variableCostHint}
             </p>
           </div>
 
           {/* Selling Price Per Unit */}
           <div>
             <label htmlFor="price" className={labelClass}>
-              Selling Price Per Unit (EUR)
+              {t.sellingPrice}
             </label>
             <input
               id="price"
               type="text"
               inputMode="numeric"
-              placeholder="e.g., 75"
+              placeholder={t.sellingPricePlaceholder}
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value)
@@ -186,7 +192,7 @@ export function BreakEvenCalculator({
           {/* Error Message */}
           {price && variableCost && parseFloat(price) <= parseFloat(variableCost) && (
             <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300">
-              Selling price must be greater than variable cost per unit
+              {t.priceError}
             </div>
           )}
 
@@ -196,7 +202,7 @@ export function BreakEvenCalculator({
             disabled={!result}
             className="w-full"
           >
-            Calculate Break-Even Point
+            {t.calculateBtn}
           </Button>
         </div>
 
@@ -206,13 +212,13 @@ export function BreakEvenCalculator({
             {/* Key Metrics */}
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl bg-accent/10 p-4 text-center dark:bg-accent/20">
-                <p className="text-sm text-slate-600 dark:text-slate-400">Break-Even Units</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t.breakEvenUnits}</p>
                 <p className="mt-1 text-3xl font-bold text-accent">
                   {formatNumber(result.breakEvenUnits)}
                 </p>
               </div>
               <div className="rounded-xl bg-primary/10 p-4 text-center dark:bg-primary/20">
-                <p className="text-sm text-slate-600 dark:text-slate-400">Break-Even Revenue</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{t.breakEvenRevenue}</p>
                 <p className="mt-1 text-3xl font-bold text-primary dark:text-white">
                   {formatCurrency(result.breakEvenRevenue)}
                 </p>
@@ -223,13 +229,13 @@ export function BreakEvenCalculator({
             <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
               <div className="grid gap-4 text-sm sm:grid-cols-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-600 dark:text-slate-400">Contribution Margin:</span>
+                  <span className="text-slate-600 dark:text-slate-400">{t.contributionMargin}</span>
                   <span className="font-semibold text-slate-800 dark:text-white">
                     {formatCurrency(result.contributionMargin)} / unit
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600 dark:text-slate-400">Contribution Ratio:</span>
+                  <span className="text-slate-600 dark:text-slate-400">{t.contributionRatio}</span>
                   <span className="font-semibold text-slate-800 dark:text-white">
                     {formatPercent(result.contributionMarginRatio)}
                   </span>
@@ -240,19 +246,19 @@ export function BreakEvenCalculator({
             {/* Simple Visualization */}
             <div>
               <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
-                Revenue vs. Cost Analysis
+                {t.chartTitle}
               </p>
               <div className="relative h-48 rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
                 {/* Y-axis label */}
                 <div className="absolute -left-2 top-1/2 -translate-y-1/2 -rotate-90 text-xs text-slate-500">
-                  EUR
+                  {t.chartEur}
                 </div>
 
                 {/* Chart area */}
                 <svg className="h-full w-full" viewBox="0 0 400 150" preserveAspectRatio="none">
                   {/* Grid lines */}
-                  <line x1="40" y1="10" x2="40" y2="130" stroke="#e2e8f0" strokeWidth="1" />
-                  <line x1="40" y1="130" x2="390" y2="130" stroke="#e2e8f0" strokeWidth="1" />
+                  <line x1="40" y1="10" x2="40" y2="130" className="stroke-slate-300 dark:stroke-slate-500" strokeWidth="1" />
+                  <line x1="40" y1="130" x2="390" y2="130" className="stroke-slate-300 dark:stroke-slate-500" strokeWidth="1" />
 
                   {/* Fixed costs line */}
                   <line
@@ -260,7 +266,7 @@ export function BreakEvenCalculator({
                     y1={130 - (parseFloat(fixedCosts) / result.breakEvenRevenue) * 100}
                     x2="390"
                     y2={130 - (parseFloat(fixedCosts) / result.breakEvenRevenue) * 100}
-                    stroke="#94a3b8"
+                    className="stroke-slate-400 dark:stroke-slate-500"
                     strokeWidth="1"
                     strokeDasharray="4"
                   />
@@ -271,20 +277,19 @@ export function BreakEvenCalculator({
                     y1={130 - (parseFloat(fixedCosts) / (result.breakEvenRevenue * 1.5)) * 100}
                     x2="390"
                     y2="10"
-                    stroke="#ef4444"
+                    className="stroke-red-500"
                     strokeWidth="2"
                   />
 
                   {/* Revenue line */}
-                  <line x1="40" y1="130" x2="390" y2="10" stroke="#2E6BFF" strokeWidth="2" />
+                  <line x1="40" y1="130" x2="390" y2="10" className="stroke-accent" strokeWidth="2" />
 
                   {/* Break-even point */}
                   <circle
                     cx={40 + (result.breakEvenUnits / (result.breakEvenUnits * 1.5)) * 350}
                     cy={130 - (result.breakEvenRevenue / (result.breakEvenRevenue * 1.5)) * 120}
                     r="6"
-                    fill="#22c55e"
-                    stroke="white"
+                    className="fill-green-500 stroke-white dark:stroke-slate-800"
                     strokeWidth="2"
                   />
                 </svg>
@@ -293,21 +298,21 @@ export function BreakEvenCalculator({
                 <div className="absolute bottom-2 right-2 flex gap-4 text-xs">
                   <div className="flex items-center gap-1">
                     <div className="h-0.5 w-4 bg-blue-500" />
-                    <span className="text-slate-600 dark:text-slate-400">Revenue</span>
+                    <span className="text-slate-600 dark:text-slate-400">{t.chartRevenue}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <div className="h-0.5 w-4 bg-red-500" />
-                    <span className="text-slate-600 dark:text-slate-400">Total Cost</span>
+                    <span className="text-slate-600 dark:text-slate-400">{t.chartTotalCost}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <div className="h-2 w-2 rounded-full bg-green-500" />
-                    <span className="text-slate-600 dark:text-slate-400">Break-Even</span>
+                    <span className="text-slate-600 dark:text-slate-400">{t.chartBreakEven}</span>
                   </div>
                 </div>
 
                 {/* X-axis label */}
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-slate-500">
-                  Units Sold
+                  {t.chartUnits}
                 </div>
               </div>
             </div>
@@ -315,21 +320,22 @@ export function BreakEvenCalculator({
             {/* Insights */}
             <div className="rounded-lg border border-slate-200 p-4 dark:border-slate-600">
               <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
-                What This Means:
+                {t.whatThisMeans}
               </p>
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                You need to sell at least <strong>{formatNumber(result.breakEvenUnits)} units</strong> to cover all your costs.
-                Each additional unit sold after that generates <strong>{formatCurrency(result.contributionMargin)}</strong> in profit.
+                {t.insightText
+                  .replace('{units}', formatNumber(result.breakEvenUnits))
+                  .replace('{margin}', formatCurrency(result.contributionMargin))}
               </p>
             </div>
 
             {/* CTA */}
             <div className="text-center">
               <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
-                Want help optimizing your pricing and cost structure?
+                {t.advisorCta}
               </p>
               <Button as="a" href={`/${locale}#contact`}>
-                Talk to Our Advisors
+                {t.talkToAdvisors}
               </Button>
             </div>
           </div>

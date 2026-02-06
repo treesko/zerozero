@@ -160,9 +160,9 @@ export function ContactForm({ t }: { t: Dict }) {
     }
   }
 
-  const inputBaseClass = 'w-full rounded-md border px-3 py-2.5 text-sm outline-none transition-colors duration-200 focus:ring-2 focus:ring-accent/20'
-  const inputNormalClass = 'border-slate-300 focus:border-accent'
-  const inputErrorClass = 'border-red-400 focus:border-red-400 focus:ring-red-200'
+  const inputBaseClass = 'w-full rounded-md border px-3 py-2.5 text-sm outline-none transition-colors duration-200 focus:ring-2 focus:ring-accent/20 dark:bg-slate-800 dark:text-white'
+  const inputNormalClass = 'border-slate-300 focus:border-accent dark:border-slate-600'
+  const inputErrorClass = 'border-red-400 focus:border-red-400 focus:ring-red-200 dark:border-red-500'
 
   return (
     <div className="mx-auto mt-8 max-w-3xl">
@@ -175,7 +175,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
       {status === 'success' && (
         <div
-          className="mb-4 rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800"
+          className="mb-4 rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300"
           role="status"
         >
           <div className="flex items-center gap-2">
@@ -189,7 +189,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
       {status === 'error' && (
         <div
-          className="mb-4 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+          className="mb-4 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
           role="alert"
         >
           <div className="flex items-center gap-2">
@@ -204,12 +204,12 @@ export function ContactForm({ t }: { t: Dict }) {
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="reveal grid grid-cols-1 gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2"
+        className="reveal grid grid-cols-1 gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2 dark:border-slate-700 dark:bg-slate-800"
         noValidate
       >
         {/* Name */}
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.name}
           </label>
           <input
@@ -233,7 +233,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Company */}
         <div>
-          <label htmlFor="company" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="company" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.company}
           </label>
           <input
@@ -247,7 +247,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.email}
           </label>
           <input
@@ -271,7 +271,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="phone" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.phone}
           </label>
           <input
@@ -285,13 +285,13 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Company Size */}
         <div>
-          <label htmlFor="size" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="size" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.size}
           </label>
           <select
             id="size"
             name="size"
-            className={`${inputBaseClass} ${inputNormalClass} bg-white`}
+            className={`${inputBaseClass} ${inputNormalClass} bg-white dark:bg-slate-800`}
           >
             <option value="1-5">1-5 employees</option>
             <option value="6-20">6-20 employees</option>
@@ -303,7 +303,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Message */}
         <div className="md:col-span-2">
-          <label htmlFor="message" className="mb-1 block text-sm font-medium text-slate-700">
+          <label htmlFor="message" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
             {t.contact.fields.message}
           </label>
           <textarea
@@ -338,7 +338,7 @@ export function ContactForm({ t }: { t: Dict }) {
               className="mt-0.5 h-4 w-4 rounded border-slate-300 text-accent focus:ring-accent"
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="agree" className="text-sm text-slate-700">
+            <label htmlFor="agree" className="text-sm text-slate-700 dark:text-slate-300">
               {t.contact.checkbox}
             </label>
           </div>

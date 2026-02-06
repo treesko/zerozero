@@ -49,8 +49,8 @@ export function Button({
   const base = 'inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold transition-all duration-200 ease-pleasant focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none'
   const variants = {
     primary: 'bg-primary text-white hover:-translate-y-0.5 hover:shadow-subtle',
-    secondary: 'border border-slate-300 text-primary hover:bg-slate-50 hover:-translate-y-0.5',
-    ghost: 'text-primary hover:bg-slate-50',
+    secondary: 'border border-slate-300 text-primary hover:bg-slate-50 hover:-translate-y-0.5 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700',
+    ghost: 'text-primary hover:bg-slate-50 dark:text-white dark:hover:bg-slate-700',
   }
 
   const isDisabled = disabled || loading

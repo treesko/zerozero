@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { Button } from '../Button'
 
 // Kosovo tax and contribution rates (2024)
@@ -27,21 +27,39 @@ type SalaryBreakdown = {
   totalEmployerCost: number
 }
 
+type SalaryTranslations = {
+  title: string
+  subtitle: string
+  mode: string
+  grossToNet: string
+  netToGross: string
+  grossInput: string
+  netInput: string
+  grossPlaceholder: string
+  netPlaceholder: string
+  taxRatesTitle: string
+  taxRatesPension: string
+  taxRatesIncome: string
+  calculateNet: string
+  calculateGross: string
+  grossSalary: string
+  netSalary: string
+  employeeDeductions: string
+  pensionContrib: string
+  taxableIncome: string
+  incomeTax: string
+  employerCost: string
+  employerPension: string
+  totalEmployerCost: string
+  annualSummary: string
+  annualGross: string
+  annualNet: string
+  annualEmployerCost: string
+  payrollHelp: string
+  calculateAgain: string
+}
+
 function calculateIncomeTax(taxableIncome: number): number {
-  let tax = 0
-  let remaining = taxableIncome
-
-  for (const bracket of TAX_BRACKETS) {
-    if (remaining <= 0) break
-
-    const taxableInBracket = Math.min(remaining, bracket.max - bracket.min)
-    if (taxableInBracket > 0 && taxableIncome > bracket.min) {
-      const amountInBracket = Math.min(taxableInBracket, Math.max(0, taxableIncome - bracket.min))
-      tax += amountInBracket * bracket.rate
-      remaining -= taxableInBracket
-    }
-  }
-
   // Simplified progressive calculation
   let progressiveTax = 0
   if (taxableIncome > 450) {
@@ -104,15 +122,11 @@ function calculateFromNet(targetNet: number): SalaryBreakdown {
 
 type KosovoSalaryCalculatorProps = {
   locale: string
-  title?: string
-  subtitle?: string
+  t: SalaryTranslations | Record<string, unknown>
 }
 
-export function KosovoSalaryCalculator({
-  locale,
-  title = 'Kosovo Salary Calculator',
-  subtitle = 'Calculate your net salary from gross or vice versa',
-}: KosovoSalaryCalculatorProps) {
+export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculatorProps) {
+  const t = tRaw as SalaryTranslations
   const [mode, setMode] = useState<CalculationMode>('gross-to-net')
   const [salary, setSalary] = useState('')
   const [result, setResult] = useState<SalaryBreakdown | null>(null)
@@ -149,8 +163,8 @@ export function KosovoSalaryCalculator({
     <div className="mx-auto max-w-2xl">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
         <div className="mb-6 text-center">
-          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{subtitle}</p>
+          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
+          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
         </div>
 
         {!result ? (
@@ -158,7 +172,7 @@ export function KosovoSalaryCalculator({
             {/* Mode Toggle */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                Calculation Mode
+                {t.mode}
               </label>
               <div className="flex gap-2">
                 <button
@@ -169,7 +183,7 @@ export function KosovoSalaryCalculator({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300'
                   }`}
                 >
-                  Bruto → Neto
+                  {t.grossToNet}
                 </button>
                 <button
                   onClick={() => setMode('net-to-gross')}
@@ -179,7 +193,7 @@ export function KosovoSalaryCalculator({
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300'
                   }`}
                 >
-                  Neto → Bruto
+                  {t.netToGross}
                 </button>
               </div>
             </div>
@@ -187,7 +201,7 @@ export function KosovoSalaryCalculator({
             {/* Salary Input */}
             <div>
               <label htmlFor="salary" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-                {mode === 'gross-to-net' ? 'Monthly Gross Salary (Bruto)' : 'Desired Net Salary (Neto)'}
+                {mode === 'gross-to-net' ? t.grossInput : t.netInput}
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">€</span>
@@ -195,7 +209,7 @@ export function KosovoSalaryCalculator({
                   id="salary"
                   type="text"
                   inputMode="numeric"
-                  placeholder={mode === 'gross-to-net' ? 'e.g., 800' : 'e.g., 650'}
+                  placeholder={mode === 'gross-to-net' ? t.grossPlaceholder : t.netPlaceholder}
                   value={salary}
                   onChange={(e) => setSalary(e.target.value)}
                   className={`${inputClass} pl-8`}
@@ -205,16 +219,16 @@ export function KosovoSalaryCalculator({
 
             {/* Info Box */}
             <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
-              <p className="font-medium">Kosovo Tax Rates (2024):</p>
+              <p className="font-medium">{t.taxRatesTitle}</p>
               <ul className="mt-2 space-y-1 text-xs">
-                <li>• Pension Contribution: 5% (employee) + 5% (employer)</li>
-                <li>• Income Tax: 0% (0-80€), 4% (80-250€), 8% (250-450€), 10% (450€+)</li>
+                <li>• {t.taxRatesPension}</li>
+                <li>• {t.taxRatesIncome}</li>
               </ul>
             </div>
 
             {/* Calculate Button */}
             <Button onClick={handleCalculate} disabled={!salary} className="w-full">
-              Calculate {mode === 'gross-to-net' ? 'Net Salary' : 'Gross Salary'}
+              {mode === 'gross-to-net' ? t.calculateNet : t.calculateGross}
             </Button>
           </div>
         ) : (
@@ -222,13 +236,13 @@ export function KosovoSalaryCalculator({
             {/* Main Results */}
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl bg-slate-100 p-4 text-center dark:bg-slate-700">
-                <p className="text-sm text-slate-500 dark:text-slate-400">Gross Salary (Bruto)</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{t.grossSalary}</p>
                 <p className="mt-1 text-2xl font-bold text-slate-800 dark:text-white">
                   {formatCurrency(result.grossSalary)}
                 </p>
               </div>
               <div className="rounded-xl bg-accent/10 p-4 text-center dark:bg-accent/20">
-                <p className="text-sm text-slate-500 dark:text-slate-400">Net Salary (Neto)</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{t.netSalary}</p>
                 <p className="mt-1 text-2xl font-bold text-accent">
                   {formatCurrency(result.netSalary)}
                 </p>
@@ -239,19 +253,19 @@ export function KosovoSalaryCalculator({
             <div className="rounded-lg border border-slate-200 dark:border-slate-600">
               <div className="border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-600 dark:bg-slate-700">
                 <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                  Employee Deductions
+                  {t.employeeDeductions}
                 </p>
               </div>
               <div className="divide-y divide-slate-100 dark:divide-slate-700">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Gross Salary</span>
+                  <span className="text-sm text-slate-600 dark:text-slate-400">{t.grossSalary}</span>
                   <span className="font-medium text-slate-800 dark:text-white">
                     {formatCurrency(result.grossSalary)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Pension Contribution (5%)
+                    {t.pensionContrib}
                   </span>
                   <span className="font-medium text-red-600 dark:text-red-400">
                     - {formatCurrency(result.pensionEmployee)}
@@ -259,7 +273,7 @@ export function KosovoSalaryCalculator({
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Taxable Income
+                    {t.taxableIncome}
                   </span>
                   <span className="font-medium text-slate-600 dark:text-slate-400">
                     {formatCurrency(result.taxableIncome)}
@@ -267,7 +281,7 @@ export function KosovoSalaryCalculator({
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Income Tax
+                    {t.incomeTax}
                   </span>
                   <span className="font-medium text-red-600 dark:text-red-400">
                     - {formatCurrency(result.incomeTax)}
@@ -275,7 +289,7 @@ export function KosovoSalaryCalculator({
                 </div>
                 <div className="flex items-center justify-between bg-accent/5 px-4 py-3 dark:bg-accent/10">
                   <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    Net Salary (Neto)
+                    {t.netSalary}
                   </span>
                   <span className="text-lg font-bold text-accent">
                     {formatCurrency(result.netSalary)}
@@ -288,19 +302,19 @@ export function KosovoSalaryCalculator({
             <div className="rounded-lg border border-slate-200 dark:border-slate-600">
               <div className="border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-600 dark:bg-slate-700">
                 <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                  Employer Cost
+                  {t.employerCost}
                 </p>
               </div>
               <div className="divide-y divide-slate-100 dark:divide-slate-700">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Gross Salary</span>
+                  <span className="text-sm text-slate-600 dark:text-slate-400">{t.grossSalary}</span>
                   <span className="font-medium text-slate-800 dark:text-white">
                     {formatCurrency(result.grossSalary)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
                   <span className="text-sm text-slate-600 dark:text-slate-400">
-                    Employer Pension (5%)
+                    {t.employerPension}
                   </span>
                   <span className="font-medium text-slate-600 dark:text-slate-400">
                     + {formatCurrency(result.pensionEmployer)}
@@ -308,7 +322,7 @@ export function KosovoSalaryCalculator({
                 </div>
                 <div className="flex items-center justify-between bg-primary/5 px-4 py-3 dark:bg-primary/10">
                   <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    Total Employer Cost
+                    {t.totalEmployerCost}
                   </span>
                   <span className="text-lg font-bold text-primary dark:text-white">
                     {formatCurrency(result.totalEmployerCost)}
@@ -320,23 +334,23 @@ export function KosovoSalaryCalculator({
             {/* Annual Summary */}
             <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
               <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
-                Annual Summary
+                {t.annualSummary}
               </p>
               <div className="grid gap-3 text-sm sm:grid-cols-3">
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">Annual Gross</p>
+                  <p className="text-slate-500 dark:text-slate-400">{t.annualGross}</p>
                   <p className="font-semibold text-slate-800 dark:text-white">
                     {formatCurrency(result.grossSalary * 12)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">Annual Net</p>
+                  <p className="text-slate-500 dark:text-slate-400">{t.annualNet}</p>
                   <p className="font-semibold text-accent">
                     {formatCurrency(result.netSalary * 12)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">Annual Employer Cost</p>
+                  <p className="text-slate-500 dark:text-slate-400">{t.annualEmployerCost}</p>
                   <p className="font-semibold text-slate-800 dark:text-white">
                     {formatCurrency(result.totalEmployerCost * 12)}
                   </p>
@@ -347,10 +361,10 @@ export function KosovoSalaryCalculator({
             {/* Action Buttons */}
             <div className="flex flex-col gap-3 sm:flex-row">
               <Button as="a" href={`/${locale}#contact`} className="flex-1">
-                Get Payroll Help
+                {t.payrollHelp}
               </Button>
               <Button variant="secondary" onClick={handleReset} className="flex-1">
-                Calculate Again
+                {t.calculateAgain}
               </Button>
             </div>
           </div>

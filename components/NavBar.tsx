@@ -113,12 +113,12 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
       <div
         id="mobile-menu"
         className={cn(
-          'md:hidden fixed inset-0 z-40 bg-white/98 backdrop-blur-10 transition-all duration-300 dark:bg-primary-950/98',
+          'md:hidden fixed inset-0 z-[60] bg-white dark:bg-primary-950 transition-all duration-300',
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
       >
         {/* Mobile menu header */}
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="flex items-center justify-between border-b border-primary-100 bg-white px-6 py-4 dark:border-primary-800 dark:bg-primary-950">
           <a href={`/${locale}`} onClick={() => setOpen(false)} className="flex-shrink-0">
             <Image
               src="/images/logo.svg"
@@ -147,12 +147,12 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
         </div>
 
         {/* Mobile menu content */}
-        <div className="flex h-[calc(100%-72px)] flex-col justify-center gap-6 px-8">
-          <div className="flex items-center gap-4">
+        <div className="flex h-[calc(100%-73px)] flex-col overflow-y-auto bg-white px-8 py-6 dark:bg-primary-950">
+          <div className="mb-6 flex items-center gap-4">
             <LangSwitcher locale={locale} mobile />
             <ThemeToggle />
           </div>
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-col gap-2">
             {linkKeys.map(key => {
               const label = t.nav[key]
               const base = `/${locale}`
@@ -161,13 +161,18 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
                 ? `${base}/${key}`
                 : (isHome ? `#${key}` : `${base}/#${key}`)
               return (
-                <a key={key} href={href} className="py-2 text-xl font-semibold text-primary dark:text-white hover:text-accent dark:hover:text-accent active:text-accent transition-colors" onClick={() => setOpen(false)}>
+                <a
+                  key={key}
+                  href={href}
+                  className="rounded-lg px-4 py-3 text-lg font-semibold text-primary transition-colors hover:bg-primary-50 hover:text-accent active:bg-primary-100 dark:text-white dark:hover:bg-primary-800 dark:hover:text-accent"
+                  onClick={() => setOpen(false)}
+                >
                   {label}
                 </a>
               )
             })}
           </nav>
-          <div className="mt-4">
+          <div className="mt-6">
             <Button as="a" href={isHome ? '#contact' : `/${locale}/#contact`} className="w-full" onClick={() => setOpen(false)}>{t.nav.cta}</Button>
           </div>
         </div>

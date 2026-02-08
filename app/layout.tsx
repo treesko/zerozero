@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
-    alternateLocale: ['sq_AL', 'de_DE'],
+    locale: 'sq_AL',
+    alternateLocale: ['en_US', 'de_DE'],
     url: BASE_URL,
     siteName: 'zerozero',
     title: 'zerozero – Modern Accounting & Advisory',
@@ -87,14 +87,14 @@ export const metadata: Metadata = {
       'en': `${BASE_URL}/en`,
       'sq': `${BASE_URL}/sq`,
       'de': `${BASE_URL}/de`,
-      'x-default': `${BASE_URL}/en`,
+      'x-default': `${BASE_URL}/sq`,
     },
   },
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const store = await cookies()
-  const locale = store.get('locale')?.value || 'en'
+  const locale = store.get('locale')?.value || 'sq'
   return (
     <html lang={locale} className={poppins.variable}>
       <head>
@@ -103,7 +103,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <WebSiteJsonLd />
       </head>
       <body className="font-sans">
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="light">
           <ToastProvider>
             <GoogleAnalytics />
             {children}

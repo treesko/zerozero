@@ -57,7 +57,7 @@ export function OrganizationJsonLd() {
     '@type': 'Organization',
     name: 'zerozero',
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`,
+    logo: `${BASE_URL}/images/logo.svg`,
     description:
       'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions.',
     sameAs: [
@@ -85,7 +85,7 @@ export function AccountingServiceJsonLd() {
     '@type': 'AccountingService',
     name: 'zerozero',
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`,
+    logo: `${BASE_URL}/images/logo.svg`,
     description:
       'Modern accounting and advisory services for SMBs, startups, and freelancers. Precision. Clarity. Confidence.',
     priceRange: '€€',
@@ -202,7 +202,7 @@ export function ArticleJsonLd({ title, description, url, datePublished, dateModi
       name: 'zerozero',
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`,
+        url: `${BASE_URL}/images/logo.svg`,
       },
     },
   }

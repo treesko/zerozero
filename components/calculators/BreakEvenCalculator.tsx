@@ -108,15 +108,15 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
   }
 
   const inputClass =
-    'w-full rounded-md border border-slate-300 px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white'
-  const labelClass = 'mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300'
+    'w-full rounded-md border border-primary-200 px-4 py-3.5 text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-900 dark:text-white'
+  const labelClass = 'mb-1.5 block text-sm font-medium text-primary-700 dark:text-primary-200'
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
+      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900 lg:p-8">
         <div className="mb-6 text-center">
           <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+          <p className="text-primary-600 dark:text-primary-300">{t.subtitle}</p>
         </div>
 
         <div className="space-y-5">
@@ -124,7 +124,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
           <div>
             <label htmlFor="fixedCosts" className={labelClass}>
               {t.fixedCosts}
-              <span className="ml-1 text-xs text-slate-400" title={t.fixedCostsHint}>
+              <span className="ml-1 text-xs text-primary-400" title={t.fixedCostsHint}>
                 ⓘ
               </span>
             </label>
@@ -140,7 +140,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
               }}
               className={inputClass}
             />
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-xs text-primary-500 dark:text-primary-400">
               {t.fixedCostsHint}
             </p>
           </div>
@@ -149,7 +149,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
           <div>
             <label htmlFor="variableCost" className={labelClass}>
               {t.variableCost}
-              <span className="ml-1 text-xs text-slate-400" title={t.variableCostHint}>
+              <span className="ml-1 text-xs text-primary-400" title={t.variableCostHint}>
                 ⓘ
               </span>
             </label>
@@ -165,7 +165,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
               }}
               className={inputClass}
             />
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <p className="mt-1 text-xs text-primary-500 dark:text-primary-400">
               {t.variableCostHint}
             </p>
           </div>
@@ -212,13 +212,13 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
             {/* Key Metrics */}
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl bg-accent/10 p-4 text-center dark:bg-accent/20">
-                <p className="text-sm text-slate-600 dark:text-slate-400">{t.breakEvenUnits}</p>
+                <p className="text-sm text-primary-600 dark:text-primary-300">{t.breakEvenUnits}</p>
                 <p className="mt-1 text-3xl font-bold text-accent">
                   {formatNumber(result.breakEvenUnits)}
                 </p>
               </div>
               <div className="rounded-xl bg-primary/10 p-4 text-center dark:bg-primary/20">
-                <p className="text-sm text-slate-600 dark:text-slate-400">{t.breakEvenRevenue}</p>
+                <p className="text-sm text-primary-600 dark:text-primary-300">{t.breakEvenRevenue}</p>
                 <p className="mt-1 text-3xl font-bold text-primary dark:text-white">
                   {formatCurrency(result.breakEvenRevenue)}
                 </p>
@@ -226,17 +226,17 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
             </div>
 
             {/* Additional Metrics */}
-            <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
+            <div className="rounded-lg bg-primary-50 p-4 dark:bg-primary-800">
               <div className="grid gap-4 text-sm sm:grid-cols-2">
                 <div className="flex justify-between">
-                  <span className="text-slate-600 dark:text-slate-400">{t.contributionMargin}</span>
-                  <span className="font-semibold text-slate-800 dark:text-white">
+                  <span className="text-primary-600 dark:text-primary-300">{t.contributionMargin}</span>
+                  <span className="font-semibold text-primary-800 dark:text-white">
                     {formatCurrency(result.contributionMargin)} / unit
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600 dark:text-slate-400">{t.contributionRatio}</span>
-                  <span className="font-semibold text-slate-800 dark:text-white">
+                  <span className="text-primary-600 dark:text-primary-300">{t.contributionRatio}</span>
+                  <span className="font-semibold text-primary-800 dark:text-white">
                     {formatPercent(result.contributionMarginRatio)}
                   </span>
                 </div>
@@ -245,20 +245,20 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
 
             {/* Simple Visualization */}
             <div>
-              <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <p className="mb-3 text-sm font-medium text-primary-700 dark:text-primary-200">
                 {t.chartTitle}
               </p>
-              <div className="relative h-48 rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
+              <div className="relative h-48 rounded-lg bg-primary-50 p-4 dark:bg-primary-800">
                 {/* Y-axis label */}
-                <div className="absolute -left-2 top-1/2 -translate-y-1/2 -rotate-90 text-xs text-slate-500">
+                <div className="absolute -left-2 top-1/2 -translate-y-1/2 -rotate-90 text-xs text-primary-500">
                   {t.chartEur}
                 </div>
 
                 {/* Chart area */}
                 <svg className="h-full w-full" viewBox="0 0 400 150" preserveAspectRatio="none">
                   {/* Grid lines */}
-                  <line x1="40" y1="10" x2="40" y2="130" className="stroke-slate-300 dark:stroke-slate-500" strokeWidth="1" />
-                  <line x1="40" y1="130" x2="390" y2="130" className="stroke-slate-300 dark:stroke-slate-500" strokeWidth="1" />
+                  <line x1="40" y1="10" x2="40" y2="130" className="stroke-primary-200 dark:stroke-primary-600" strokeWidth="1" />
+                  <line x1="40" y1="130" x2="390" y2="130" className="stroke-primary-200 dark:stroke-primary-600" strokeWidth="1" />
 
                   {/* Fixed costs line */}
                   <line
@@ -266,7 +266,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
                     y1={130 - (parseFloat(fixedCosts) / result.breakEvenRevenue) * 100}
                     x2="390"
                     y2={130 - (parseFloat(fixedCosts) / result.breakEvenRevenue) * 100}
-                    className="stroke-slate-400 dark:stroke-slate-500"
+                    className="stroke-primary-300 dark:stroke-primary-600"
                     strokeWidth="1"
                     strokeDasharray="4"
                   />
@@ -297,32 +297,32 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
                 {/* Legend */}
                 <div className="absolute bottom-2 right-2 flex gap-4 text-xs">
                   <div className="flex items-center gap-1">
-                    <div className="h-0.5 w-4 bg-blue-500" />
-                    <span className="text-slate-600 dark:text-slate-400">{t.chartRevenue}</span>
+                    <div className="h-0.5 w-4 bg-accent" />
+                    <span className="text-primary-600 dark:text-primary-300">{t.chartRevenue}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <div className="h-0.5 w-4 bg-red-500" />
-                    <span className="text-slate-600 dark:text-slate-400">{t.chartTotalCost}</span>
+                    <span className="text-primary-600 dark:text-primary-300">{t.chartTotalCost}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <div className="h-2 w-2 rounded-full bg-green-500" />
-                    <span className="text-slate-600 dark:text-slate-400">{t.chartBreakEven}</span>
+                    <span className="text-primary-600 dark:text-primary-300">{t.chartBreakEven}</span>
                   </div>
                 </div>
 
                 {/* X-axis label */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-slate-500">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-xs text-primary-500">
                   {t.chartUnits}
                 </div>
               </div>
             </div>
 
             {/* Insights */}
-            <div className="rounded-lg border border-slate-200 p-4 dark:border-slate-600">
-              <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <div className="rounded-lg border border-primary-100 p-4 dark:border-primary-700">
+              <p className="mb-2 text-sm font-medium text-primary-700 dark:text-primary-200">
                 {t.whatThisMeans}
               </p>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-primary-600 dark:text-primary-300">
                 {t.insightText
                   .replace('{units}', formatNumber(result.breakEvenUnits))
                   .replace('{margin}', formatCurrency(result.contributionMargin))}
@@ -331,7 +331,7 @@ export function BreakEvenCalculator({ locale, t: tRaw }: BreakEvenCalculatorProp
 
             {/* CTA */}
             <div className="text-center">
-              <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
+              <p className="mb-3 text-sm text-primary-600 dark:text-primary-300">
                 {t.advisorCta}
               </p>
               <Button as="a" href={`/${locale}#contact`}>

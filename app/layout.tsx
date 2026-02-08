@@ -1,13 +1,18 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { OrganizationJsonLd, AccountingServiceJsonLd, WebSiteJsonLd } from '@/components/JsonLd'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { ToastProvider } from '@/components/Toast'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
+  display: 'swap'
+})
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
 
@@ -34,8 +39,11 @@ export const metadata: Metadata = {
   creator: 'zerozero',
   publisher: 'zerozero',
   icons: {
-    icon: '/favicon.svg',
-    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/images/logo-mark.svg',
+    shortcut: '/favicon.svg',
   },
   openGraph: {
     type: 'website',
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
       'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions. Precision. Clarity. Confidence.',
     images: [
       {
-        url: '/og-image.png',
+        url: '/api/og',
         width: 1200,
         height: 630,
         alt: 'zerozero – Precision. Clarity. Confidence.',
@@ -60,8 +68,7 @@ export const metadata: Metadata = {
     title: 'zerozero – Modern Accounting & Advisory',
     description:
       'Premium accounting and advisory firm helping businesses turn numbers into clear decisions.',
-    images: ['/og-image.png'],
-    creator: '@zerozero',
+    images: ['/api/og'],
   },
   robots: {
     index: true,
@@ -89,13 +96,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const store = await cookies()
   const locale = store.get('locale')?.value || 'en'
   return (
-    <html lang={locale} className={inter.variable}>
+    <html lang={locale} className={poppins.variable}>
       <head>
         <OrganizationJsonLd />
         <AccountingServiceJsonLd />
         <WebSiteJsonLd />
       </head>
-      <body className="bg-white text-slate-900 transition-colors dark:bg-slate-900 dark:text-slate-100">
+      <body className="font-sans">
         <ThemeProvider>
           <ToastProvider>
             <GoogleAnalytics />

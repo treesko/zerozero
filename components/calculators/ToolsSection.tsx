@@ -74,7 +74,7 @@ export function ToolsSection({ locale, t }: ToolsSectionProps) {
     <div>
       <div className="mx-auto mb-8 max-w-3xl text-center">
         <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.sectionTitle}</h2>
-        <p className="reveal text-slate-600 dark:text-slate-400">{t.sectionSubtitle}</p>
+        <p className="reveal text-primary-600 dark:text-primary-300">{t.sectionSubtitle}</p>
       </div>
 
       {/* Tool Selector Tabs */}
@@ -83,10 +83,10 @@ export function ToolsSection({ locale, t }: ToolsSectionProps) {
           <button
             key={tool.id}
             onClick={() => setActiveTool(tool.id)}
-            className={`flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 rounded-full px-5 py-3.5 text-base font-medium transition-all ${
               activeTool === tool.id
                 ? 'bg-accent text-white shadow-lg'
-                : 'bg-white text-slate-700 shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                : 'bg-white text-primary-700 shadow-sm hover:bg-primary-50 dark:bg-primary-900 dark:text-primary-200 dark:hover:bg-primary-800'
             }`}
           >
             {tool.icon}
@@ -96,7 +96,7 @@ export function ToolsSection({ locale, t }: ToolsSectionProps) {
       </div>
 
       {/* Tool Description */}
-      <p className="reveal mb-6 text-center text-sm text-slate-500 dark:text-slate-400">
+      <p className="reveal mb-6 text-center text-sm text-primary-500 dark:text-primary-400">
         {tools.find((tool) => tool.id === activeTool)?.description}
       </p>
 

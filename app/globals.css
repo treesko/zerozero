@@ -4,6 +4,30 @@
 
 :root {
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Light theme colors */
+  --color-bg: #f8fbff;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-text-primary: #185b9e;
+  --color-text-body: #1a3a5c;
+  --color-text-secondary: #4a6a8a;
+  --color-text-muted: #7a9ab8;
+  --color-border: #d4e4f4;
+  --color-accent: #31aeff;
+}
+
+.dark {
+  /* Dark theme colors */
+  --color-bg: #0a1628;
+  --color-surface: #0d1f35;
+  --color-surface-elevated: #142d4a;
+  --color-text-primary: #ffffff;
+  --color-text-body: #d4e8f8;
+  --color-text-secondary: #9ebdd9;
+  --color-text-muted: #6a8aa8;
+  --color-border: #1e4066;
+  --color-accent: #31aeff;
 }
 
 html {
@@ -11,21 +35,19 @@ html {
 }
 
 body {
-  @apply bg-white text-slate-800 antialiased transition-colors duration-300;
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  @apply antialiased transition-colors duration-300;
 }
 
-.dark body {
-  @apply bg-slate-900 text-slate-100;
-}
-
-/* Ensure anchors don’t hide under sticky header */
+/* Ensure anchors don't hide under sticky header */
 [id] {
   scroll-margin-top: 88px; /* header height + spacing */
 }
 
 /* Subtle focus styles */
 *:focus-visible {
-  outline: 2px solid theme('colors.accent.DEFAULT');
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
@@ -82,4 +104,23 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0d1f35;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1e4066;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2a5080;
 }

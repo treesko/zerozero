@@ -143,15 +143,15 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
   }
 
   const inputClass =
-    'w-full rounded-md border border-slate-300 px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white'
-  const labelClass = 'mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300'
+    'w-full rounded-md border border-primary-200 px-4 py-3.5 text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-900 dark:text-white'
+  const labelClass = 'mb-1.5 block text-sm font-medium text-primary-700 dark:text-primary-200'
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
+      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900 lg:p-8">
         <div className="mb-6 text-center">
           <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+          <p className="text-primary-600 dark:text-primary-300">{t.subtitle}</p>
         </div>
 
         {!result ? (
@@ -197,7 +197,7 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
                 id="businessType"
                 value={businessType}
                 onChange={(e) => setBusinessType(e.target.value as BusinessType)}
-                className={`${inputClass} bg-white dark:bg-slate-800`}
+                className={`${inputClass} bg-white dark:bg-primary-900`}
               >
                 {Object.entries(t.businessTypes).map(([value, label]) => (
                   <option key={value} value={value}>
@@ -221,7 +221,7 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
                 onChange={(e) => setCurrentCost(e.target.value)}
                 className={inputClass}
               />
-              <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              <p className="mt-1 text-xs text-primary-500 dark:text-primary-400">
                 {t.currentCostHint}
               </p>
             </div>
@@ -241,13 +241,13 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
             {/* Savings Summary */}
             <div className="rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 p-6 dark:from-accent/20 dark:to-accent/10">
               <div className="mb-4 text-center">
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                <p className="text-sm font-medium text-primary-600 dark:text-primary-300">
                   {t.annualSavings}
                 </p>
                 <p className="mt-1 text-4xl font-extrabold text-accent">
                   {formatCurrency(result.savings * 12)}
                 </p>
-                <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                <p className="mt-1 text-sm text-primary-600 dark:text-primary-300">
                   {t.savingsPercent.replace('{percent}', String(result.savingsPercent))}
                 </p>
               </div>
@@ -256,20 +256,20 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
             {/* Comparison Chart */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-600 dark:text-slate-400">{t.currentCostLabel}</span>
-                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                <span className="text-sm text-primary-600 dark:text-primary-300">{t.currentCostLabel}</span>
+                <span className="font-semibold text-primary-700 dark:text-primary-200">
                   {formatCurrency(result.currentCost)}/mo
                 </span>
               </div>
-              <div className="h-3 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-                <div className="h-full w-full bg-slate-400 dark:bg-slate-500" />
+              <div className="h-3 overflow-hidden rounded-full bg-primary-200 dark:bg-primary-800">
+                <div className="h-full w-full bg-primary-400 dark:bg-primary-500" />
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-600 dark:text-slate-400">{t.withZerozero}</span>
+                <span className="text-sm text-primary-600 dark:text-primary-300">{t.withZerozero}</span>
                 <span className="font-semibold text-accent">{formatCurrency(result.zeroroCost)}/mo</span>
               </div>
-              <div className="h-3 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="h-3 overflow-hidden rounded-full bg-primary-200 dark:bg-primary-800">
                 <div
                   className="h-full bg-accent transition-all duration-1000"
                   style={{ width: `${(result.zeroroCost / result.currentCost) * 100}%` }}
@@ -279,12 +279,12 @@ export function TaxCalculator({ locale, t: tRaw }: TaxCalculatorProps) {
 
             {/* Additional Benefits */}
             <div>
-              <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <p className="mb-3 text-sm font-medium text-primary-700 dark:text-primary-200">
                 {t.included}
               </p>
               <ul className="space-y-2">
                 {result.additionalBenefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+                  <li key={index} className="flex items-start gap-2 text-sm text-primary-600 dark:text-primary-300">
                     <svg
                       className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent"
                       viewBox="0 0 20 20"

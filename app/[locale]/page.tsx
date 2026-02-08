@@ -16,34 +16,34 @@ type Props = { params: { locale: 'en' | 'sq' | 'de' } }
 
 function HeroGraphic() {
   return (
-    <div className="relative h-72 w-full overflow-hidden rounded-xl bg-gradient-to-br from-slate-50 to-soft-bg shadow-sm md:h-full">
-      <svg className="absolute -left-6 -top-6 h-40 w-40 text-accent/20" viewBox="0 0 100 100" fill="none">
+    <div className="relative h-72 w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 to-accent-50 shadow-sm dark:from-primary-900 dark:to-primary-950 md:h-full">
+      <svg className="absolute -left-6 -top-6 h-40 w-40 text-accent/30 dark:text-accent/40" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2"/>
       </svg>
-      <svg className="absolute bottom-6 right-6 h-28 w-28 text-accent/30" viewBox="0 0 100 100" fill="none">
+      <svg className="absolute bottom-6 right-6 h-28 w-28 text-primary/20 dark:text-accent/30" viewBox="0 0 100 100" fill="none">
         <rect x="10" y="10" width="80" height="80" rx="10" stroke="currentColor" strokeWidth="2"/>
       </svg>
       <div className="absolute inset-6">
         <div className="grid h-full grid-rows-3 gap-3">
-          <div className="rounded-md bg-white/70 p-4 shadow-sm">
-            <div className="h-2 w-1/3 rounded bg-accent/60"></div>
+          <div className="rounded-md bg-white/80 p-4 shadow-sm dark:bg-primary-800/70">
+            <div className="h-2 w-1/3 rounded bg-accent/70"></div>
             <div className="mt-3 flex items-end gap-2">
               {[30, 50, 80, 45, 90].map((h, i) => (
-                <div key={i} className="w-5 rounded bg-primary/20" style={{ height: `${h}%` }} />
+                <div key={i} className="w-5 rounded bg-primary-300 dark:bg-accent/50" style={{ height: `${h}%` }} />
               ))}
             </div>
           </div>
-          <div className="rounded-md bg-white/70 p-4 shadow-sm">
-            <div className="h-2 w-24 rounded bg-slate-300"></div>
-            <div className="mt-3 h-1.5 w-full rounded bg-accent/30"></div>
-            <div className="mt-2 h-1.5 w-2/3 rounded bg-primary/30"></div>
+          <div className="rounded-md bg-white/80 p-4 shadow-sm dark:bg-primary-800/70">
+            <div className="h-2 w-24 rounded bg-primary-200 dark:bg-primary-600"></div>
+            <div className="mt-3 h-1.5 w-full rounded bg-accent/40 dark:bg-accent/50"></div>
+            <div className="mt-2 h-1.5 w-2/3 rounded bg-primary-300 dark:bg-primary-500"></div>
           </div>
-          <div className="rounded-md bg-white/70 p-4 shadow-sm">
+          <div className="rounded-md bg-white/80 p-4 shadow-sm dark:bg-primary-800/70">
             <div className="flex items-center justify-between">
-              <div className="h-2 w-28 rounded bg-slate-300"></div>
-              <div className="h-6 w-16 rounded bg-accent/40"></div>
+              <div className="h-2 w-28 rounded bg-primary-200 dark:bg-primary-600"></div>
+              <div className="h-6 w-16 rounded bg-accent/50 dark:bg-accent/60"></div>
             </div>
-            <div className="mt-3 h-1.5 w-4/5 rounded bg-primary/20"></div>
+            <div className="mt-3 h-1.5 w-4/5 rounded bg-primary-200 dark:bg-primary-500"></div>
           </div>
         </div>
       </div>
@@ -63,8 +63,8 @@ export default async function Page({ params }: { params: Promise<Props['params']
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div className="reveal">
             <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-accent">{t.hero.badge}</p>
-            <h1 className="mb-4 text-4xl font-extrabold leading-tight text-primary md:text-5xl">{t.hero.title}</h1>
-            <p className="mb-8 max-w-xl text-lg text-slate-600">{t.hero.subtitle}</p>
+            <h1 className="mb-4 text-4xl font-extrabold leading-tight text-primary dark:text-white md:text-5xl">{t.hero.title}</h1>
+            <p className="mb-8 max-w-xl text-lg text-primary-600 dark:text-primary-200">{t.hero.subtitle}</p>
             <div className="flex flex-wrap gap-3">
               <Button as="a" href={`/${locale}#contact`}>{t.hero.primaryCta}</Button>
               <Button as="a" href={`/${locale}#services`} variant="secondary">{t.hero.secondaryCta}</Button>
@@ -78,11 +78,11 @@ export default async function Page({ params }: { params: Promise<Props['params']
 
       {/* Trust / Stats Strip */}
       <Section container className="py-8">
-        <div className="reveal grid grid-cols-2 gap-6 rounded-xl border border-slate-200 bg-white p-6 text-sm shadow-sm md:grid-cols-4">
+        <div className="reveal grid grid-cols-2 gap-6 rounded-xl border border-primary-100 bg-white p-6 text-sm shadow-sm dark:border-primary-800 dark:bg-primary-900 md:grid-cols-4">
           {t.stats.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-xl font-extrabold text-primary">{s.value}</div>
-              <div className="mt-1 text-slate-600">{s.label}</div>
+              <div className="text-xl font-extrabold text-primary dark:text-white">{s.value}</div>
+              <div className="mt-1 text-primary-600 dark:text-primary-300">{s.label}</div>
             </div>
           ))}
         </div>
@@ -91,8 +91,8 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* Services */}
       <Section id="services">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.services.title}</h2>
-          <p className="reveal text-slate-600">{t.services.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.services.title}</h2>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.services.intro}</p>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {t.services.items.map((s) => (
@@ -105,14 +105,14 @@ export default async function Page({ params }: { params: Promise<Props['params']
       <Section id="about">
         <div className="grid gap-10 md:grid-cols-2">
           <div className="reveal">
-            <h2 className="mb-4 text-3xl font-bold text-primary">{t.about.title}</h2>
-            <p className="mb-4 text-slate-700">{t.about.p1}</p>
-            <p className="text-slate-700">{t.about.p2}</p>
+            <h2 className="mb-4 text-3xl font-bold text-primary dark:text-white">{t.about.title}</h2>
+            <p className="mb-4 text-primary-700 dark:text-primary-200">{t.about.p1}</p>
+            <p className="text-primary-700 dark:text-primary-200">{t.about.p2}</p>
           </div>
           <div className="reveal">
             <ul className="space-y-3">
               {t.about.bullets.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-slate-700">
+                <li key={item} className="flex items-start gap-3 text-primary-700 dark:text-primary-200">
                   <svg className="mt-1 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
                   <span>{item}</span>
                 </li>
@@ -125,21 +125,21 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* Industries */}
       <Section id="industries">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.industries.title}</h2>
-          <p className="reveal text-slate-600">{t.industries.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.industries.title}</h2>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.industries.intro}</p>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {t.industries.items.map((c) => (
-            <div key={c.t} className="reveal rounded-full border border-slate-200 bg-white px-5 py-3 text-sm shadow-sm">
-              <div className="font-semibold text-primary">{c.t}</div>
-              <div className="text-slate-600">{c.d}</div>
+            <div key={c.t} className="reveal rounded-full border border-primary-100 bg-white px-5 py-3 text-sm shadow-sm dark:border-primary-800 dark:bg-primary-900">
+              <div className="font-semibold text-primary dark:text-white">{c.t}</div>
+              <div className="text-primary-600 dark:text-primary-300">{c.d}</div>
             </div>
           ))}
         </div>
       </Section>
 
       {/* Interactive Tools */}
-      <Section id="tools" className="bg-slate-50 dark:bg-slate-800/50">
+      <Section id="tools" className="bg-primary-50 dark:bg-primary-900/50">
         <ToolsSection locale={locale} t={t.tools} />
       </Section>
 
@@ -147,7 +147,7 @@ export default async function Page({ params }: { params: Promise<Props['params']
       <Section id="testimonials">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.testimonials.title}</h2>
-          <p className="reveal text-slate-600 dark:text-slate-400">{t.testimonials.intro}</p>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.testimonials.intro}</p>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.testimonials.items.map((item) => (
@@ -159,14 +159,14 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* Resources */}
       <Section id="resources">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.resources.title}</h2>
-          <p className="reveal text-slate-600">{t.resources.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.resources.title}</h2>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.resources.intro}</p>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.resourcesData.slice(0, 3).map((a) => (
-            <article key={a.slug} className="reveal rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="mb-2 text-base font-semibold text-primary">{a.title}</h3>
-              <p className="mb-3 text-sm text-slate-600">{a.excerpt}</p>
+            <article key={a.slug} className="reveal rounded-xl border border-primary-100 bg-white p-6 shadow-sm dark:border-primary-800 dark:bg-primary-900">
+              <h3 className="mb-2 text-base font-semibold text-primary dark:text-white">{a.title}</h3>
+              <p className="mb-3 text-sm text-primary-600 dark:text-primary-300">{a.excerpt}</p>
               <a href={`/${locale}/resources/${a.slug}`} className="text-sm font-semibold text-accent hover:underline">{t.resources.readMore}</a>
             </article>
           ))}
@@ -179,8 +179,8 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* Pricing */}
       <Section id="pricing">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.pricing.title}</h2>
-          <p className="reveal text-slate-600">{t.pricing.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.pricing.title}</h2>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.pricing.intro}</p>
         </div>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {t.pricing.plans.map((p) => (
@@ -192,8 +192,8 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* Contact */}
       <Section id="contact">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary">{t.contact.title}</h2>
-          <p className="reveal text-slate-600">{t.contact.intro}</p>
+          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.contact.title}</h2>
+          <p className="reveal text-primary-600 dark:text-primary-300">{t.contact.intro}</p>
         </div>
         <ContactForm t={t} />
       </Section>

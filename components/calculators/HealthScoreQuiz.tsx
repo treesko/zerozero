@@ -219,18 +219,18 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
+      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900 lg:p-8">
         {!showResult ? (
           <>
             {/* Header */}
             <div className="mb-6 text-center">
               <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
-              <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+              <p className="text-primary-600 dark:text-primary-300">{t.subtitle}</p>
             </div>
 
             {/* Progress Bar */}
             <div className="mb-8">
-              <div className="mb-2 flex justify-between text-sm text-slate-500 dark:text-slate-400">
+              <div className="mb-2 flex justify-between text-sm text-primary-500 dark:text-primary-400">
                 <span>
                   {t.questionOf
                     .replace('{current}', String(currentQuestion + 1))
@@ -238,7 +238,7 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
                 </span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="h-2 overflow-hidden rounded-full bg-primary-200 dark:bg-primary-800">
                 <div
                   className="h-full bg-accent transition-all duration-500"
                   style={{ width: `${progress}%` }}
@@ -252,7 +252,7 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
                 isAnimating ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
               }`}
             >
-              <h4 className="mb-6 text-lg font-semibold text-slate-800 dark:text-white">
+              <h4 className="mb-6 text-lg font-semibold text-primary-800 dark:text-white">
                 {t.questions[currentQ.questionKey]}
               </h4>
 
@@ -261,9 +261,9 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
                   <button
                     key={index}
                     onClick={() => handleAnswer(currentQ.id, option.score)}
-                    className="w-full rounded-lg border border-slate-200 bg-slate-50 p-4 text-left transition-all hover:border-accent hover:bg-accent/5 dark:border-slate-600 dark:bg-slate-700 dark:hover:border-accent dark:hover:bg-accent/10"
+                    className="w-full rounded-lg border border-primary-100 bg-primary-50 p-4 text-left transition-all hover:border-accent hover:bg-accent/5 dark:border-primary-700 dark:bg-primary-800 dark:hover:border-accent dark:hover:bg-accent/10"
                   >
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                    <span className="text-sm font-medium text-slate-700 dark:text-primary-100">
                       {answersForQuestion[option.labelKey]}
                     </span>
                   </button>
@@ -306,10 +306,10 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
                   </svg>
                   {/* Score number */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-4xl font-bold text-slate-800 dark:text-white">
+                    <span className="text-4xl font-bold text-primary-800 dark:text-white">
                       {totalScore}
                     </span>
-                    <span className="text-sm text-slate-500 dark:text-slate-400">{t.outOf100}</span>
+                    <span className="text-sm text-primary-500 dark:text-primary-400">{t.outOf100}</span>
                   </div>
                 </div>
               </div>
@@ -318,20 +318,20 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
               <h4 className={`mb-2 text-xl font-bold ${scoreLevel.color}`}>
                 {t.levels[scoreLevel.labelKey]}
               </h4>
-              <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
+              <p className="mb-6 text-sm text-primary-600 dark:text-primary-300">
                 {t.levels[scoreLevel.descKey]}
               </p>
 
               {/* Recommendations */}
               <div className="mb-6 text-left">
-                <p className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <p className="mb-3 text-sm font-semibold text-primary-700 dark:text-primary-200">
                   {t.recommendations}
                 </p>
                 <ul className="space-y-2">
                   {scoreLevel.recKeys.map((recKey, index) => (
                     <li
                       key={recKey}
-                      className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400"
+                      className="flex items-start gap-2 text-sm text-primary-600 dark:text-primary-300"
                     >
                       <span className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10 text-xs font-bold text-accent">
                         {index + 1}
@@ -344,8 +344,8 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
 
               {/* Email Capture */}
               {!emailSubmitted ? (
-                <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
-                  <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="rounded-lg bg-primary-50 p-4 dark:bg-primary-800">
+                  <p className="mb-3 text-sm font-medium text-primary-700 dark:text-primary-200">
                     {t.emailPrompt}
                   </p>
                   <form onSubmit={handleEmailSubmit} className="flex gap-2">
@@ -355,7 +355,7 @@ export function HealthScoreQuiz({ locale, t: tRaw }: HealthScoreQuizProps) {
                       placeholder={t.emailPlaceholder}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white"
+                      className="flex-1 rounded-md border border-primary-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-900 dark:text-white"
                     />
                     <Button type="submit">{t.sendReport}</Button>
                   </form>

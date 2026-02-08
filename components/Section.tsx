@@ -7,8 +7,8 @@ type Props = React.HTMLAttributes<HTMLElement> & {
 
 export function Section({ className, children, container = true, ...props }: Props) {
   return (
-    <section className={cn('py-20 md:py-28', className)} {...props}>
-      <div className={cn(container && 'mx-auto max-w-7xl px-6 md:px-8')}>{children}</div>
+    <section className={cn('py-12 sm:py-16 md:py-24', className)} {...props}>
+      <div className={cn(container && 'mx-auto max-w-7xl px-4 sm:px-6 md:px-8')}>{children}</div>
     </section>
   )
 }

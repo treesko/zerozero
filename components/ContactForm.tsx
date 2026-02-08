@@ -160,8 +160,8 @@ export function ContactForm({ t }: { t: Dict }) {
     }
   }
 
-  const inputBaseClass = 'w-full rounded-md border px-3 py-2.5 text-sm outline-none transition-colors duration-200 focus:ring-2 focus:ring-accent/20 dark:bg-slate-800 dark:text-white'
-  const inputNormalClass = 'border-slate-300 focus:border-accent dark:border-slate-600'
+  const inputBaseClass = 'w-full rounded-md border px-4 py-3 text-base outline-none transition-colors duration-200 focus:ring-2 focus:ring-accent/20 dark:bg-primary-900 dark:text-white'
+  const inputNormalClass = 'border-primary-200 focus:border-accent dark:border-primary-700'
   const inputErrorClass = 'border-red-400 focus:border-red-400 focus:ring-red-200 dark:border-red-500'
 
   return (
@@ -204,12 +204,12 @@ export function ContactForm({ t }: { t: Dict }) {
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        className="reveal grid grid-cols-1 gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2 dark:border-slate-700 dark:bg-slate-800"
+        className="reveal grid grid-cols-1 gap-4 rounded-xl border border-primary-100 bg-white p-4 shadow-sm sm:p-6 md:grid-cols-2 dark:border-primary-800 dark:bg-primary-900"
         noValidate
       >
         {/* Name */}
         <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.name}
           </label>
           <input
@@ -225,7 +225,7 @@ export function ContactForm({ t }: { t: Dict }) {
             onChange={handleChange}
           />
           {errors.name && (
-            <p id="name-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="name-error" className="mt-1 text-xs text-red-600 dark:text-red-400" role="alert">
               {errors.name}
             </p>
           )}
@@ -233,7 +233,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Company */}
         <div>
-          <label htmlFor="company" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="company" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.company}
           </label>
           <input
@@ -247,7 +247,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="email" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.email}
           </label>
           <input
@@ -263,7 +263,7 @@ export function ContactForm({ t }: { t: Dict }) {
             onChange={handleChange}
           />
           {errors.email && (
-            <p id="email-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="email-error" className="mt-1 text-xs text-red-600 dark:text-red-400" role="alert">
               {errors.email}
             </p>
           )}
@@ -271,7 +271,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="phone" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.phone}
           </label>
           <input
@@ -285,13 +285,13 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Company Size */}
         <div>
-          <label htmlFor="size" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="size" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.size}
           </label>
           <select
             id="size"
             name="size"
-            className={`${inputBaseClass} ${inputNormalClass} bg-white dark:bg-slate-800`}
+            className={`${inputBaseClass} ${inputNormalClass} bg-white dark:bg-primary-900`}
           >
             <option value="1-5">1-5 employees</option>
             <option value="6-20">6-20 employees</option>
@@ -303,7 +303,7 @@ export function ContactForm({ t }: { t: Dict }) {
 
         {/* Message */}
         <div className="md:col-span-2">
-          <label htmlFor="message" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label htmlFor="message" className="mb-1 block text-sm font-medium text-primary-700 dark:text-primary-200">
             {t.contact.fields.message}
           </label>
           <textarea
@@ -319,7 +319,7 @@ export function ContactForm({ t }: { t: Dict }) {
             onChange={handleChange}
           />
           {errors.message && (
-            <p id="message-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="message-error" className="mt-1 text-xs text-red-600 dark:text-red-400" role="alert">
               {errors.message}
             </p>
           )}
@@ -335,15 +335,15 @@ export function ContactForm({ t }: { t: Dict }) {
               required
               aria-invalid={errors.agree ? 'true' : undefined}
               aria-describedby={errors.agree ? 'agree-error' : undefined}
-              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-accent focus:ring-accent"
+              className="mt-1 h-5 w-5 rounded border-primary-300 text-accent focus:ring-accent"
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="agree" className="text-sm text-slate-700 dark:text-slate-300">
+            <label htmlFor="agree" className="text-sm text-primary-700 dark:text-primary-200">
               {t.contact.checkbox}
             </label>
           </div>
           {errors.agree && (
-            <p id="agree-error" className="mt-1 text-xs text-red-600" role="alert">
+            <p id="agree-error" className="mt-1 text-xs text-red-600 dark:text-red-400" role="alert">
               {errors.agree}
             </p>
           )}

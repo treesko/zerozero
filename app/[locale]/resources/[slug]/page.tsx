@@ -38,8 +38,8 @@ export default async function ResourcePage({ params }: { params: Promise<Props['
       <Section>
         <div className="mx-auto max-w-3xl">
           <Link href={`/${locale}/resources`} className="text-sm font-medium text-accent hover:underline">← {t.resources.title}</Link>
-          <h1 className="mt-4 text-4xl font-extrabold text-primary">{article.title}</h1>
-          <div className="prose prose-slate mt-6 max-w-none">
+          <h1 className="mt-4 text-4xl font-extrabold text-primary dark:text-white">{article.title}</h1>
+          <div className="prose prose-slate mt-6 max-w-none dark:prose-invert">
             <p>{article.content}</p>
           </div>
         </div>

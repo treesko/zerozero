@@ -157,40 +157,40 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
   }
 
   const inputClass =
-    'w-full rounded-md border border-slate-300 px-4 py-3 text-sm outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white'
+    'w-full rounded-md border border-primary-200 px-4 py-3.5 text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-900 dark:text-white'
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-700 dark:bg-slate-800 md:p-8">
+      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900 lg:p-8">
         <div className="mb-6 text-center">
           <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+          <p className="text-primary-600 dark:text-primary-300">{t.subtitle}</p>
         </div>
 
         {!result ? (
           <div className="space-y-5">
             {/* Mode Toggle */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+              <label className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200">
                 {t.mode}
               </label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setMode('gross-to-net')}
-                  className={`flex-1 rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
                     mode === 'gross-to-net'
                       ? 'bg-accent text-white'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300'
+                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
                   }`}
                 >
                   {t.grossToNet}
                 </button>
                 <button
                   onClick={() => setMode('net-to-gross')}
-                  className={`flex-1 rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
                     mode === 'net-to-gross'
                       ? 'bg-accent text-white'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300'
+                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
                   }`}
                 >
                   {t.netToGross}
@@ -200,11 +200,11 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
 
             {/* Salary Input */}
             <div>
-              <label htmlFor="salary" className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+              <label htmlFor="salary" className="mb-1.5 block text-sm font-medium text-primary-700 dark:text-primary-200">
                 {mode === 'gross-to-net' ? t.grossInput : t.netInput}
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">€</span>
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-400">€</span>
                 <input
                   id="salary"
                   type="text"
@@ -235,14 +235,14 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
           <div className="space-y-6">
             {/* Main Results */}
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-slate-100 p-4 text-center dark:bg-slate-700">
-                <p className="text-sm text-slate-500 dark:text-slate-400">{t.grossSalary}</p>
-                <p className="mt-1 text-2xl font-bold text-slate-800 dark:text-white">
+              <div className="rounded-xl bg-primary-100 p-4 text-center dark:bg-primary-800">
+                <p className="text-sm text-primary-500 dark:text-primary-400">{t.grossSalary}</p>
+                <p className="mt-1 text-2xl font-bold text-primary-800 dark:text-white">
                   {formatCurrency(result.grossSalary)}
                 </p>
               </div>
               <div className="rounded-xl bg-accent/10 p-4 text-center dark:bg-accent/20">
-                <p className="text-sm text-slate-500 dark:text-slate-400">{t.netSalary}</p>
+                <p className="text-sm text-primary-500 dark:text-primary-400">{t.netSalary}</p>
                 <p className="mt-1 text-2xl font-bold text-accent">
                   {formatCurrency(result.netSalary)}
                 </p>
@@ -250,21 +250,21 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
             </div>
 
             {/* Detailed Breakdown */}
-            <div className="rounded-lg border border-slate-200 dark:border-slate-600">
-              <div className="border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-600 dark:bg-slate-700">
-                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+            <div className="rounded-lg border border-primary-100 dark:border-primary-700">
+              <div className="border-b border-primary-100 bg-primary-50 px-4 py-3 dark:border-primary-700 dark:bg-primary-800">
+                <p className="text-sm font-semibold text-slate-700 dark:text-primary-100">
                   {t.employeeDeductions}
                 </p>
               </div>
               <div className="divide-y divide-slate-100 dark:divide-slate-700">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">{t.grossSalary}</span>
-                  <span className="font-medium text-slate-800 dark:text-white">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">{t.grossSalary}</span>
+                  <span className="font-medium text-primary-800 dark:text-white">
                     {formatCurrency(result.grossSalary)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">
                     {t.pensionContrib}
                   </span>
                   <span className="font-medium text-red-600 dark:text-red-400">
@@ -272,15 +272,15 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">
                     {t.taxableIncome}
                   </span>
-                  <span className="font-medium text-slate-600 dark:text-slate-400">
+                  <span className="font-medium text-primary-600 dark:text-primary-300">
                     {formatCurrency(result.taxableIncome)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">
                     {t.incomeTax}
                   </span>
                   <span className="font-medium text-red-600 dark:text-red-400">
@@ -288,7 +288,7 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
                   </span>
                 </div>
                 <div className="flex items-center justify-between bg-accent/5 px-4 py-3 dark:bg-accent/10">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  <span className="text-sm font-semibold text-slate-700 dark:text-primary-100">
                     {t.netSalary}
                   </span>
                   <span className="text-lg font-bold text-accent">
@@ -299,29 +299,29 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
             </div>
 
             {/* Employer Cost */}
-            <div className="rounded-lg border border-slate-200 dark:border-slate-600">
-              <div className="border-b border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-600 dark:bg-slate-700">
-                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+            <div className="rounded-lg border border-primary-100 dark:border-primary-700">
+              <div className="border-b border-primary-100 bg-primary-50 px-4 py-3 dark:border-primary-700 dark:bg-primary-800">
+                <p className="text-sm font-semibold text-slate-700 dark:text-primary-100">
                   {t.employerCost}
                 </p>
               </div>
               <div className="divide-y divide-slate-100 dark:divide-slate-700">
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">{t.grossSalary}</span>
-                  <span className="font-medium text-slate-800 dark:text-white">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">{t.grossSalary}</span>
+                  <span className="font-medium text-primary-800 dark:text-white">
                     {formatCurrency(result.grossSalary)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">
+                  <span className="text-sm text-primary-600 dark:text-primary-300">
                     {t.employerPension}
                   </span>
-                  <span className="font-medium text-slate-600 dark:text-slate-400">
+                  <span className="font-medium text-primary-600 dark:text-primary-300">
                     + {formatCurrency(result.pensionEmployer)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between bg-primary/5 px-4 py-3 dark:bg-primary/10">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  <span className="text-sm font-semibold text-slate-700 dark:text-primary-100">
                     {t.totalEmployerCost}
                   </span>
                   <span className="text-lg font-bold text-primary dark:text-white">
@@ -332,26 +332,26 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
             </div>
 
             {/* Annual Summary */}
-            <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-700">
-              <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <div className="rounded-lg bg-primary-50 p-4 dark:bg-primary-800">
+              <p className="mb-3 text-sm font-medium text-primary-700 dark:text-primary-200">
                 {t.annualSummary}
               </p>
               <div className="grid gap-3 text-sm sm:grid-cols-3">
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">{t.annualGross}</p>
-                  <p className="font-semibold text-slate-800 dark:text-white">
+                  <p className="text-primary-500 dark:text-primary-400">{t.annualGross}</p>
+                  <p className="font-semibold text-primary-800 dark:text-white">
                     {formatCurrency(result.grossSalary * 12)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">{t.annualNet}</p>
+                  <p className="text-primary-500 dark:text-primary-400">{t.annualNet}</p>
                   <p className="font-semibold text-accent">
                     {formatCurrency(result.netSalary * 12)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-slate-500 dark:text-slate-400">{t.annualEmployerCost}</p>
-                  <p className="font-semibold text-slate-800 dark:text-white">
+                  <p className="text-primary-500 dark:text-primary-400">{t.annualEmployerCost}</p>
+                  <p className="font-semibold text-primary-800 dark:text-white">
                     {formatCurrency(result.totalEmployerCost * 12)}
                   </p>
                 </div>

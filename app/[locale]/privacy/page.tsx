@@ -23,9 +23,9 @@ export default async function PrivacyPage({ params }: { params: Promise<Props['p
       <NavBar locale={locale} t={t} />
       <Section>
         <div className="mx-auto max-w-3xl">
-          <h1 className="mb-4 text-4xl font-extrabold text-primary">{t.privacy.title}</h1>
-          <p className="text-slate-700">{t.privacy.p1}</p>
-          <p className="mt-4 text-slate-700">{t.privacy.p2}</p>
+          <h1 className="mb-4 text-4xl font-extrabold text-primary dark:text-white">{t.privacy.title}</h1>
+          <p className="text-primary-700 dark:text-primary-200">{t.privacy.p1}</p>
+          <p className="mt-4 text-primary-700 dark:text-primary-200">{t.privacy.p2}</p>
         </div>
       </Section>
       <Footer locale={locale} t={t} />

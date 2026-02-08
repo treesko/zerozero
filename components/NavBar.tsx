@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import { Button } from './Button'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '@/lib/cn'
@@ -29,11 +30,26 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   }, [open])
 
   return (
-    <header className={cn('sticky top-0 z-50 w-full transition-colors', scrolled ? 'bg-white/80 backdrop-blur-10 border-b border-slate-200 dark:bg-slate-900/80 dark:border-slate-700' : 'bg-transparent')}
+    <header className={cn('sticky top-0 z-50 w-full transition-colors', scrolled ? 'bg-white/80 backdrop-blur-10 border-b border-primary-100 dark:bg-primary-950/90 dark:border-primary-800' : 'bg-transparent')}
       aria-label="Main Navigation">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
-        <a href={`/${locale}`} className="text-xl font-extrabold tracking-tight text-primary dark:text-white" aria-label={`${t.brand} home`}>
-          {t.brand}
+        <a href={`/${locale}`} aria-label={`${t.brand} home`} className="flex-shrink-0">
+          <Image
+            src="/images/logo.svg"
+            alt={t.brand}
+            width={160}
+            height={35}
+            priority
+            className="h-8 w-auto dark:hidden"
+          />
+          <Image
+            src="/images/logo-white.svg"
+            alt={t.brand}
+            width={160}
+            height={35}
+            priority
+            className="hidden h-8 w-auto dark:block"
+          />
         </a>
 
         {/* Desktop nav */}
@@ -51,7 +67,7 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
                   'nav-underline text-sm font-medium transition-colors',
                   isActive
                     ? 'text-accent dark:text-accent'
-                    : 'text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-white'
+                    : 'text-primary-700 hover:text-primary dark:text-primary-200 dark:hover:text-white'
                 )}
                 aria-current={isActive ? 'page' : undefined}
                 onClick={() => setOpen(false)}
@@ -68,16 +84,16 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
           <Button as="a" href={isHome ? '#contact' : `/${locale}/#contact`}>{t.nav.cta}</Button>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button - 44px touch target */}
         <button
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+          className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-md border border-primary-200 text-primary-700 hover:bg-primary-50 active:bg-primary-100 dark:border-primary-700 dark:text-primary-200 dark:hover:bg-primary-800"
           aria-label="Open menu"
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen(v => !v)}
         >
           <span className="sr-only">Toggle menu</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             {open ? (
               <path d="M18 6L6 18M6 6l12 12" />
             ) : (
@@ -91,27 +107,59 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
       <div
         id="mobile-menu"
         className={cn(
-          'md:hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-10 transition-opacity duration-300 dark:bg-slate-900/95',
+          'md:hidden fixed inset-0 z-40 bg-white/98 backdrop-blur-10 transition-all duration-300 dark:bg-primary-950/98',
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
       >
-        <div className="mx-auto flex h-full max-w-7xl flex-col justify-center gap-8 px-8">
+        {/* Mobile menu header */}
+        <div className="flex items-center justify-between px-6 py-4">
+          <a href={`/${locale}`} onClick={() => setOpen(false)} className="flex-shrink-0">
+            <Image
+              src="/images/logo.svg"
+              alt={t.brand}
+              width={140}
+              height={30}
+              className="h-7 w-auto dark:hidden"
+            />
+            <Image
+              src="/images/logo-white.svg"
+              alt={t.brand}
+              width={140}
+              height={30}
+              className="hidden h-7 w-auto dark:block"
+            />
+          </a>
+          <button
+            onClick={() => setOpen(false)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-primary-200 text-primary-700 hover:bg-primary-50 active:bg-primary-100 dark:border-primary-700 dark:text-primary-200 dark:hover:bg-primary-800"
+            aria-label="Close menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile menu content */}
+        <div className="flex h-[calc(100%-72px)] flex-col justify-center gap-6 px-8">
           <div className="flex items-center gap-4">
             <LangSwitcher locale={locale} mobile />
             <ThemeToggle />
           </div>
-          {linkKeys.map(key => {
-            const label = t.nav[key]
-            const base = `/${locale}`
-            const href = isHome ? `#${key}` : `${base}/#${key}`
-            return (
-              <a key={key} href={href} className="text-2xl font-semibold text-primary dark:text-white" onClick={() => setOpen(false)}>
-                {label}
-              </a>
-            )
-          })}
-          <div>
-            <Button as="a" href={isHome ? '#contact' : `/${locale}/#contact`} className="w-full">{t.nav.cta}</Button>
+          <nav className="flex flex-col gap-1">
+            {linkKeys.map(key => {
+              const label = t.nav[key]
+              const base = `/${locale}`
+              const href = isHome ? `#${key}` : `${base}/#${key}`
+              return (
+                <a key={key} href={href} className="py-2 text-xl font-semibold text-primary dark:text-white hover:text-accent dark:hover:text-accent active:text-accent transition-colors" onClick={() => setOpen(false)}>
+                  {label}
+                </a>
+              )
+            })}
+          </nav>
+          <div className="mt-4">
+            <Button as="a" href={isHome ? '#contact' : `/${locale}/#contact`} className="w-full" onClick={() => setOpen(false)}>{t.nav.cta}</Button>
           </div>
         </div>
       </div>
@@ -128,9 +176,19 @@ function LangSwitcher({ locale, mobile }: { locale: 'en'|'sq'|'de', mobile?: boo
     { code: 'de', label: 'DE' },
   ]
   return (
-    <nav className={cn('flex items-center gap-2', mobile ? '' : '')} aria-label="Language selector">
+    <nav className={cn('flex items-center', mobile ? 'gap-1' : 'gap-2')} aria-label="Language selector">
       {langs.map(l => (
-        <a key={l.code} href={`/${l.code}${rest}`} className={cn('text-xs font-semibold uppercase tracking-wide', l.code === locale ? 'text-primary dark:text-white' : 'text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white')}>
+        <a
+          key={l.code}
+          href={`/${l.code}${rest}`}
+          className={cn(
+            'font-semibold uppercase tracking-wide transition-colors',
+            mobile ? 'px-3 py-2 text-sm' : 'text-xs',
+            l.code === locale
+              ? 'text-primary dark:text-white'
+              : 'text-primary-400 hover:text-primary dark:text-primary-400 dark:hover:text-white'
+          )}
+        >
           {l.label}
         </a>
       ))}

@@ -3,14 +3,14 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Precision. Clarity. Confidence.',
     nav: {
-      home: 'Home', services: 'Services', about: 'About', industries: 'Industries', tools: 'Tools', testimonials: 'Testimonials', resources: 'Resources', pricing: 'Pricing', contact: 'Contact', cta: 'Book a Consultation'
+      home: 'Home', services: 'Services', about: 'About', team: 'Team', industries: 'Industries', tools: 'Tools', testimonials: 'Testimonials', resources: 'Resources', faq: 'FAQ', pricing: 'Pricing', contact: 'Contact', cta: 'Book a Consultation'
     },
     hero: {
       badge: 'Precision. Clarity. Confidence.',
       title: 'Accounting that turns numbers into clear decisions.',
-      subtitle: 'zerozero is a modern, reliable accounting and advisory partner for businesses that value accuracy, insight, and long-term relationships.',
+      subtitle: "Hi, I'm Hafiz Bajraktari. I founded zerozero to give business owners like you the financial clarity and confidence you deserve. Let's work together.",
       primaryCta: 'Book a Free Consultation',
-      secondaryCta: 'View Our Services',
+      secondaryCta: 'Learn More About Me',
     },
     stats: [
       { label: 'Years of expertise', value: '10+' },
@@ -31,13 +31,13 @@ export function dictionary() {
       ],
     },
     about: {
-      title: 'About zerozero',
-      p1: 'We’re a team of experienced accountants and advisors focused on delivering precision, clarity, and confidence. We combine modern tools with human judgment to translate complex numbers into simple, actionable insights.',
-      p2: 'Our philosophy is simple: build long-term partnerships, prioritize transparency, and help you make confident decisions at every stage of your business.',
+      title: 'Meet the Founder',
+      p1: "I'm Hafiz Bajraktari, and I founded zerozero with a simple mission: to give every business owner the clarity and confidence they deserve when it comes to their finances. After years of seeing businesses struggle with confusing numbers and impersonal accounting services, I decided to build something different.",
+      p2: 'At zerozero, I believe accounting should empower you, not overwhelm you. I combine modern tools with genuine care for your success, treating every client like a long-term partner rather than just another account.',
       bullets: [
-        'We translate complex numbers into simple language.',
-        'We combine modern tools with personal attention.',
-        'We focus on long-term partnerships, not one-off jobs.',
+        'Personal attention from day one – you work directly with me.',
+        'Modern tools with a human touch – technology serves you, not the other way around.',
+        'Long-term partnership mindset – your success is my success.',
       ],
     },
     industries: {
@@ -51,11 +51,11 @@ export function dictionary() {
       ],
     },
     testimonials: {
-      title: 'What Our Clients Say', intro: 'Trusted by founders and finance teams.',
+      title: 'What Clients Say', intro: 'Business owners share their experience working with Hafiz.',
       items: [
-        { quote: 'zerozero transformed our monthly close and gave us real visibility into cash flow.', name: 'Amelia R.', role: 'Founder, Local Retail Brand' },
-        { quote: 'Their advice helped us structure smarter and prepare for fundraising.', name: 'Jonas M.', role: 'CEO, SaaS Startup' },
-        { quote: 'Responsive, precise, and a pleasure to work with.', name: 'Priya K.', role: 'COO, Design Studio' },
+        { quote: 'Hafiz transformed how I understand my business finances. For the first time, I actually look forward to my monthly reports.', name: 'Arta M.', role: 'Founder, Boutique Retail' },
+        { quote: 'Working with Hafiz feels like having a trusted advisor on speed dial. His proactive approach saved us thousands in taxes.', name: 'Besnik K.', role: 'CEO, Tech Startup' },
+        { quote: 'Finally, an accountant who explains things in plain language. Hafiz genuinely cares about my business success.', name: 'Donika R.', role: 'Owner, Creative Agency' },
       ],
     },
     resources: { title: 'Resources & Insights', intro: 'Practical guidance from our team.', readMore: 'Read more', exploreAll: 'Explore all resources →' },
@@ -263,6 +263,46 @@ export function dictionary() {
         advisorCta: 'Want help optimizing your pricing and cost structure?',
         talkToAdvisors: 'Talk to Our Advisors',
       },
+    },
+    faq: {
+      title: 'Frequently Asked Questions',
+      intro: 'Find answers to common questions about our services.',
+      items: [
+        { question: 'What services does zerozero offer?', answer: 'We offer comprehensive accounting and advisory services including bookkeeping, tax planning and compliance, payroll management, financial reporting, startup advisory, and cash flow management. Our services are tailored to meet the needs of small businesses, startups, freelancers, and growing companies.' },
+        { question: 'How much do your services cost?', answer: 'Our pricing starts at €149/month for solo founders with basic bookkeeping needs. Growing businesses typically choose our Growth plan at €349/month, which includes monthly closes, management reports, and tax filings. For complex needs, we offer custom pricing. Book a free consultation and we\'ll recommend the best plan for you.' },
+        { question: 'What industries do you specialize in?', answer: 'We work with a diverse range of industries including startups and tech companies, small and medium businesses, freelancers and creators, retail and e-commerce, and professional services firms. Our approach is tailored to the unique financial needs of each industry.' },
+        { question: 'How do I get started with zerozero?', answer: 'Getting started is easy! Simply book a free consultation through our website. During the call, we\'ll learn about your business, understand your needs, and recommend the best approach. After that, we\'ll handle the onboarding process to get you set up quickly.' },
+        { question: 'What software and tools do you use?', answer: 'We use modern, cloud-based accounting software and tools to ensure accuracy and real-time visibility. We work with popular platforms and can integrate with your existing tools. We\'ll recommend the best setup during your consultation.' },
+        { question: 'How often will I receive financial reports?', answer: 'Report frequency depends on your plan. Starter plans include quarterly reports, while Growth plans include comprehensive monthly reports with management insights. We believe regular reporting is key to making informed business decisions.' },
+        { question: 'Can you help with tax planning and optimization?', answer: 'Absolutely! Tax planning is one of our core services. We take a proactive approach to help you minimize tax liability legally, plan for major business decisions, and ensure you never miss a deadline. Our advisors stay current with tax law changes.' },
+        { question: 'What\'s the difference between your pricing plans?', answer: 'Starter is for early-stage businesses needing basic bookkeeping. Growth includes everything in Starter plus monthly closes, management reports, payroll support, and tax filings. Custom plans are for complex businesses needing dedicated advisors and specialized reporting.' },
+        { question: 'Do you offer virtual and remote services?', answer: 'Yes! All our services are available remotely. We use secure cloud tools for document sharing and video calls for consultations. Many of our clients have never met us in person but enjoy the same high-quality service.' },
+        { question: 'What\'s included in a free consultation?', answer: 'During your free consultation, we\'ll discuss your business, current financial setup, challenges, and goals. We\'ll provide initial recommendations and explain how we can help. There\'s no obligation – it\'s a chance for us to understand if we\'re a good fit for each other.' },
+      ],
+    },
+    team: {
+      badge: 'Your Partner',
+      title: 'Meet Hafiz Bajraktari',
+      intro: 'The founder behind zerozero and your dedicated accounting partner.',
+      metaTitle: 'About Hafiz Bajraktari | zerozero',
+      metaDescription: 'Meet Hafiz Bajraktari, founder of zerozero. With years of experience in accounting and business advisory, Hafiz provides personalized financial clarity for growing businesses.',
+      members: [
+        {
+          name: 'Hafiz Bajraktari',
+          role: 'Founder & Lead Advisor',
+          bio: 'I founded zerozero because I believe every business owner deserves clear, honest, and proactive financial guidance. With extensive experience in accounting, tax planning, and business advisory, I work directly with each client to understand their unique needs and help them make confident decisions. My approach is simple: treat every business as if it were my own.',
+          image: '/images/hafiz-placeholder.svg',
+          credentials: ['Certified Accountant', 'Tax Specialist', 'Business Advisor'],
+          linkedin: '#',
+        },
+      ],
+      valuesTitle: 'My Commitment to You',
+      valuesIntro: 'The principles I bring to every client relationship.',
+      values: [
+        { title: 'Precision', desc: 'Every number matters. I maintain the highest standards of accuracy so you can trust your financial data completely.' },
+        { title: 'Clarity', desc: 'No jargon, no confusion. I explain everything in plain language so you always understand your financial position.' },
+        { title: 'Partnership', desc: 'I\'m invested in your long-term success. When you grow, I grow. That\'s the kind of relationship I build.' },
+      ],
     },
     privacy: {
       title: 'Privacy Policy',

@@ -3,14 +3,14 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Präzision. Klarheit. Vertrauen.',
     nav: {
-      home: 'Start', services: 'Leistungen', about: 'Über uns', industries: 'Branchen', tools: 'Rechner', testimonials: 'Referenzen', resources: 'Ressourcen', pricing: 'Preise', contact: 'Kontakt', cta: 'Beratung buchen'
+      home: 'Start', services: 'Leistungen', about: 'Über uns', team: 'Team', industries: 'Branchen', tools: 'Rechner', testimonials: 'Referenzen', resources: 'Ressourcen', faq: 'FAQ', pricing: 'Preise', contact: 'Kontakt', cta: 'Beratung buchen'
     },
     hero: {
       badge: 'Präzision. Klarheit. Vertrauen.',
       title: 'Buchhaltung, die Zahlen in klare Entscheidungen verwandelt.',
-      subtitle: 'zerozero ist ein modernes, verlässliches Buchhaltungs- und Beratungsunternehmen für Betriebe, die Genauigkeit, Einblicke und langfristige Partnerschaften schätzen.',
+      subtitle: 'Hallo, ich bin Hafiz Bajraktari. Ich habe zerozero gegründet, um Unternehmern wie Ihnen die finanzielle Klarheit und das Vertrauen zu geben, das Sie verdienen. Lassen Sie uns zusammenarbeiten.',
       primaryCta: 'Kostenloses Beratungsgespräch',
-      secondaryCta: 'Unsere Leistungen ansehen',
+      secondaryCta: 'Mehr über mich erfahren',
     },
     stats: [
       { label: 'Jahre Erfahrung', value: '10+' },
@@ -31,13 +31,13 @@ export function dictionary() {
       ],
     },
     about: {
-      title: 'Über zerozero',
-      p1: 'Wir sind ein Team erfahrener Buchhalterinnen und Berater, das auf Präzision, Klarheit und Vertrauen setzt. Wir verbinden moderne Tools mit menschlichem Urteilsvermögen und machen komplexe Zahlen einfach und umsetzbar.',
-      p2: 'Unsere Philosophie: langfristige Partnerschaften, Transparenz und sichere Entscheidungen in jeder Phase Ihres Unternehmens.',
+      title: 'Lernen Sie den Gründer kennen',
+      p1: 'Ich bin Hafiz Bajraktari und habe zerozero mit einer einfachen Mission gegründet: Jedem Unternehmer die Klarheit und das Vertrauen zu geben, die er bei seinen Finanzen verdient. Nachdem ich jahrelang gesehen habe, wie Unternehmen mit verwirrenden Zahlen und unpersönlichen Buchhaltungsdienstleistungen kämpfen, beschloss ich, etwas Anderes aufzubauen.',
+      p2: 'Bei zerozero glaube ich, dass Buchhaltung Sie stärken sollte, nicht überfordern. Ich kombiniere moderne Tools mit echtem Interesse an Ihrem Erfolg und behandle jeden Kunden als langfristigen Partner statt nur als weiteres Konto.',
       bullets: [
-        'Wir übersetzen komplexe Zahlen in klare Sprache.',
-        'Moderne Werkzeuge kombiniert mit persönlicher Betreuung.',
-        'Fokus auf langfristige Partnerschaften statt einmaliger Aufträge.',
+        'Persönliche Betreuung von Tag eins – Sie arbeiten direkt mit mir.',
+        'Moderne Tools mit menschlicher Note – Technologie dient Ihnen, nicht umgekehrt.',
+        'Langfristige Partnerschaftsmentalität – Ihr Erfolg ist mein Erfolg.',
       ],
     },
     industries: {
@@ -51,11 +51,11 @@ export function dictionary() {
       ],
     },
     testimonials: {
-      title: 'Was unsere Kund:innen sagen', intro: 'Vertraut von Gründer:innen und Finance-Teams.',
+      title: 'Was Kunden sagen', intro: 'Unternehmer teilen ihre Erfahrung mit Hafiz.',
       items: [
-        { quote: 'zerozero hat unseren Monatsabschluss transformiert und echte Transparenz in den Cashflow gebracht.', name: 'Amelia R.', role: 'Gründerin, lokale Retail-Marke' },
-        { quote: 'Ihre Beratung half uns, smarter zu strukturieren und uns auf Fundraising vorzubereiten.', name: 'Jonas M.', role: 'CEO, SaaS-Startup' },
-        { quote: 'Schnell, präzise und sehr angenehm in der Zusammenarbeit.', name: 'Priya K.', role: 'COO, Designstudio' },
+        { quote: 'Hafiz hat verändert, wie ich meine Unternehmensfinanzen verstehe. Zum ersten Mal freue ich mich auf meine Monatsberichte.', name: 'Arta M.', role: 'Gründerin, Boutique-Einzelhandel' },
+        { quote: 'Mit Hafiz zu arbeiten fühlt sich an wie einen vertrauenswürdigen Berater jederzeit verfügbar zu haben. Sein proaktiver Ansatz hat uns Tausende an Steuern gespart.', name: 'Besnik K.', role: 'CEO, Tech-Startup' },
+        { quote: 'Endlich ein Buchhalter, der Dinge verständlich erklärt. Hafiz liegt der Erfolg meines Unternehmens wirklich am Herzen.', name: 'Donika R.', role: 'Inhaberin, Kreativagentur' },
       ],
     },
     resources: { title: 'Ressourcen & Insights', intro: 'Praxisnahe Guidance von unserem Team.', readMore: 'Mehr lesen', exploreAll: 'Alle Ressourcen ansehen →' },
@@ -268,6 +268,46 @@ export function dictionary() {
       title: 'Datenschutzerklärung',
       p1: 'Wir respektieren Ihre Privatsphäre. Diese Website erhebt keine personenbezogenen Daten außer den Informationen, die Sie freiwillig über das Kontaktformular übermitteln. Wir verwenden Ihre Daten ausschließlich zur Beantwortung Ihrer Anfrage. Wir verkaufen oder teilen Ihre Daten nicht mit Dritten. Wenn Sie die Löschung Ihrer Daten wünschen, kontaktieren Sie uns.',
       p2: 'Diese Seite dient rein zu Informationszwecken und kann gelegentlich aktualisiert werden.',
+    },
+    faq: {
+      title: 'Häufig gestellte Fragen',
+      intro: 'Finden Sie Antworten auf die häufigsten Fragen zu unseren Dienstleistungen.',
+      items: [
+        { question: 'Welche Dienstleistungen bietet zerozero an?', answer: 'Wir bieten umfassende Buchhaltungsdienstleistungen wie Buchführung, Steuerplanung und -erklärung, Lohn- und Gehaltsabrechnung, Finanzberichte, Cashflow-Management und Unternehmensberatung. Wir passen uns an Ihre spezifischen Geschäftsbedürfnisse an.' },
+        { question: 'Was kosten Ihre Dienstleistungen?', answer: 'Unsere Preise beginnen bei €149/Monat für Solo-Unternehmer und reichen bis zu individuellen Angeboten für größere Firmen. Die Kosten hängen von Geschäftsgröße, Transaktionsvolumen und benötigten Dienstleistungen ab. Vereinbaren Sie ein Gespräch für ein individuelles Angebot.' },
+        { question: 'Auf welche Branchen sind Sie spezialisiert?', answer: 'Wir haben Erfahrung mit KMU, Startups und Tech-Unternehmen, Freelancern und Kreativen, E-Commerce und Einzelhandel sowie professionellen Dienstleistern. Unsere Systeme passen sich an die spezifischen Anforderungen Ihrer Branche an.' },
+        { question: 'Wie starte ich mit zerozero?', answer: 'Buchen Sie einfach ein kostenloses Beratungsgespräch über unsere Website. Wir analysieren Ihre aktuelle Situation, verstehen Ihre Ziele und empfehlen den besten Serviceplan. Das Onboarding ist schnell und reibungslos.' },
+        { question: 'Welche Software nutzen Sie?', answer: 'Wir arbeiten mit führenden Buchhaltungslösungen wie QuickBooks, Xero und FreshBooks. Wir können auch Ihre bestehenden Tools integrieren oder die beste Lösung für Ihr Unternehmen empfehlen.' },
+        { question: 'Wie oft erhalte ich Finanzberichte?', answer: 'Unsere Growth- und Custom-Pakete enthalten monatliche Berichte mit KPIs, Cashflow-Analyse und Gewinn- und Verlustrechnung. Starter-Pakete beinhalten Quartalsberichte. Alle Berichte sind klar verständlich.' },
+        { question: 'Können Sie bei Steuerplanung helfen?', answer: 'Absolut! Proaktive Steuerplanung ist Teil unserer Growth- und Custom-Pakete. Wir arbeiten ganzjährig zur Optimierung Ihrer Steuersituation und stellen korrekte, rechtzeitige Erklärungen sicher.' },
+        { question: 'Was ist der Unterschied zwischen Ihren Preisplänen?', answer: 'Starter eignet sich für Solo-Unternehmer mit grundlegenden Anforderungen. Growth ist ideal für KMU mit Reporting-Bedarf. Custom ist für komplexere Anforderungen. Jede Stufe bietet mehr Leistungen und individuelle Betreuung.' },
+        { question: 'Bieten Sie Remote-/virtuelle Dienste an?', answer: 'Ja! Wir sind zu 100% remote-fähig. Alle Dienstleistungen werden virtuell erbracht mit sicherer Cloud-Software und regelmäßiger Kommunikation per Video oder Telefon. Keine persönlichen Treffen nötig, sofern Sie es nicht wünschen.' },
+        { question: 'Was ist in einer kostenlosen Beratung enthalten?', answer: 'In unserem 30-minütigen Gespräch analysieren wir Ihren aktuellen Buchhaltungsprozess, verstehen Ihre Herausforderungen, empfehlen Lösungen und erläutern die Zusammenarbeit. Keine Verpflichtungen und absolut kostenfrei.' },
+      ],
+    },
+    team: {
+      badge: 'Ihr Partner',
+      title: 'Lernen Sie Hafiz Bajraktari kennen',
+      intro: 'Der Gründer hinter zerozero und Ihr dedizierter Buchhaltungspartner.',
+      metaTitle: 'Über Hafiz Bajraktari | zerozero',
+      metaDescription: 'Lernen Sie Hafiz Bajraktari kennen, den Gründer von zerozero. Mit jahrelanger Erfahrung in Buchhaltung und Unternehmensberatung bietet Hafiz personalisierte finanzielle Klarheit für wachsende Unternehmen.',
+      members: [
+        {
+          name: 'Hafiz Bajraktari',
+          role: 'Gründer & Leitender Berater',
+          bio: 'Ich habe zerozero gegründet, weil ich glaube, dass jeder Unternehmer klare, ehrliche und proaktive Finanzberatung verdient. Mit umfangreicher Erfahrung in Buchhaltung, Steuerplanung und Unternehmensberatung arbeite ich direkt mit jedem Kunden, um seine einzigartigen Bedürfnisse zu verstehen und ihm zu helfen, fundierte Entscheidungen zu treffen. Mein Ansatz ist einfach: Ich behandle jedes Unternehmen, als wäre es mein eigenes.',
+          image: '/images/hafiz-placeholder.svg',
+          credentials: ['Zertifizierter Buchhalter', 'Steuerspezialist', 'Unternehmensberater'],
+          linkedin: '#',
+        },
+      ],
+      valuesTitle: 'Mein Versprechen an Sie',
+      valuesIntro: 'Die Prinzipien, die ich in jede Kundenbeziehung einbringe.',
+      values: [
+        { title: 'Präzision', desc: 'Jede Zahl zählt. Ich halte höchste Standards der Genauigkeit, damit Sie Ihren Finanzdaten vollständig vertrauen können.' },
+        { title: 'Klarheit', desc: 'Kein Fachjargon, keine Verwirrung. Ich erkläre alles verständlich, damit Sie Ihre finanzielle Situation immer verstehen.' },
+        { title: 'Partnerschaft', desc: 'Ich investiere in Ihren langfristigen Erfolg. Wenn Sie wachsen, wachse ich. Das ist die Art von Beziehung, die ich aufbaue.' },
+      ],
     },
     resourcesData: [
       {

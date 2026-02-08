@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { NavBar } from '@/components/NavBar'
 import { Footer } from '@/components/Footer'
 import { Section } from '@/components/Section'
@@ -9,6 +10,7 @@ import { ContactForm } from '@/components/ContactForm'
 import { RevealController } from '@/components/RevealController'
 import { BackToTop } from '@/components/BackToTop'
 import { ToolsSection } from '@/components/calculators/ToolsSection'
+import { FAQ } from '@/components/FAQ'
 import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
@@ -16,7 +18,7 @@ type Props = { params: { locale: 'en' | 'sq' | 'de' } }
 
 function HeroGraphic() {
   return (
-    <div className="relative h-72 w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 to-accent-50 shadow-sm dark:from-primary-900 dark:to-primary-950 md:h-full">
+    <div className="relative h-72 w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 to-accent-50 shadow-sm dark:from-primary-900 dark:to-primary-950 md:h-80 lg:h-96">
       <svg className="absolute -left-6 -top-6 h-40 w-40 text-accent/30 dark:text-accent/40" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="2"/>
       </svg>
@@ -103,17 +105,27 @@ export default async function Page({ params }: { params: Promise<Props['params']
 
       {/* About */}
       <Section id="about">
-        <div className="grid gap-10 md:grid-cols-2">
-          <div className="reveal">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          {/* Photo */}
+          <div className="reveal flex justify-center md:order-2">
+            <div className="relative h-64 w-64 overflow-hidden rounded-2xl shadow-lg md:h-80 md:w-80">
+              <Image
+                src="/images/hafiz-placeholder.svg"
+                alt="Hafiz Bajraktari"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          {/* Text */}
+          <div className="reveal md:order-1">
             <h2 className="mb-4 text-3xl font-bold text-primary dark:text-white">{t.about.title}</h2>
             <p className="mb-4 text-primary-700 dark:text-primary-200">{t.about.p1}</p>
-            <p className="text-primary-700 dark:text-primary-200">{t.about.p2}</p>
-          </div>
-          <div className="reveal">
+            <p className="mb-6 text-primary-700 dark:text-primary-200">{t.about.p2}</p>
             <ul className="space-y-3">
               {t.about.bullets.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-primary-700 dark:text-primary-200">
-                  <svg className="mt-1 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  <svg className="mt-1 flex-shrink-0 text-accent" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
                   <span>{item}</span>
                 </li>
               ))}
@@ -176,6 +188,11 @@ export default async function Page({ params }: { params: Promise<Props['params']
         </div>
       </Section>
 
+      {/* FAQ */}
+      <Section id="faq" className="bg-primary-50 dark:bg-primary-900/50">
+        <FAQ title={t.faq.title} intro={t.faq.intro} items={t.faq.items} />
+      </Section>
+
       {/* Pricing */}
       <Section id="pricing">
         <div className="mx-auto max-w-3xl text-center">
@@ -226,7 +243,7 @@ export async function generateMetadata({ params }: { params: Promise<Props['para
         'en': `${BASE_URL}/en`,
         'sq': `${BASE_URL}/sq`,
         'de': `${BASE_URL}/de`,
-        'x-default': `${BASE_URL}/en`,
+        'x-default': `${BASE_URL}/sq`,
       },
     },
     openGraph: {

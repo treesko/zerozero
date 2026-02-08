@@ -25,6 +25,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     })
 
+    // Team page
+    routes.push({
+      url: `${BASE_URL}/${locale}/team`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((l) => [l, `${BASE_URL}/${l}/team`])
+        ),
+      },
+    })
+
     // Resources index page
     routes.push({
       url: `${BASE_URL}/${locale}/resources`,

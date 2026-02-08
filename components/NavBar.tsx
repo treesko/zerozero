@@ -8,7 +8,8 @@ import { cn } from '@/lib/cn'
 import { useActiveSection } from '@/lib/useActiveSection'
 
 type Dict = any
-const linkKeys = ['home','services','about','industries','tools','testimonials','resources','pricing','contact'] as const
+const linkKeys = ['home','services','about','team','industries','tools','testimonials','resources','faq','pricing','contact'] as const
+const pageRoutes: Partial<Record<typeof linkKeys[number], boolean>> = { team: true }
 
 export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   const [open, setOpen] = useState(false)
@@ -57,8 +58,13 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
           {linkKeys.map(key => {
             const label = t.nav[key]
             const base = `/${locale}`
-            const href = isHome ? `#${key}` : `${base}/#${key}`
-            const isActive = isHome && activeSection === key
+            const isPageRoute = pageRoutes[key]
+            const href = isPageRoute
+              ? `${base}/${key}`
+              : (isHome ? `#${key}` : `${base}/#${key}`)
+            const isActive = isPageRoute
+              ? pathname === `${base}/${key}`
+              : (isHome && activeSection === key)
             return (
               <a
                 key={key}
@@ -150,7 +156,10 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
             {linkKeys.map(key => {
               const label = t.nav[key]
               const base = `/${locale}`
-              const href = isHome ? `#${key}` : `${base}/#${key}`
+              const isPageRoute = pageRoutes[key]
+              const href = isPageRoute
+                ? `${base}/${key}`
+                : (isHome ? `#${key}` : `${base}/#${key}`)
               return (
                 <a key={key} href={href} className="py-2 text-xl font-semibold text-primary dark:text-white hover:text-accent dark:hover:text-accent active:text-accent transition-colors" onClick={() => setOpen(false)}>
                   {label}
@@ -176,14 +185,14 @@ function LangSwitcher({ locale, mobile }: { locale: 'en'|'sq'|'de', mobile?: boo
     { code: 'de', label: 'DE' },
   ]
   return (
-    <nav className={cn('flex items-center', mobile ? 'gap-1' : 'gap-2')} aria-label="Language selector">
+    <nav className={cn('flex items-center', mobile ? 'gap-1' : 'gap-1')} aria-label="Language selector">
       {langs.map(l => (
         <a
           key={l.code}
           href={`/${l.code}${rest}`}
           className={cn(
             'font-semibold uppercase tracking-wide transition-colors',
-            mobile ? 'px-3 py-2 text-sm' : 'text-xs',
+            mobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs',
             l.code === locale
               ? 'text-primary dark:text-white'
               : 'text-primary-400 hover:text-primary dark:text-primary-400 dark:hover:text-white'

@@ -31,9 +31,11 @@ export function Footer({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
           </div>
 
           <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
-            <nav className="flex gap-6 text-sm text-primary-700 dark:text-primary-200">
+            <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-primary-700 dark:text-primary-200">
               <a href={`${base}/#services`} className="hover:text-primary dark:hover:text-white">{t.nav.services}</a>
               <a href={`${base}/#about`} className="hover:text-primary dark:hover:text-white">{t.nav.about}</a>
+              <a href={`${base}/team`} className="hover:text-primary dark:hover:text-white">{t.nav.team}</a>
+              <a href={`${base}/#faq`} className="hover:text-primary dark:hover:text-white">{t.nav.faq}</a>
               <a href={`${base}/#pricing`} className="hover:text-primary dark:hover:text-white">{t.nav.pricing}</a>
               <a href={`${base}/#contact`} className="hover:text-primary dark:hover:text-white">{t.nav.contact}</a>
             </nav>

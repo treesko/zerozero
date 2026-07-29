@@ -7,11 +7,10 @@ import { Button } from '../Button'
 const PENSION_EMPLOYEE_RATE = 0.05 // 5%
 const PENSION_EMPLOYER_RATE = 0.05 // 5%
 
-// Progressive income tax brackets (monthly)
+// Progressive income tax brackets (monthly, Law No. 08/L-142, Aug 2024)
 const TAX_BRACKETS = [
-  { min: 0, max: 80, rate: 0 },        // 0-80 EUR: 0%
-  { min: 80, max: 250, rate: 0.04 },   // 80-250 EUR: 4%
-  { min: 250, max: 450, rate: 0.08 },  // 250-450 EUR: 8%
+  { min: 0, max: 250, rate: 0 },        // 0-250 EUR: 0%
+  { min: 250, max: 450, rate: 0.08 },   // 250-450 EUR: 8%
   { min: 450, max: Infinity, rate: 0.10 }, // Above 450: 10%
 ]
 
@@ -60,14 +59,11 @@ type SalaryTranslations = {
 }
 
 function calculateIncomeTax(taxableIncome: number): number {
-  // Simplified progressive calculation
   let progressiveTax = 0
   if (taxableIncome > 450) {
-    progressiveTax = (80 * 0) + (170 * 0.04) + (200 * 0.08) + ((taxableIncome - 450) * 0.10)
+    progressiveTax = (200 * 0.08) + ((taxableIncome - 450) * 0.10)
   } else if (taxableIncome > 250) {
-    progressiveTax = (80 * 0) + (170 * 0.04) + ((taxableIncome - 250) * 0.08)
-  } else if (taxableIncome > 80) {
-    progressiveTax = (80 * 0) + ((taxableIncome - 80) * 0.04)
+    progressiveTax = (taxableIncome - 250) * 0.08
   } else {
     progressiveTax = 0
   }

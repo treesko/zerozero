@@ -5,7 +5,6 @@ import { Section } from '@/components/Section'
 import { Button } from '@/components/Button'
 import { ServiceCard } from '@/components/cards/ServiceCard'
 import { TestimonialCard } from '@/components/cards/TestimonialCard'
-import { PricingCard } from '@/components/cards/PricingCard'
 import { ContactForm } from '@/components/ContactForm'
 import { RevealController } from '@/components/RevealController'
 import { BackToTop } from '@/components/BackToTop'
@@ -193,19 +192,6 @@ export default async function Page({ params }: { params: Promise<Props['params']
         <FAQ title={t.faq.title} intro={t.faq.intro} items={t.faq.items} />
       </Section>
 
-      {/* Pricing */}
-      <Section id="pricing">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="reveal mb-3 text-3xl font-bold text-primary dark:text-white">{t.pricing.title}</h2>
-          <p className="reveal text-primary-600 dark:text-primary-300">{t.pricing.intro}</p>
-        </div>
-        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {t.pricing.plans.map((p) => (
-            <PricingCard key={p.name} name={p.name} price={p.price} description={p.desc} features={p.features} highlighted={p.highlighted} mostPopularText={t.pricing.mostPopular} />
-          ))}
-        </div>
-      </Section>
-
       {/* Contact */}
       <Section id="contact">
         <div className="mx-auto max-w-2xl text-center">
@@ -222,7 +208,7 @@ export default async function Page({ params }: { params: Promise<Props['params']
   )
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params

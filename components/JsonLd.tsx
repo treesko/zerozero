@@ -20,7 +20,6 @@ type LocalBusinessSchema = {
   url: string
   logo: string
   description: string
-  priceRange: string
   address: {
     '@type': 'PostalAddress'
     addressCountry: string
@@ -49,7 +48,7 @@ type WebSiteSchema = {
   inLanguage: string[]
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export function OrganizationJsonLd() {
   const schema: OrganizationSchema = {
@@ -61,8 +60,8 @@ export function OrganizationJsonLd() {
     description:
       'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions.',
     sameAs: [
-      'https://www.linkedin.com/company/zerozero',
-      'https://www.facebook.com/zerozero',
+      'https://www.facebook.com/profile.php?id=61561896255149',
+      'https://www.instagram.com/zerozeroaccounting/',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -88,7 +87,6 @@ export function AccountingServiceJsonLd() {
     logo: `${BASE_URL}/images/logo.svg`,
     description:
       'Modern accounting and advisory services for SMBs, startups, and freelancers. Precision. Clarity. Confidence.',
-    priceRange: '€€',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'XK', // Kosovo country code, update as needed

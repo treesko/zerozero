@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { locales, getDictionary } from '@/lib/i18n'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = []

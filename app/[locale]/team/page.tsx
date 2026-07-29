@@ -41,7 +41,6 @@ export default async function TeamPage({ params }: { params: Promise<Props['para
               bio={member.bio}
               image={member.image}
               credentials={member.credentials}
-              linkedin={member.linkedin}
             />
           ))}
         </div>
@@ -82,7 +81,7 @@ export default async function TeamPage({ params }: { params: Promise<Props['para
   )
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params

@@ -14,7 +14,7 @@ const poppins = Poppins({
   display: 'swap'
 })
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero.com'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

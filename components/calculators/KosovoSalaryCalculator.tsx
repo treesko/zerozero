@@ -3,18 +3,19 @@
 import { useState } from 'react'
 import { Button } from '../Button'
 
-// Kosovo tax and contribution rates (2024)
-const PENSION_EMPLOYEE_RATE = 0.05 // 5%
-const PENSION_EMPLOYER_RATE = 0.05 // 5%
+const PENSION_EMPLOYEE_RATE = 0.05
+const PENSION_EMPLOYER_RATE = 0.05
+const SECONDARY_TAX_RATE = 0.10
 
 // Progressive income tax brackets (monthly, Law No. 08/L-142, Aug 2024)
 const TAX_BRACKETS = [
-  { min: 0, max: 250, rate: 0 },        // 0-250 EUR: 0%
-  { min: 250, max: 450, rate: 0.08 },   // 250-450 EUR: 8%
-  { min: 450, max: Infinity, rate: 0.10 }, // Above 450: 10%
+  { min: 0, max: 250, rate: 0 },
+  { min: 250, max: 450, rate: 0.08 },
+  { min: 450, max: Infinity, rate: 0.10 },
 ]
 
 type CalculationMode = 'gross-to-net' | 'net-to-gross'
+type EmployerType = 'primary' | 'secondary'
 
 type SalaryBreakdown = {
   grossSalary: number
@@ -29,6 +30,9 @@ type SalaryBreakdown = {
 type SalaryTranslations = {
   title: string
   subtitle: string
+  employerType: string
+  primaryEmployer: string
+  secondaryEmployer: string
   mode: string
   grossToNet: string
   netToGross: string
@@ -39,6 +43,7 @@ type SalaryTranslations = {
   taxRatesTitle: string
   taxRatesPension: string
   taxRatesIncome: string
+  taxRatesIncomeSecondary: string
   calculateNet: string
   calculateGross: string
   grossSalary: string
@@ -71,10 +76,16 @@ function calculateIncomeTax(taxableIncome: number): number {
   return Math.round(progressiveTax * 100) / 100
 }
 
-function calculateFromGross(grossSalary: number): SalaryBreakdown {
+function calculateSecondaryIncomeTax(taxableIncome: number): number {
+  return Math.round(taxableIncome * SECONDARY_TAX_RATE * 100) / 100
+}
+
+function calculateFromGross(grossSalary: number, isSecondary: boolean): SalaryBreakdown {
   const pensionEmployee = grossSalary * PENSION_EMPLOYEE_RATE
   const taxableIncome = grossSalary - pensionEmployee
-  const incomeTax = calculateIncomeTax(taxableIncome)
+  const incomeTax = isSecondary
+    ? calculateSecondaryIncomeTax(taxableIncome)
+    : calculateIncomeTax(taxableIncome)
   const netSalary = grossSalary - pensionEmployee - incomeTax
   const pensionEmployer = grossSalary * PENSION_EMPLOYER_RATE
   const totalEmployerCost = grossSalary + pensionEmployer
@@ -90,8 +101,7 @@ function calculateFromGross(grossSalary: number): SalaryBreakdown {
   }
 }
 
-function calculateFromNet(targetNet: number): SalaryBreakdown {
-  // Binary search to find gross salary that results in target net
+function calculateFromNet(targetNet: number, isSecondary: boolean): SalaryBreakdown {
   let low = targetNet
   let high = targetNet * 2
   let iterations = 0
@@ -99,7 +109,7 @@ function calculateFromNet(targetNet: number): SalaryBreakdown {
 
   while (iterations < maxIterations) {
     const mid = (low + high) / 2
-    const result = calculateFromGross(mid)
+    const result = calculateFromGross(mid, isSecondary)
 
     if (Math.abs(result.netSalary - targetNet) < 0.01) {
       return result
@@ -113,7 +123,7 @@ function calculateFromNet(targetNet: number): SalaryBreakdown {
     iterations++
   }
 
-  return calculateFromGross((low + high) / 2)
+  return calculateFromGross((low + high) / 2, isSecondary)
 }
 
 type KosovoSalaryCalculatorProps = {
@@ -124,17 +134,20 @@ type KosovoSalaryCalculatorProps = {
 export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculatorProps) {
   const t = tRaw as SalaryTranslations
   const [mode, setMode] = useState<CalculationMode>('gross-to-net')
+  const [employerType, setEmployerType] = useState<EmployerType>('primary')
   const [salary, setSalary] = useState('')
   const [result, setResult] = useState<SalaryBreakdown | null>(null)
+
+  const isSecondary = employerType === 'secondary'
 
   const handleCalculate = () => {
     const salaryNum = parseFloat(salary.replace(/[^0-9.]/g, '')) || 0
     if (salaryNum <= 0) return
 
     if (mode === 'gross-to-net') {
-      setResult(calculateFromGross(salaryNum))
+      setResult(calculateFromGross(salaryNum, isSecondary))
     } else {
-      setResult(calculateFromNet(salaryNum))
+      setResult(calculateFromNet(salaryNum, isSecondary))
     }
   }
 
@@ -165,6 +178,35 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
 
         {!result ? (
           <div className="space-y-5">
+            {/* Employer Type Toggle */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200">
+                {t.employerType}
+              </label>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setEmployerType('primary')}
+                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
+                    employerType === 'primary'
+                      ? 'bg-accent text-white'
+                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
+                  }`}
+                >
+                  {t.primaryEmployer}
+                </button>
+                <button
+                  onClick={() => setEmployerType('secondary')}
+                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
+                    employerType === 'secondary'
+                      ? 'bg-accent text-white'
+                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
+                  }`}
+                >
+                  {t.secondaryEmployer}
+                </button>
+              </div>
+            </div>
+
             {/* Mode Toggle */}
             <div>
               <label className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200">
@@ -218,7 +260,7 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
               <p className="font-medium">{t.taxRatesTitle}</p>
               <ul className="mt-2 space-y-1 text-xs">
                 <li>• {t.taxRatesPension}</li>
-                <li>• {t.taxRatesIncome}</li>
+                <li>• {isSecondary ? t.taxRatesIncomeSecondary : t.taxRatesIncome}</li>
               </ul>
             </div>
 

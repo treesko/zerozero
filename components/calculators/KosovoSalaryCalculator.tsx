@@ -237,15 +237,6 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
               </div>
             </div>
 
-            {/* Quick summary line */}
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-primary-600 dark:text-primary-300">
-              <span>{t.pension} <span className="font-semibold text-red-600 dark:text-red-400">-{fmt(breakdown.pensionEmployee)}</span></span>
-              <span className="text-primary-300 dark:text-primary-600">·</span>
-              <span>{t.tax} <span className="font-semibold text-red-600 dark:text-red-400">-{fmt(breakdown.incomeTax)}</span></span>
-              <span className="text-primary-300 dark:text-primary-600">·</span>
-              <span>{t.employerCostShort} <span className="font-semibold">{fmt(breakdown.totalEmployerCost)}</span></span>
-            </div>
-
             {/* Employee Deductions */}
             <div className="rounded-lg border border-primary-100 dark:border-primary-700">
               <div className="border-b border-primary-100 bg-primary-50 px-4 py-2.5 dark:border-primary-700 dark:bg-primary-800">

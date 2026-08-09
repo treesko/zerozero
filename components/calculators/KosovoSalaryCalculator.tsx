@@ -1,18 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Button } from '../Button'
 
 const PENSION_EMPLOYEE_RATE = 0.05
 const PENSION_EMPLOYER_RATE = 0.05
 const SECONDARY_TAX_RATE = 0.10
-
-// Progressive income tax brackets (monthly, Law No. 08/L-142, Aug 2024)
-const TAX_BRACKETS = [
-  { min: 0, max: 250, rate: 0 },
-  { min: 250, max: 450, rate: 0.08 },
-  { min: 450, max: Infinity, rate: 0.10 },
-]
 
 type CalculationMode = 'gross-to-net' | 'net-to-gross'
 type EmployerType = 'primary' | 'secondary'
@@ -44,8 +37,6 @@ type SalaryTranslations = {
   taxRatesPension: string
   taxRatesIncome: string
   taxRatesIncomeSecondary: string
-  calculateNet: string
-  calculateGross: string
   grossSalary: string
   netSalary: string
   employeeDeductions: string
@@ -60,7 +51,12 @@ type SalaryTranslations = {
   annualNet: string
   annualEmployerCost: string
   payrollHelp: string
-  calculateAgain: string
+  details: string
+  hideDetails: string
+  taxRatesInfo: string
+  pension: string
+  tax: string
+  employerCostShort: string
 }
 
 function calculateIncomeTax(taxableIncome: number): number {
@@ -69,10 +65,7 @@ function calculateIncomeTax(taxableIncome: number): number {
     progressiveTax = (200 * 0.08) + ((taxableIncome - 450) * 0.10)
   } else if (taxableIncome > 250) {
     progressiveTax = (taxableIncome - 250) * 0.08
-  } else {
-    progressiveTax = 0
   }
-
   return Math.round(progressiveTax * 100) / 100
 }
 
@@ -110,19 +103,11 @@ function calculateFromNet(targetNet: number, isSecondary: boolean): SalaryBreakd
   while (iterations < maxIterations) {
     const mid = (low + high) / 2
     const result = calculateFromGross(mid, isSecondary)
-
-    if (Math.abs(result.netSalary - targetNet) < 0.01) {
-      return result
-    }
-
-    if (result.netSalary < targetNet) {
-      low = mid
-    } else {
-      high = mid
-    }
+    if (Math.abs(result.netSalary - targetNet) < 0.01) return result
+    if (result.netSalary < targetNet) low = mid
+    else high = mid
     iterations++
   }
-
   return calculateFromGross((low + high) / 2, isSecondary)
 }
 
@@ -136,278 +121,232 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
   const [mode, setMode] = useState<CalculationMode>('gross-to-net')
   const [employerType, setEmployerType] = useState<EmployerType>('primary')
   const [salary, setSalary] = useState('')
-  const [result, setResult] = useState<SalaryBreakdown | null>(null)
+  const [showDetails, setShowDetails] = useState(false)
+  const [showTaxInfo, setShowTaxInfo] = useState(false)
 
   const isSecondary = employerType === 'secondary'
 
-  const handleCalculate = () => {
-    const salaryNum = parseFloat(salary.replace(/[^0-9.]/g, '')) || 0
-    if (salaryNum <= 0) return
+  const breakdown = useMemo(() => {
+    const num = parseFloat(salary.replace(/[^0-9.]/g, '')) || 0
+    if (num <= 0) return null
+    return mode === 'gross-to-net'
+      ? calculateFromGross(num, isSecondary)
+      : calculateFromNet(num, isSecondary)
+  }, [salary, mode, isSecondary])
 
-    if (mode === 'gross-to-net') {
-      setResult(calculateFromGross(salaryNum, isSecondary))
-    } else {
-      setResult(calculateFromNet(salaryNum, isSecondary))
-    }
-  }
-
-  const handleReset = () => {
-    setResult(null)
-    setSalary('')
-  }
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('de-DE', {
+  const fmt = (value: number) =>
+    new Intl.NumberFormat('de-DE', {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value)
-  }
-
-  const inputClass =
-    'w-full rounded-md border border-primary-200 px-4 py-3.5 text-base outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-900 dark:text-white'
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900 lg:p-8">
-        <div className="mb-6 text-center">
-          <h3 className="mb-2 text-2xl font-bold text-primary dark:text-white">{t.title}</h3>
-          <p className="text-primary-600 dark:text-primary-300">{t.subtitle}</p>
+    <div className="mx-auto max-w-xl">
+      <div className="rounded-2xl border border-primary-100 bg-white p-4 shadow-lg sm:p-6 dark:border-primary-800 dark:bg-primary-900">
+
+        {/* Header */}
+        <h3 className="mb-4 text-center text-xl font-bold text-primary dark:text-white sm:text-2xl">
+          {t.title}
+        </h3>
+
+        {/* Controls — two segments on one row */}
+        <div className="mb-4 flex items-center gap-2">
+          {/* Employer type segment */}
+          <div className="inline-flex flex-1 rounded-full bg-primary-100 p-0.5 dark:bg-primary-800">
+            <button
+              onClick={() => setEmployerType('primary')}
+              className={`flex-1 rounded-full px-2 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
+                employerType === 'primary'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-primary-600 hover:text-primary dark:text-primary-300'
+              }`}
+            >
+              {t.primaryEmployer}
+            </button>
+            <button
+              onClick={() => setEmployerType('secondary')}
+              className={`flex-1 rounded-full px-2 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
+                employerType === 'secondary'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-primary-600 hover:text-primary dark:text-primary-300'
+              }`}
+            >
+              {t.secondaryEmployer}
+            </button>
+          </div>
+
+          {/* Mode segment */}
+          <div className="inline-flex rounded-full bg-primary-100 p-0.5 dark:bg-primary-800">
+            <button
+              onClick={() => setMode('gross-to-net')}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
+                mode === 'gross-to-net'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-primary-600 hover:text-primary dark:text-primary-300'
+              }`}
+            >
+              {t.grossToNet}
+            </button>
+            <button
+              onClick={() => setMode('net-to-gross')}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
+                mode === 'net-to-gross'
+                  ? 'bg-accent text-white shadow-sm'
+                  : 'text-primary-600 hover:text-primary dark:text-primary-300'
+              }`}
+            >
+              {t.netToGross}
+            </button>
+          </div>
         </div>
 
-        {!result ? (
-          <div className="space-y-5">
-            {/* Employer Type Toggle */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200">
-                {t.employerType}
-              </label>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setEmployerType('primary')}
-                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
-                    employerType === 'primary'
-                      ? 'bg-accent text-white'
-                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
-                  }`}
-                >
-                  {t.primaryEmployer}
-                </button>
-                <button
-                  onClick={() => setEmployerType('secondary')}
-                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
-                    employerType === 'secondary'
-                      ? 'bg-accent text-white'
-                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
-                  }`}
-                >
-                  {t.secondaryEmployer}
-                </button>
+        {/* Salary Input */}
+        <div className="relative mb-4">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-semibold text-primary-400">€</span>
+          <input
+            type="text"
+            inputMode="decimal"
+            placeholder={mode === 'gross-to-net' ? t.grossPlaceholder : t.netPlaceholder}
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
+            className="w-full rounded-xl border-2 border-primary-200 bg-primary-50/50 py-3 pl-10 pr-4 text-xl font-bold text-primary outline-none transition-colors focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 dark:border-primary-700 dark:bg-primary-800 dark:text-white dark:focus:bg-primary-900"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-primary-400">
+            {mode === 'gross-to-net' ? t.grossInput : t.netInput}
+          </span>
+        </div>
+
+        {/* Results — appear when there's a valid salary */}
+        {breakdown && (
+          <div className="space-y-3">
+            {/* Gross / Net cards */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-xl bg-primary-100 p-3 text-center dark:bg-primary-800">
+                <p className="text-xs text-primary-500 dark:text-primary-400">{t.grossSalary}</p>
+                <p className="mt-0.5 text-lg font-bold text-primary-800 dark:text-white sm:text-xl">
+                  {fmt(breakdown.grossSalary)}
+                </p>
+              </div>
+              <div className="rounded-xl bg-accent/10 p-3 text-center dark:bg-accent/20">
+                <p className="text-xs text-primary-500 dark:text-primary-400">{t.netSalary}</p>
+                <p className="mt-0.5 text-lg font-bold text-accent sm:text-xl">
+                  {fmt(breakdown.netSalary)}
+                </p>
               </div>
             </div>
 
-            {/* Mode Toggle */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-primary-700 dark:text-primary-200">
-                {t.mode}
-              </label>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setMode('gross-to-net')}
-                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
-                    mode === 'gross-to-net'
-                      ? 'bg-accent text-white'
-                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
-                  }`}
-                >
-                  {t.grossToNet}
-                </button>
-                <button
-                  onClick={() => setMode('net-to-gross')}
-                  className={`flex-1 rounded-lg px-4 py-3.5 text-base font-medium transition-all ${
-                    mode === 'net-to-gross'
-                      ? 'bg-accent text-white'
-                      : 'bg-primary-100 text-slate-700 hover:bg-primary-200 dark:bg-primary-800 dark:text-primary-200'
-                  }`}
-                >
-                  {t.netToGross}
-                </button>
+            {/* Quick summary line */}
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-primary-600 dark:text-primary-300">
+              <span>{t.pension} <span className="font-semibold text-red-600 dark:text-red-400">-{fmt(breakdown.pensionEmployee)}</span></span>
+              <span className="text-primary-300 dark:text-primary-600">·</span>
+              <span>{t.tax} <span className="font-semibold text-red-600 dark:text-red-400">-{fmt(breakdown.incomeTax)}</span></span>
+              <span className="text-primary-300 dark:text-primary-600">·</span>
+              <span>{t.employerCostShort} <span className="font-semibold">{fmt(breakdown.totalEmployerCost)}</span></span>
+            </div>
+
+            {/* Details + Tax info toggles */}
+            <div className="flex items-center justify-center gap-4 text-xs">
+              <button
+                onClick={() => setShowDetails(v => !v)}
+                className="font-medium text-accent hover:underline"
+              >
+                {showDetails ? `▾ ${t.hideDetails}` : `▸ ${t.details}`}
+              </button>
+              <button
+                onClick={() => setShowTaxInfo(v => !v)}
+                className="font-medium text-primary-500 hover:text-primary hover:underline dark:text-primary-400"
+              >
+                ℹ {t.taxRatesInfo}
+              </button>
+            </div>
+
+            {/* Tax info (collapsible) */}
+            {showTaxInfo && (
+              <div className="rounded-lg bg-blue-50 p-3 text-xs text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+                <p className="font-medium">{t.taxRatesTitle}</p>
+                <ul className="mt-1.5 space-y-0.5">
+                  <li>• {t.taxRatesPension}</li>
+                  <li>• {isSecondary ? t.taxRatesIncomeSecondary : t.taxRatesIncome}</li>
+                </ul>
               </div>
-            </div>
+            )}
 
-            {/* Salary Input */}
-            <div>
-              <label htmlFor="salary" className="mb-1.5 block text-sm font-medium text-primary-700 dark:text-primary-200">
-                {mode === 'gross-to-net' ? t.grossInput : t.netInput}
-              </label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-400">€</span>
-                <input
-                  id="salary"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder={mode === 'gross-to-net' ? t.grossPlaceholder : t.netPlaceholder}
-                  value={salary}
-                  onChange={(e) => setSalary(e.target.value)}
-                  className={`${inputClass} pl-8`}
-                />
+            {/* Detailed breakdown (collapsible) */}
+            {showDetails && (
+              <div className="space-y-3">
+                {/* Employee Deductions */}
+                <div className="rounded-lg border border-primary-100 dark:border-primary-700">
+                  <div className="border-b border-primary-100 bg-primary-50 px-3 py-2 dark:border-primary-700 dark:bg-primary-800">
+                    <p className="text-xs font-semibold text-slate-700 dark:text-primary-100">{t.employeeDeductions}</p>
+                  </div>
+                  <div className="divide-y divide-slate-100 text-sm dark:divide-slate-700">
+                    <Row label={t.grossSalary} value={fmt(breakdown.grossSalary)} />
+                    <Row label={t.pensionContrib} value={`- ${fmt(breakdown.pensionEmployee)}`} negative />
+                    <Row label={t.taxableIncome} value={fmt(breakdown.taxableIncome)} muted />
+                    <Row label={t.incomeTax} value={`- ${fmt(breakdown.incomeTax)}`} negative />
+                    <div className="flex items-center justify-between bg-accent/5 px-3 py-2 dark:bg-accent/10">
+                      <span className="text-xs font-semibold text-slate-700 dark:text-primary-100">{t.netSalary}</span>
+                      <span className="font-bold text-accent">{fmt(breakdown.netSalary)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Employer Cost */}
+                <div className="rounded-lg border border-primary-100 dark:border-primary-700">
+                  <div className="border-b border-primary-100 bg-primary-50 px-3 py-2 dark:border-primary-700 dark:bg-primary-800">
+                    <p className="text-xs font-semibold text-slate-700 dark:text-primary-100">{t.employerCost}</p>
+                  </div>
+                  <div className="divide-y divide-slate-100 text-sm dark:divide-slate-700">
+                    <Row label={t.grossSalary} value={fmt(breakdown.grossSalary)} />
+                    <Row label={t.employerPension} value={`+ ${fmt(breakdown.pensionEmployer)}`} />
+                    <div className="flex items-center justify-between bg-primary/5 px-3 py-2 dark:bg-primary/10">
+                      <span className="text-xs font-semibold text-slate-700 dark:text-primary-100">{t.totalEmployerCost}</span>
+                      <span className="font-bold text-primary dark:text-white">{fmt(breakdown.totalEmployerCost)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Annual Summary */}
+                <div className="rounded-lg bg-primary-50 p-3 dark:bg-primary-800">
+                  <p className="mb-2 text-xs font-medium text-primary-700 dark:text-primary-200">{t.annualSummary}</p>
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div>
+                      <p className="text-primary-500 dark:text-primary-400">{t.annualGross}</p>
+                      <p className="font-semibold text-primary-800 dark:text-white">{fmt(breakdown.grossSalary * 12)}</p>
+                    </div>
+                    <div>
+                      <p className="text-primary-500 dark:text-primary-400">{t.annualNet}</p>
+                      <p className="font-semibold text-accent">{fmt(breakdown.netSalary * 12)}</p>
+                    </div>
+                    <div>
+                      <p className="text-primary-500 dark:text-primary-400">{t.annualEmployerCost}</p>
+                      <p className="font-semibold text-primary-800 dark:text-white">{fmt(breakdown.totalEmployerCost * 12)}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Info Box */}
-            <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
-              <p className="font-medium">{t.taxRatesTitle}</p>
-              <ul className="mt-2 space-y-1 text-xs">
-                <li>• {t.taxRatesPension}</li>
-                <li>• {isSecondary ? t.taxRatesIncomeSecondary : t.taxRatesIncome}</li>
-              </ul>
-            </div>
-
-            {/* Calculate Button */}
-            <Button onClick={handleCalculate} disabled={!salary} className="w-full">
-              {mode === 'gross-to-net' ? t.calculateNet : t.calculateGross}
+            {/* CTA */}
+            <Button as="a" href={`/${locale}#contact`} className="w-full">
+              {t.payrollHelp}
             </Button>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Main Results */}
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-primary-100 p-4 text-center dark:bg-primary-800">
-                <p className="text-sm text-primary-500 dark:text-primary-400">{t.grossSalary}</p>
-                <p className="mt-1 text-2xl font-bold text-primary-800 dark:text-white">
-                  {formatCurrency(result.grossSalary)}
-                </p>
-              </div>
-              <div className="rounded-xl bg-accent/10 p-4 text-center dark:bg-accent/20">
-                <p className="text-sm text-primary-500 dark:text-primary-400">{t.netSalary}</p>
-                <p className="mt-1 text-2xl font-bold text-accent">
-                  {formatCurrency(result.netSalary)}
-                </p>
-              </div>
-            </div>
-
-            {/* Detailed Breakdown */}
-            <div className="rounded-lg border border-primary-100 dark:border-primary-700">
-              <div className="border-b border-primary-100 bg-primary-50 px-4 py-3 dark:border-primary-700 dark:bg-primary-800">
-                <p className="text-sm font-semibold text-slate-700 dark:text-primary-100">
-                  {t.employeeDeductions}
-                </p>
-              </div>
-              <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">{t.grossSalary}</span>
-                  <span className="font-medium text-primary-800 dark:text-white">
-                    {formatCurrency(result.grossSalary)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">
-                    {t.pensionContrib}
-                  </span>
-                  <span className="font-medium text-red-600 dark:text-red-400">
-                    - {formatCurrency(result.pensionEmployee)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">
-                    {t.taxableIncome}
-                  </span>
-                  <span className="font-medium text-primary-600 dark:text-primary-300">
-                    {formatCurrency(result.taxableIncome)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">
-                    {t.incomeTax}
-                  </span>
-                  <span className="font-medium text-red-600 dark:text-red-400">
-                    - {formatCurrency(result.incomeTax)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between bg-accent/5 px-4 py-3 dark:bg-accent/10">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-primary-100">
-                    {t.netSalary}
-                  </span>
-                  <span className="text-lg font-bold text-accent">
-                    {formatCurrency(result.netSalary)}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Employer Cost */}
-            <div className="rounded-lg border border-primary-100 dark:border-primary-700">
-              <div className="border-b border-primary-100 bg-primary-50 px-4 py-3 dark:border-primary-700 dark:bg-primary-800">
-                <p className="text-sm font-semibold text-slate-700 dark:text-primary-100">
-                  {t.employerCost}
-                </p>
-              </div>
-              <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">{t.grossSalary}</span>
-                  <span className="font-medium text-primary-800 dark:text-white">
-                    {formatCurrency(result.grossSalary)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between px-4 py-3">
-                  <span className="text-sm text-primary-600 dark:text-primary-300">
-                    {t.employerPension}
-                  </span>
-                  <span className="font-medium text-primary-600 dark:text-primary-300">
-                    + {formatCurrency(result.pensionEmployer)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between bg-primary/5 px-4 py-3 dark:bg-primary/10">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-primary-100">
-                    {t.totalEmployerCost}
-                  </span>
-                  <span className="text-lg font-bold text-primary dark:text-white">
-                    {formatCurrency(result.totalEmployerCost)}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Annual Summary */}
-            <div className="rounded-lg bg-primary-50 p-4 dark:bg-primary-800">
-              <p className="mb-3 text-sm font-medium text-primary-700 dark:text-primary-200">
-                {t.annualSummary}
-              </p>
-              <div className="grid gap-3 text-sm sm:grid-cols-3">
-                <div>
-                  <p className="text-primary-500 dark:text-primary-400">{t.annualGross}</p>
-                  <p className="font-semibold text-primary-800 dark:text-white">
-                    {formatCurrency(result.grossSalary * 12)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-primary-500 dark:text-primary-400">{t.annualNet}</p>
-                  <p className="font-semibold text-accent">
-                    {formatCurrency(result.netSalary * 12)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-primary-500 dark:text-primary-400">{t.annualEmployerCost}</p>
-                  <p className="font-semibold text-primary-800 dark:text-white">
-                    {formatCurrency(result.totalEmployerCost * 12)}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button as="a" href={`/${locale}#contact`} className="flex-1">
-                {t.payrollHelp}
-              </Button>
-              <Button variant="secondary" onClick={handleReset} className="flex-1">
-                {t.calculateAgain}
-              </Button>
-            </div>
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+function Row({ label, value, negative, muted }: { label: string; value: string; negative?: boolean; muted?: boolean }) {
+  return (
+    <div className="flex items-center justify-between px-3 py-2">
+      <span className="text-xs text-primary-600 dark:text-primary-300">{label}</span>
+      <span className={`font-medium ${negative ? 'text-red-600 dark:text-red-400' : muted ? 'text-primary-500 dark:text-primary-400' : 'text-primary-800 dark:text-white'}`}>
+        {value}
+      </span>
     </div>
   )
 }

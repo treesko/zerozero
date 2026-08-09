@@ -38,6 +38,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     })
 
+    // Calculator page
+    routes.push({
+      url: `${BASE_URL}/${locale}/kalkulatori`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((l) => [l, `${BASE_URL}/${l}/kalkulatori`])
+        ),
+      },
+    })
+
     // Resources index page
     routes.push({
       url: `${BASE_URL}/${locale}/resources`,

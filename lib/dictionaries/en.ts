@@ -109,6 +109,10 @@ export function dictionary() {
         employerCostShort: 'Employer cost',
       },
     },
+    calculator: {
+      metaTitle: 'Kosovo Salary Calculator | zerozero',
+      metaDescription: 'Calculate your Kosovo net/gross salary with up-to-date ATK tax rates. Free tool by zerozero.',
+    },
     faq: {
       title: 'Frequently Asked Questions',
       intro: 'Find answers to common questions about our services.',

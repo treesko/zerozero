@@ -154,6 +154,10 @@ export function dictionary() {
         employerCostShort: 'Kostoja e punëdhënësit',
       },
     },
+    calculator: {
+      metaTitle: 'Kalkulatori i Pagës për Kosovë | zerozero',
+      metaDescription: 'Llogaritni pagën neto/bruto për Kosovë me normat tatimore aktuale të ATK-së. Mjet falas nga zerozero.',
+    },
     faq: {
       title: 'Pyetjet e Shpeshta',
       intro: 'Gjeni përgjigje për pyetjet më të zakonshme rreth shërbimeve tona.',

@@ -10,7 +10,8 @@ import { useActiveSection } from '@/lib/useActiveSection'
 
 type Dict = any
 const linkKeys = ['home','services','about','team','industries','tools','testimonials','resources','faq','contact'] as const
-const pageRoutes: Partial<Record<typeof linkKeys[number], boolean>> = { team: true }
+const pageRoutes: Partial<Record<typeof linkKeys[number], boolean>> = { team: true, tools: true }
+const pageRouteSlugs: Partial<Record<typeof linkKeys[number], string>> = { tools: 'kalkulatori' }
 
 export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
   const [open, setOpen] = useState(false)
@@ -80,8 +81,9 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
             const label = t.nav[key]
             const base = `/${locale}`
             const isPageRoute = pageRoutes[key]
+            const slug = pageRouteSlugs[key] || key
             const href = isPageRoute
-              ? `${base}/${key}`
+              ? `${base}/${slug}`
               : (isHome ? `#${key}` : `${base}/#${key}`)
             return (
               <a
@@ -132,11 +134,12 @@ export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {
               const label = t.nav[key]
               const base = `/${locale}`
               const isPageRoute = pageRoutes[key]
+              const slug = pageRouteSlugs[key] || key
               const href = isPageRoute
-                ? `${base}/${key}`
+                ? `${base}/${slug}`
                 : (isHome ? `#${key}` : `${base}/#${key}`)
               const isActive = isPageRoute
-                ? pathname === `${base}/${key}`
+                ? pathname === `${base}/${slug}`
                 : (isHome && activeSection === key)
               return (
                 <a

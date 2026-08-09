@@ -109,6 +109,10 @@ export function dictionary() {
         employerCostShort: 'Arbeitgeberkosten',
       },
     },
+    calculator: {
+      metaTitle: 'Kosovo Gehaltsrechner | zerozero',
+      metaDescription: 'Berechnen Sie Ihr Kosovo Netto-/Bruttogehalt mit aktuellen ATK-Steuersätzen. Kostenloses Tool von zerozero.',
+    },
     privacy: {
       title: 'Datenschutzerklärung',
       p1: 'Wir respektieren Ihre Privatsphäre. Diese Website erhebt keine personenbezogenen Daten außer den Informationen, die Sie freiwillig über das Kontaktformular übermitteln. Wir verwenden Ihre Daten ausschließlich zur Beantwortung Ihrer Anfrage. Wir verkaufen oder teilen Ihre Daten nicht mit Dritten. Wenn Sie die Löschung Ihrer Daten wünschen, kontaktieren Sie uns.',

@@ -41,7 +41,7 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
   const [showTaxInfo, setShowTaxInfo] = useState(false)
 
   const fmt = (value: number) =>
-    new Intl.NumberFormat('de-DE', {
+    new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 2,

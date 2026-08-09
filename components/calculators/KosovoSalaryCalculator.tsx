@@ -132,7 +132,7 @@ export function KosovoSalaryCalculator({ locale, t: tRaw }: KosovoSalaryCalculat
   }, [salary, mode, isSecondary])
 
   const fmt = (value: number) =>
-    new Intl.NumberFormat('de-DE', {
+    new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 2,

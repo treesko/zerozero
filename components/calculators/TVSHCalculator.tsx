@@ -97,7 +97,7 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
           <p className="text-sm text-primary-600 dark:text-primary-300">{t.subtitle}</p>
         </div>
 
-        {/* Three rows: Base, Total, TVSH */}
+        {/* Three rows: Base, TVSH, Total */}
         <div className="mb-5 space-y-3">
           {/* Base input */}
           <div>
@@ -119,6 +119,18 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
             </div>
           </div>
 
+          {/* TVSH result */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-primary-700 dark:text-primary-200">
+              {t.tvshAmount}
+            </label>
+            <div className="rounded-xl border-2 border-amber-200 bg-amber-50 py-3.5 px-4 dark:border-amber-700 dark:bg-amber-900/20">
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                {hasValue ? fmt(tvsh) : '—'}
+              </p>
+            </div>
+          </div>
+
           {/* Total input */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-primary-700 dark:text-primary-200">
@@ -136,18 +148,6 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
                   activeField === 'total' ? 'border-accent' : 'border-primary-200 dark:border-primary-700'
                 }`}
               />
-            </div>
-          </div>
-
-          {/* TVSH result */}
-          <div>
-            <label className="mb-1.5 block text-sm font-semibold text-primary-700 dark:text-primary-200">
-              {t.tvshAmount}
-            </label>
-            <div className="rounded-xl border-2 border-amber-200 bg-amber-50 py-3.5 px-4 dark:border-amber-700 dark:bg-amber-900/20">
-              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
-                {hasValue ? fmt(tvsh) : '—'}
-              </p>
             </div>
           </div>
         </div>

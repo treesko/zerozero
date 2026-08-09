@@ -54,9 +54,20 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
       maximumFractionDigits: 2,
     }).format(value)
 
+  const fmtTyping = (raw: string) => {
+    const clean = raw.replace(/[^0-9.]/g, '')
+    if (!clean) return ''
+    const parts = clean.split('.')
+    const intPart = parts[0].replace(/^0+(?=\d)/, '')
+    const formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    if (parts.length > 1) return `${formatted}.${parts[1]}`
+    return formatted
+  }
+
   const handleBaseChange = useCallback((raw: string) => {
-    setBaseInput(raw)
     setActiveField('base')
+    const display = fmtTyping(raw)
+    setBaseInput(display)
     const num = parseFloat(raw.replace(/[^0-9.]/g, '')) || 0
     if (num <= 0) {
       setTotalInput('')
@@ -71,8 +82,9 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
   }, [])
 
   const handleTotalChange = useCallback((raw: string) => {
-    setTotalInput(raw)
     setActiveField('total')
+    const display = fmtTyping(raw)
+    setTotalInput(display)
     const num = parseFloat(raw.replace(/[^0-9.]/g, '')) || 0
     if (num <= 0) {
       setBaseInput('')

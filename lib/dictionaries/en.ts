@@ -3,7 +3,7 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Precision. Clarity. Confidence.',
     nav: {
-      home: 'Home', services: 'Services', about: 'About', team: 'Team', industries: 'Industries', tools: 'Salary Calculator', testimonials: 'Testimonials', resources: 'Resources', faq: 'FAQ', contact: 'Contact', cta: 'Book a Consultation'
+      home: 'Home', services: 'Services', about: 'About', team: 'Team', industries: 'Industries', tools: 'Salary Calculator', tvsh: 'VAT', testimonials: 'Testimonials', resources: 'Resources', faq: 'FAQ', contact: 'Contact', cta: 'Book a Consultation'
     },
     hero: {
       badge: 'Precision. Clarity. Confidence.',
@@ -112,6 +112,23 @@ export function dictionary() {
     calculator: {
       metaTitle: 'Kosovo Salary Calculator | zerozero',
       metaDescription: 'Calculate your Kosovo net/gross salary with up-to-date ATK tax rates. Free tool by zerozero.',
+    },
+    tvsh: {
+      metaTitle: 'Kosovo VAT Calculator | zerozero',
+      metaDescription: 'Calculate 18% VAT from base or total amount. Free tool by zerozero.',
+      title: 'Kosovo VAT Calculator',
+      subtitle: 'Calculate VAT from base amount or total',
+      fromBase: 'From Base',
+      fromTotal: 'From Total',
+      basePlaceholder: 'e.g., 10000',
+      totalPlaceholder: 'e.g., 11800',
+      baseLabel: 'Base',
+      baseAmount: 'Base Amount',
+      tvshAmount: 'VAT (18%)',
+      totalAmount: 'Total',
+      taxInfo: 'VAT rate',
+      taxRate: 'VAT: 18% (Value Added Tax)',
+      cta: 'Need help with VAT?',
     },
     faq: {
       title: 'Frequently Asked Questions',

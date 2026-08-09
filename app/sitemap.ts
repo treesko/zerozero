@@ -51,6 +51,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     })
 
+    // TVSH calculator page
+    routes.push({
+      url: `${BASE_URL}/${locale}/tvsh`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((l) => [l, `${BASE_URL}/${l}/tvsh`])
+        ),
+      },
+    })
+
     // Resources index page
     routes.push({
       url: `${BASE_URL}/${locale}/resources`,

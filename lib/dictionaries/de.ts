@@ -3,7 +3,7 @@ export function dictionary() {
     brand: 'zerozero',
     slogan: 'Präzision. Klarheit. Vertrauen.',
     nav: {
-      home: 'Start', services: 'Leistungen', about: 'Über uns', team: 'Team', industries: 'Branchen', tools: 'Gehaltsrechner', testimonials: 'Referenzen', resources: 'Ressourcen', faq: 'FAQ', contact: 'Kontakt', cta: 'Beratung buchen'
+      home: 'Start', services: 'Leistungen', about: 'Über uns', team: 'Team', industries: 'Branchen', tools: 'Gehaltsrechner', tvsh: 'MwSt', testimonials: 'Referenzen', resources: 'Ressourcen', faq: 'FAQ', contact: 'Kontakt', cta: 'Beratung buchen'
     },
     hero: {
       badge: 'Präzision. Klarheit. Vertrauen.',
@@ -112,6 +112,23 @@ export function dictionary() {
     calculator: {
       metaTitle: 'Kosovo Gehaltsrechner | zerozero',
       metaDescription: 'Berechnen Sie Ihr Kosovo Netto-/Bruttogehalt mit aktuellen ATK-Steuersätzen. Kostenloses Tool von zerozero.',
+    },
+    tvsh: {
+      metaTitle: 'Kosovo MwSt-Rechner | zerozero',
+      metaDescription: 'Berechnen Sie 18% MwSt aus Netto- oder Bruttobetrag. Kostenloses Tool von zerozero.',
+      title: 'Kosovo MwSt-Rechner',
+      subtitle: 'MwSt aus Nettobetrag oder Gesamtbetrag berechnen',
+      fromBase: 'Vom Netto',
+      fromTotal: 'Vom Brutto',
+      basePlaceholder: 'z.B. 10000',
+      totalPlaceholder: 'z.B. 11800',
+      baseLabel: 'Netto',
+      baseAmount: 'Nettobetrag',
+      tvshAmount: 'MwSt (18%)',
+      totalAmount: 'Gesamtbetrag',
+      taxInfo: 'MwSt-Satz',
+      taxRate: 'MwSt: 18% (Mehrwertsteuer)',
+      cta: 'Brauchen Sie Hilfe mit der MwSt?',
     },
     privacy: {
       title: 'Datenschutzerklärung',

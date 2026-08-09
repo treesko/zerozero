@@ -9,8 +9,8 @@ import { cn } from '@/lib/cn'
 import { useActiveSection } from '@/lib/useActiveSection'
 
 type Dict = any
-const linkKeys = ['home','services','about','team','industries','tools','testimonials','resources','faq','contact'] as const
-const pageRoutes: Partial<Record<typeof linkKeys[number], boolean>> = { team: true, tools: true }
+const linkKeys = ['home','services','about','team','industries','tools','tvsh','testimonials','resources','faq','contact'] as const
+const pageRoutes: Partial<Record<typeof linkKeys[number], boolean>> = { team: true, tools: true, tvsh: true }
 const pageRouteSlugs: Partial<Record<typeof linkKeys[number], string>> = { tools: 'kalkulatori' }
 
 export function NavBar({ locale, t }: { locale: 'en'|'sq'|'de', t: Dict }) {

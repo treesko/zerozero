@@ -49,7 +49,10 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
     }).format(value)
 
   const fmtInput = (value: number) =>
-    value % 1 === 0 ? value.toString() : round2(value).toString()
+    new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value)
 
   const handleBaseChange = useCallback((raw: string) => {
     setBaseInput(raw)

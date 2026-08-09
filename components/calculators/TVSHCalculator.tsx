@@ -97,22 +97,22 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
           <p className="text-sm text-primary-600 dark:text-primary-300">{t.subtitle}</p>
         </div>
 
-        {/* Two input fields side by side */}
-        <div className="mb-5 grid grid-cols-2 gap-3">
+        {/* Three rows: Base, Total, TVSH */}
+        <div className="mb-5 space-y-3">
           {/* Base input */}
           <div>
             <label className="mb-1.5 block text-sm font-semibold text-primary-700 dark:text-primary-200">
               {t.baseAmount}
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg font-semibold text-primary-400">€</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-semibold text-primary-400">€</span>
               <input
                 type="text"
                 inputMode="decimal"
                 placeholder={t.basePlaceholder}
                 value={baseInput}
                 onChange={(e) => handleBaseChange(e.target.value)}
-                className={`w-full rounded-xl border-2 bg-primary-50/50 py-3 pl-9 pr-3 text-xl font-bold text-primary outline-none transition-colors focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 dark:bg-primary-800 dark:text-white dark:focus:bg-primary-900 ${
+                className={`w-full rounded-xl border-2 bg-primary-50/50 py-3.5 pl-10 pr-4 text-2xl font-bold text-primary outline-none transition-colors focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 dark:bg-primary-800 dark:text-white dark:focus:bg-primary-900 ${
                   activeField === 'base' ? 'border-accent' : 'border-primary-200 dark:border-primary-700'
                 }`}
               />
@@ -125,30 +125,35 @@ export function TVSHCalculator({ locale, t: tRaw }: TVSHCalculatorProps) {
               {t.totalAmount}
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg font-semibold text-primary-400">€</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-semibold text-primary-400">€</span>
               <input
                 type="text"
                 inputMode="decimal"
                 placeholder={t.totalPlaceholder}
                 value={totalInput}
                 onChange={(e) => handleTotalChange(e.target.value)}
-                className={`w-full rounded-xl border-2 bg-primary-50/50 py-3 pl-9 pr-3 text-xl font-bold text-primary outline-none transition-colors focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 dark:bg-primary-800 dark:text-white dark:focus:bg-primary-900 ${
+                className={`w-full rounded-xl border-2 bg-primary-50/50 py-3.5 pl-10 pr-4 text-2xl font-bold text-primary outline-none transition-colors focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 dark:bg-primary-800 dark:text-white dark:focus:bg-primary-900 ${
                   activeField === 'total' ? 'border-accent' : 'border-primary-200 dark:border-primary-700'
                 }`}
               />
             </div>
           </div>
-        </div>
 
-        {/* TVSH result — always visible when there's a value */}
-        {hasValue && (
-          <div className="space-y-4">
-            <div className="rounded-xl bg-amber-50 p-4 text-center dark:bg-amber-900/20">
-              <p className="text-sm font-medium text-primary-500 dark:text-primary-400">{t.tvshAmount}</p>
-              <p className="mt-0.5 text-2xl font-bold text-amber-600 dark:text-amber-400 sm:text-3xl">
-                {fmt(tvsh)}
+          {/* TVSH result */}
+          <div>
+            <label className="mb-1.5 block text-sm font-semibold text-primary-700 dark:text-primary-200">
+              {t.tvshAmount}
+            </label>
+            <div className="rounded-xl border-2 border-amber-200 bg-amber-50 py-3.5 px-4 dark:border-amber-700 dark:bg-amber-900/20">
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
+                {hasValue ? fmt(tvsh) : '—'}
               </p>
             </div>
+          </div>
+        </div>
+
+        {hasValue && (
+          <div className="space-y-4">
 
             {/* Tax info toggle */}
             <div className="text-center">

@@ -2,6 +2,16 @@ export function dictionary() {
   return {
     brand: 'zerozero',
     slogan: 'Saktësi. Qartësi. Besim.',
+    metaTitle: 'zerozero – Kontabilitet & Këshillim Financiar në Kosovë',
+    metaDescription: 'zerozero është firma premium e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Ndihmojmë bizneset të kthejnë numrat në vendime të qarta. Saktësi. Qartësi. Besim.',
+    metaKeywords: [
+      'kontabilitet', 'kontabilist Prishtinë', 'kontabilist Kosovë',
+      'mbajtje e librave', 'planifikim tatimor', 'këshillim financiar',
+      'pagat Kosovë', 'TVSH Kosovë', 'ATK', 'deklarim tatimor',
+      'raportim financiar', 'biznese të vogla Kosovë', 'startup Kosovë',
+      'llogaritës i pagës', 'kalkulatori i TVSH', 'kontabilitet Prishtinë',
+      'shërbime kontabiliteti', 'kontabilist', 'tatimi mbi të ardhurat',
+    ],
     nav: {
       home: 'Ballina',
       services: 'Shërbimet',
@@ -158,10 +168,12 @@ export function dictionary() {
     calculator: {
       metaTitle: 'Kalkulatori i Pagës për Kosovë | zerozero',
       metaDescription: 'Llogaritni pagën neto/bruto për Kosovë me normat tatimore aktuale të ATK-së. Mjet falas nga zerozero.',
+      metaKeywords: ['kalkulatori i pagës', 'paga bruto neto Kosovë', 'llogaritës i pagës', 'ATK normat tatimore', 'paga neto Kosovë', 'kalkulatori i pagës Prishtinë'],
     },
     tvsh: {
       metaTitle: 'Kalkulatori i TVSH-së | zerozero',
       metaDescription: 'Llogaritni TVSH-në 18% nga baza ose totali. Mjet falas nga zerozero.',
+      metaKeywords: ['TVSH Kosovë', 'kalkulatori i TVSH', 'tatimi mbi vlerën e shtuar', '18% TVSH', 'TVSH llogaritës', 'TVSH kalkulatori Kosovë'],
       title: 'Kalkulatori i TVSH-së',
       subtitle: 'Llogaritni TVSH-në nga baza ose totali',
       fromBase: 'Nga Baza',
@@ -198,6 +210,7 @@ export function dictionary() {
       intro: 'Themeluesi prapa zerozero dhe partneri juaj i dedikuar për kontabilitet.',
       metaTitle: 'Rreth Hafiz Bajraktarit | zerozero',
       metaDescription: 'Njihuni me Hafiz Bajraktarin, themeluesin e zerozero. Me vite përvojë në kontabilitet dhe këshillim biznesi, Hafizi ofron qartësi financiare të personalizuar për bizneset në rritje.',
+      metaKeywords: ['Hafiz Bajraktari', 'themelues zerozero', 'kontabilist Prishtinë', 'këshilltar biznesi Kosovë'],
       members: [
         {
           name: 'Hafiz Bajraktari',

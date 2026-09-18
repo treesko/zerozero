@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getDictionary } from '@/lib/i18n'
+import { BreadcrumbJsonLd } from '@/components/JsonLd'
 import { NavBar } from '@/components/NavBar'
 import { Footer } from '@/components/Footer'
 import { Section } from '@/components/Section'
 
 type Props = { params: { locale: 'en'|'sq'|'de' } }
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params
@@ -13,6 +16,15 @@ export async function generateMetadata({ params }: { params: Promise<Props['para
   return {
     title: `${t.resources.title} – ${t.brand}`,
     description: t.resources.intro,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/resources`,
+      languages: {
+        'en': `${BASE_URL}/en/resources`,
+        'sq': `${BASE_URL}/sq/resources`,
+        'de': `${BASE_URL}/de/resources`,
+        'x-default': `${BASE_URL}/sq/resources`,
+      },
+    },
   }
 }
 
@@ -22,6 +34,10 @@ export default async function ResourcesPage({ params }: { params: Promise<Props[
   const list = t.resourcesData
   return (
     <main>
+      <BreadcrumbJsonLd items={[
+        { name: t.nav.home, url: `${BASE_URL}/${locale}` },
+        { name: t.resources.title, url: `${BASE_URL}/${locale}/resources` },
+      ]} />
       <NavBar locale={locale} t={t} />
       <Section>
         <div className="mx-auto max-w-3xl text-center">

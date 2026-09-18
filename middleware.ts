@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
   // Redirect to default locale
   const url = request.nextUrl.clone()
   url.pathname = `/${DEFAULT_LOCALE}${pathname}`
-  const res = NextResponse.redirect(url)
+  const res = NextResponse.redirect(url, 301)
   res.cookies.set('locale', DEFAULT_LOCALE, { path: '/' })
   return res
 }

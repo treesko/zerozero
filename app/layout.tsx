@@ -3,6 +3,7 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { OrganizationJsonLd, AccountingServiceJsonLd, WebSiteJsonLd } from '@/components/JsonLd'
+import type { Locale } from '@/lib/i18n'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { ToastProvider } from '@/components/Toast'
@@ -19,21 +20,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'zerozero – Modern Accounting & Advisory',
+    default: 'zerozero – Kontabilitet & Këshillim Financiar në Kosovë',
     template: '%s | zerozero',
   },
   description:
-    'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions. Precision. Clarity. Confidence.',
+    'zerozero është firma premium e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Ndihmojmë bizneset të kthejnë numrat në vendime të qarta. Saktësi. Qartësi. Besim.',
   keywords: [
-    'accounting',
-    'bookkeeping',
-    'tax planning',
-    'financial advisory',
-    'small business accounting',
-    'payroll services',
-    'financial reporting',
-    'startup accounting',
-    'SME accounting',
+    'kontabilitet', 'kontabilist Prishtinë', 'kontabilist Kosovë',
+    'mbajtje e librave', 'planifikim tatimor', 'këshillim financiar',
+    'pagat Kosovë', 'TVSH Kosovë', 'ATK', 'deklarim tatimor',
+    'raportim financiar', 'biznese të vogla Kosovë', 'startup Kosovë',
+    'llogaritës i pagës', 'kalkulatori i TVSH', 'kontabilitet Prishtinë',
+    'shërbime kontabiliteti', 'kontabilist', 'tatimi mbi të ardhurat',
   ],
   authors: [{ name: 'zerozero' }],
   creator: 'zerozero',
@@ -51,24 +49,24 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US', 'de_DE'],
     url: BASE_URL,
     siteName: 'zerozero',
-    title: 'zerozero – Modern Accounting & Advisory',
+    title: 'zerozero – Kontabilitet & Këshillim Financiar në Kosovë',
     description:
-      'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions. Precision. Clarity. Confidence.',
+      'zerozero është firma premium e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Saktësi. Qartësi. Besim.',
     images: [
       {
-        url: '/api/og',
+        url: '/api/og?locale=sq',
         width: 1200,
         height: 630,
-        alt: 'zerozero – Precision. Clarity. Confidence.',
+        alt: 'zerozero – Saktësi. Qartësi. Besim.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'zerozero – Modern Accounting & Advisory',
+    title: 'zerozero – Kontabilitet & Këshillim Financiar',
     description:
-      'Premium accounting and advisory firm helping businesses turn numbers into clear decisions.',
-    images: ['/api/og'],
+      'Firma premium e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Saktësi. Qartësi. Besim.',
+    images: ['/api/og?locale=sq'],
   },
   robots: {
     index: true,
@@ -98,9 +96,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} className={poppins.variable}>
       <head>
-        <OrganizationJsonLd />
-        <AccountingServiceJsonLd />
-        <WebSiteJsonLd />
+        <OrganizationJsonLd locale={locale} />
+        <AccountingServiceJsonLd locale={locale} />
+        <WebSiteJsonLd locale={locale} />
       </head>
       <body className="font-sans">
         <ThemeProvider defaultTheme="light">

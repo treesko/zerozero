@@ -2,6 +2,14 @@ export function dictionary() {
   return {
     brand: 'zerozero',
     slogan: 'Precision. Clarity. Confidence.',
+    metaTitle: 'zerozero – Modern Accounting & Advisory',
+    metaDescription: 'zerozero is a premium accounting and advisory firm in Kosovo helping businesses turn numbers into clear decisions. Precision. Clarity. Confidence.',
+    metaKeywords: [
+      'accounting', 'bookkeeping', 'tax planning', 'financial advisory',
+      'small business accounting', 'payroll services', 'financial reporting',
+      'startup accounting', 'SME accounting', 'Kosovo accounting',
+      'Prishtina accountant', 'VAT calculator Kosovo', 'salary calculator Kosovo',
+    ],
     nav: {
       home: 'Home', services: 'Services', about: 'About', team: 'Team', industries: 'Industries', tools: 'Salary Calculator', tvsh: 'VAT', testimonials: 'Testimonials', resources: 'Resources', faq: 'FAQ', contact: 'Contact', cta: 'Book a Consultation'
     },
@@ -112,10 +120,12 @@ export function dictionary() {
     calculator: {
       metaTitle: 'Kosovo Salary Calculator | zerozero',
       metaDescription: 'Calculate your Kosovo net/gross salary with up-to-date ATK tax rates. Free tool by zerozero.',
+      metaKeywords: ['salary calculator Kosovo', 'gross to net Kosovo', 'Kosovo tax rates', 'ATK tax rates', 'Kosovo payroll calculator'],
     },
     tvsh: {
       metaTitle: 'Kosovo VAT Calculator | zerozero',
       metaDescription: 'Calculate 18% VAT from base or total amount. Free tool by zerozero.',
+      metaKeywords: ['VAT calculator Kosovo', 'Kosovo VAT 18%', 'value added tax Kosovo', 'TVSH calculator'],
       title: 'Kosovo VAT Calculator',
       subtitle: 'Calculate VAT from base amount or total',
       fromBase: 'From Base',
@@ -152,6 +162,7 @@ export function dictionary() {
       intro: 'The founder behind zerozero and your dedicated accounting partner.',
       metaTitle: 'About Hafiz Bajraktari | zerozero',
       metaDescription: 'Meet Hafiz Bajraktari, founder of zerozero. With years of experience in accounting and business advisory, Hafiz provides personalized financial clarity for growing businesses.',
+      metaKeywords: ['Hafiz Bajraktari', 'zerozero founder', 'accountant Prishtina', 'Kosovo business advisor'],
       members: [
         {
           name: 'Hafiz Bajraktari',

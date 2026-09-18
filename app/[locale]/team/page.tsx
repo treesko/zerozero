@@ -4,10 +4,13 @@ import { Section } from '@/components/Section'
 import { TeamMember } from '@/components/TeamMember'
 import { RevealController } from '@/components/RevealController'
 import { BackToTop } from '@/components/BackToTop'
+import { BreadcrumbJsonLd } from '@/components/JsonLd'
 import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
 type Props = { params: { locale: 'en' | 'sq' | 'de' } }
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
 export default async function TeamPage({ params }: { params: Promise<Props['params']> }) {
   const { locale } = await params
@@ -15,6 +18,10 @@ export default async function TeamPage({ params }: { params: Promise<Props['para
 
   return (
     <main>
+      <BreadcrumbJsonLd items={[
+        { name: t.nav.home, url: `${BASE_URL}/${locale}` },
+        { name: t.team.title, url: `${BASE_URL}/${locale}/team` },
+      ]} />
       <NavBar locale={locale} t={t} />
 
       <Section container className="pt-16">
@@ -81,8 +88,6 @@ export default async function TeamPage({ params }: { params: Promise<Props['para
   )
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
-
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params
   const t = getDictionary(locale)
@@ -90,6 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<Props['para
   return {
     title: t.team.metaTitle,
     description: t.team.metaDescription,
+    keywords: t.team.metaKeywords,
     alternates: {
       canonical: `${BASE_URL}/${locale}/team`,
       languages: {

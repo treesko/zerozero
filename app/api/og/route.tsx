@@ -2,7 +2,17 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export async function GET() {
+const localeText: Record<string, { label: string; tagline: string }> = {
+  sq: { label: 'Kontabilitet', tagline: 'Saktësi. Qartësi. Besim.' },
+  en: { label: 'Accounting', tagline: 'Precision. Clarity. Confidence.' },
+  de: { label: 'Buchhaltung', tagline: 'Präzision. Klarheit. Vertrauen.' },
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const locale = searchParams.get('locale') || 'sq'
+  const { label, tagline } = localeText[locale] || localeText.sq
+
   return new ImageResponse(
     (
       <div
@@ -58,7 +68,7 @@ export async function GET() {
               textTransform: 'uppercase',
             }}
           >
-            Accounting
+            {label}
           </div>
         </div>
 
@@ -71,7 +81,7 @@ export async function GET() {
             color: 'rgba(255, 255, 255, 0.8)',
           }}
         >
-          Precision. Clarity. Confidence.
+          {tagline}
         </div>
       </div>
     ),

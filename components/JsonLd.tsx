@@ -1,64 +1,35 @@
-type OrganizationSchema = {
-  '@context': 'https://schema.org'
-  '@type': 'Organization'
-  name: string
-  url: string
-  logo: string
-  description: string
-  sameAs: string[]
-  contactPoint: {
-    '@type': 'ContactPoint'
-    contactType: string
-    availableLanguage: string[]
-  }
-}
-
-type LocalBusinessSchema = {
-  '@context': 'https://schema.org'
-  '@type': 'AccountingService'
-  name: string
-  url: string
-  logo: string
-  description: string
-  address: {
-    '@type': 'PostalAddress'
-    addressCountry: string
-  }
-  areaServed: string[]
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog'
-    name: string
-    itemListElement: Array<{
-      '@type': 'Offer'
-      itemOffered: {
-        '@type': 'Service'
-        name: string
-        description: string
-      }
-    }>
-  }
-}
-
-type WebSiteSchema = {
-  '@context': 'https://schema.org'
-  '@type': 'WebSite'
-  name: string
-  url: string
-  description: string
-  inLanguage: string[]
-}
+import { getDictionary } from '@/lib/i18n'
+import type { Locale } from '@/lib/i18n'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
 
-export function OrganizationJsonLd() {
-  const schema: OrganizationSchema = {
+const descriptions: Record<Locale, { org: string; service: string; site: string }> = {
+  sq: {
+    org: 'zerozero është firma premium e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Ndihmojmë bizneset të kthejnë numrat në vendime të qarta.',
+    service: 'Shërbime moderne të kontabilitetit dhe këshillimit financiar për NVM-të, startup-et dhe freelancerët në Kosovë. Saktësi. Qartësi. Besim.',
+    site: 'Firma moderne e kontabilitetit dhe këshillimit financiar në Prishtinë, Kosovë. Saktësi. Qartësi. Besim.',
+  },
+  en: {
+    org: 'zerozero is a premium accounting and advisory firm in Prishtina, Kosovo helping businesses turn numbers into clear decisions.',
+    service: 'Modern accounting and advisory services for SMBs, startups, and freelancers in Kosovo. Precision. Clarity. Confidence.',
+    site: 'Modern accounting and advisory firm in Prishtina, Kosovo. Precision. Clarity. Confidence.',
+  },
+  de: {
+    org: 'zerozero ist eine Premium-Buchhaltungs- und Beratungsfirma in Prishtina, Kosovo, die Unternehmen hilft, Zahlen in klare Entscheidungen zu verwandeln.',
+    service: 'Moderne Buchhaltungs- und Beratungsdienstleistungen für KMU, Startups und Freelancer im Kosovo. Präzision. Klarheit. Vertrauen.',
+    site: 'Moderne Buchhaltungs- und Beratungsfirma in Prishtina, Kosovo. Präzision. Klarheit. Vertrauen.',
+  },
+}
+
+export function OrganizationJsonLd({ locale }: { locale: string }) {
+  const l = (locale as Locale) || 'sq'
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'zerozero',
     url: BASE_URL,
     logo: `${BASE_URL}/images/logo.svg`,
-    description:
-      'zerozero is a premium accounting and advisory firm helping businesses turn numbers into clear decisions.',
+    description: descriptions[l].org,
     sameAs: [
       'https://www.facebook.com/profile.php?id=61561896255149',
       'https://www.instagram.com/zerozeroaccounting/',
@@ -78,73 +49,39 @@ export function OrganizationJsonLd() {
   )
 }
 
-export function AccountingServiceJsonLd() {
-  const schema: LocalBusinessSchema = {
+export function AccountingServiceJsonLd({ locale }: { locale: string }) {
+  const l = (locale as Locale) || 'sq'
+  const t = getDictionary(l)
+
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'AccountingService',
     name: 'zerozero',
     url: BASE_URL,
     logo: `${BASE_URL}/images/logo.svg`,
-    description:
-      'Modern accounting and advisory services for SMBs, startups, and freelancers. Precision. Clarity. Confidence.',
+    description: descriptions[l].service,
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'XK', // Kosovo country code, update as needed
+      addressLocality: 'Prishtinë',
+      addressRegion: 'Kosovë',
+      addressCountry: 'XK',
     },
-    areaServed: ['Kosovo', 'Albania', 'Germany', 'Europe'],
+    areaServed: [
+      { '@type': 'Country', name: 'Kosovo' },
+      { '@type': 'Country', name: 'Albania' },
+      { '@type': 'Country', name: 'Germany' },
+    ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Accounting Services',
-      itemListElement: [
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Bookkeeping & Accounting',
-            description: 'Accurate, timely bookkeeping with streamlined workflows and expert oversight.',
-          },
+      name: t.services.title,
+      itemListElement: t.services.items.map((item) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: item.title,
+          description: item.desc,
         },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Tax Planning & Compliance',
-            description: 'Proactive planning and compliant filings to optimize your tax position.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Payroll Services',
-            description: 'Reliable payroll processing with complete compliance and reporting.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Financial Reporting & Analysis',
-            description: 'Clear monthly reports and insights to guide decision-making.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Startup & SME Advisory',
-            description: 'From setup to scale, guidance tailored to your growth journey.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Cash Flow & Budgeting',
-            description: 'Forecasting and budgeting to improve liquidity and control.',
-          },
-        },
-      ],
+      })),
     },
   }
 
@@ -156,14 +93,61 @@ export function AccountingServiceJsonLd() {
   )
 }
 
-export function WebSiteJsonLd() {
-  const schema: WebSiteSchema = {
+export function WebSiteJsonLd({ locale }: { locale: string }) {
+  const l = (locale as Locale) || 'sq'
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'zerozero',
     url: BASE_URL,
-    description: 'Modern accounting and advisory firm. Precision. Clarity. Confidence.',
+    description: descriptions[l].site,
     inLanguage: ['en', 'sq', 'de'],
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
+type FAQItem = { question: string; answer: string }
+
+export function FAQPageJsonLd({ items }: { items: FAQItem[] }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
+type BreadcrumbItem = { name: string; url: string }
+
+export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   }
 
   return (

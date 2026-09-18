@@ -2,6 +2,13 @@ export function dictionary() {
   return {
     brand: 'zerozero',
     slogan: 'Präzision. Klarheit. Vertrauen.',
+    metaTitle: 'zerozero – Moderne Buchhaltung & Beratung',
+    metaDescription: 'zerozero ist eine Premium-Buchhaltungs- und Beratungsfirma im Kosovo. Wir helfen Unternehmen, Zahlen in klare Entscheidungen zu verwandeln. Präzision. Klarheit. Vertrauen.',
+    metaKeywords: [
+      'Buchhaltung Kosovo', 'Buchhalter Prishtina', 'Steuerplanung Kosovo',
+      'Finanzberatung', 'Lohnabrechnung Kosovo', 'MwSt Rechner Kosovo',
+      'Gehaltsrechner Kosovo', 'KMU Buchhaltung', 'Startup Buchhaltung',
+    ],
     nav: {
       home: 'Start', services: 'Leistungen', about: 'Über uns', team: 'Team', industries: 'Branchen', tools: 'Gehaltsrechner', tvsh: 'MwSt', testimonials: 'Referenzen', resources: 'Ressourcen', faq: 'FAQ', contact: 'Kontakt', cta: 'Beratung buchen'
     },
@@ -112,10 +119,12 @@ export function dictionary() {
     calculator: {
       metaTitle: 'Kosovo Gehaltsrechner | zerozero',
       metaDescription: 'Berechnen Sie Ihr Kosovo Netto-/Bruttogehalt mit aktuellen ATK-Steuersätzen. Kostenloses Tool von zerozero.',
+      metaKeywords: ['Gehaltsrechner Kosovo', 'Brutto Netto Kosovo', 'ATK Steuersätze', 'Kosovo Lohnrechner'],
     },
     tvsh: {
       metaTitle: 'Kosovo MwSt-Rechner | zerozero',
       metaDescription: 'Berechnen Sie 18% MwSt aus Netto- oder Bruttobetrag. Kostenloses Tool von zerozero.',
+      metaKeywords: ['MwSt Rechner Kosovo', 'Kosovo MwSt 18%', 'Mehrwertsteuer Kosovo', 'TVSH Rechner'],
       title: 'Kosovo MwSt-Rechner',
       subtitle: 'MwSt aus Nettobetrag oder Gesamtbetrag berechnen',
       fromBase: 'Vom Netto',
@@ -157,6 +166,7 @@ export function dictionary() {
       intro: 'Der Gründer hinter zerozero und Ihr dedizierter Buchhaltungspartner.',
       metaTitle: 'Über Hafiz Bajraktari | zerozero',
       metaDescription: 'Lernen Sie Hafiz Bajraktari kennen, den Gründer von zerozero. Mit jahrelanger Erfahrung in Buchhaltung und Unternehmensberatung bietet Hafiz personalisierte finanzielle Klarheit für wachsende Unternehmen.',
+      metaKeywords: ['Hafiz Bajraktari', 'zerozero Gründer', 'Buchhalter Prishtina', 'Unternehmensberater Kosovo'],
       members: [
         {
           name: 'Hafiz Bajraktari',

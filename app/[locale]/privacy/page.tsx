@@ -6,12 +6,23 @@ import { getDictionary } from '@/lib/i18n'
 
 type Props = { params: { locale: 'en'|'sq'|'de' } }
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://zerozero-ks.com'
+
 export async function generateMetadata({ params }: { params: Promise<Props['params']> }): Promise<Metadata> {
   const { locale } = await params
   const t = getDictionary(locale)
   return {
     title: `${t.privacy.title} – ${t.brand}`,
     description: t.privacy.p1,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/privacy`,
+      languages: {
+        'en': `${BASE_URL}/en/privacy`,
+        'sq': `${BASE_URL}/sq/privacy`,
+        'de': `${BASE_URL}/de/privacy`,
+        'x-default': `${BASE_URL}/sq/privacy`,
+      },
+    },
   }
 }
 

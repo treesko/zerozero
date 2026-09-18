@@ -10,6 +10,7 @@ import { RevealController } from '@/components/RevealController'
 import { BackToTop } from '@/components/BackToTop'
 import { ToolsSection } from '@/components/calculators/ToolsSection'
 import { FAQ } from '@/components/FAQ'
+import { FAQPageJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd'
 import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
@@ -190,6 +191,7 @@ export default async function Page({ params }: { params: Promise<Props['params']
       {/* FAQ */}
       <Section id="faq" className="bg-primary-50 dark:bg-primary-900/50">
         <FAQ title={t.faq.title} intro={t.faq.intro} items={t.faq.items} />
+        <FAQPageJsonLd items={t.faq.items} />
       </Section>
 
       {/* Contact */}
@@ -221,8 +223,9 @@ export async function generateMetadata({ params }: { params: Promise<Props['para
   }
 
   return {
-    title: `${t.brand} – Modern Accounting & Advisory`,
-    description: `${t.hero.subtitle}`,
+    title: t.metaTitle,
+    description: t.metaDescription,
+    keywords: t.metaKeywords,
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
@@ -234,12 +237,20 @@ export async function generateMetadata({ params }: { params: Promise<Props['para
     },
     openGraph: {
       title: `${t.brand} – ${t.hero.title}`,
-      description: t.hero.subtitle,
+      description: t.metaDescription,
       url: `${BASE_URL}/${locale}`,
       locale: localeToOg[locale] || 'en_US',
       alternateLocale: Object.entries(localeToOg)
         .filter(([l]) => l !== locale)
         .map(([, og]) => og),
+      images: [
+        {
+          url: `/api/og?locale=${locale}`,
+          width: 1200,
+          height: 630,
+          alt: `${t.brand} – ${t.slogan}`,
+        },
+      ],
     },
   }
 }
